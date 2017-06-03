@@ -5,11 +5,11 @@ namespace Abp.DataFilter.DataFilter.Fields
 {
     public class EqualField<TFieldType> :AbstractFilterField<TFieldType>
     {
-        public TFieldType Field { get; set; }
+        public TFieldType Value { get; set; }
 
         public override bool IsSatisfy()
         {
-            return Field == null;
+            return Value == null;
         }
         public override Expression<Func<T, bool>> GetExpression<T>()
         {

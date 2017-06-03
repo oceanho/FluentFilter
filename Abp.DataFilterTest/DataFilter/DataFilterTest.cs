@@ -16,7 +16,7 @@ namespace Abp.DataFilterTest.DataFilter
         {
             var obj = new MyFilterEntity()
             {
-                Id = new EqualField<int>() { Field = 100 },
+                Id = new EqualField<int>() { Value = 100 },
                 Price = new RangeField<decimal>() { Min = 50, Max = 1000 }
             };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
