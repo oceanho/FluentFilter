@@ -11,5 +11,10 @@ namespace Abp.DataFilter.DataFilter
         {
             return false;
         }
+
+        public void Visit<T>(Expression<Func<T, bool>> whereExpression)
+        {
+            // whereExpression
+        }
     }
 }

@@ -7,6 +7,6 @@ namespace Abp.DataFilter.DataFilter
     {
         bool IsSatisfy();
 
-        Expression<Func<T, bool>> GetExpression<T>();
+        void Visit<T>(Expression<Func<T, bool>> whereExpression);
     }
 }
