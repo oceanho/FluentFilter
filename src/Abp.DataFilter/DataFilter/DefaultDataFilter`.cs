@@ -19,7 +19,7 @@ namespace Abp.DataFilter.DataFilter
 
         public virtual Type ElementType => _elementType;
 
-        public virtual TEntity Entity
+        public virtual TEntity Filter
         {
             get
             {

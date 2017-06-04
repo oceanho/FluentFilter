@@ -21,7 +21,7 @@ namespace Abp.DataFilterTest.DataFilter
             {
                 Left = new MyGroupFilterEntity()
                 {
-                    Entity = new MyGroupEntity
+                    Filter = new MyGroupEntity
                     {
                         Id = 100000,
                         Price = 1000001,
@@ -37,7 +37,7 @@ namespace Abp.DataFilterTest.DataFilter
 
                 Right = new MyGroupFilterEntity()
                 {
-                    Entity = new MyGroupEntity
+                    Filter = new MyGroupEntity
                     {
                         Id = 200000,
                         Price = 2000001

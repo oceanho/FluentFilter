@@ -23,7 +23,7 @@ namespace Abp.DataFilter.DataFilter
 
     public interface IDataFilter<TEntity> : IDataFilter
     {
-        TEntity Entity { get; set; }
+        TEntity Filter { get; set; }
         Expression<Func<TEntity, bool>> ToExpression();
     }
 }
