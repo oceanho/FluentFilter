@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter.Fields
 {
-    public class EqualField<TField> :AbstractFilterField<TField>
+    public class ContainsField<TField> : AbstractFilterField<TField>
+        where TField : IConvertible
     {
-        public TField Value { get; set; }
+        public TField[] Values { get; set; }
 
         public override bool IsSatisfy()
         {
-            return Value == null;
+            return Values != null && Values.Length > 0;
         }
         public override Expression<Func<T, bool>> GetExpression<T>()
         {

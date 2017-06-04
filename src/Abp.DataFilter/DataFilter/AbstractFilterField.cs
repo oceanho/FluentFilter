@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter
 {
-    public abstract class AbstractFilterField <TFieldType> : IFiledFilter<TFieldType>
+    public abstract class AbstractFilterField <TField> : IFiledFilter<TField>
     {
         public abstract Expression<Func<T, bool>> GetExpression<T>();
 

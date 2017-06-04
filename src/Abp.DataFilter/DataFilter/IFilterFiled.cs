@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter
 {
-    public interface IFiledFilter<TFieldType>
+    public interface IFiledFilter<TField>
     {
         bool IsSatisfy();
 
