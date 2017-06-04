@@ -3,6 +3,10 @@ using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter.Fields
 {
+    /// <summary>
+    /// This is Range field
+    /// </summary>
+    /// <typeparam name="TField"></typeparam>
     public class RangeField<TField> : AbstractFilterField<TField>
         where TField : IConvertible
     {

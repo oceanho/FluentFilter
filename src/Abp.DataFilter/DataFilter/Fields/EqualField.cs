@@ -3,6 +3,10 @@ using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter.Fields
 {
+    /// <summary>
+    /// This is equals field
+    /// </summary>
+    /// <typeparam name="TField"></typeparam>
     public class EqualField<TField> :AbstractFilterField<TField>
     {
         public TField Value { get; set; }

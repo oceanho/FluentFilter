@@ -4,6 +4,11 @@ using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter.Fields
 {
+
+    /// <summary>
+    /// This is contains field
+    /// </summary>
+    /// <typeparam name="TField"></typeparam>
     public class ContainsField<TField> : AbstractFilterField<TField>
         where TField : IConvertible
     {
