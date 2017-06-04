@@ -3,10 +3,7 @@ using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter
 {
-    public interface IFiledFilter<TField>
+    public interface IFiledFilter
     {
-        bool IsSatisfy();
-
-        void Visit<T>(Expression<Func<T, bool>> whereExpression);
     }
 }

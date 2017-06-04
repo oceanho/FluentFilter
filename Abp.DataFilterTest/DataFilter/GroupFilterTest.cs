@@ -26,7 +26,7 @@ namespace Abp.DataFilterTest.DataFilter
                     }
                 },
 
-                Flag = GroupFilterFlag.Default,
+                Flag = GroupFilterKind.Default,
 
                 Right = new MyGroupFilterEntity()
                 {
@@ -44,13 +44,13 @@ namespace Abp.DataFilterTest.DataFilter
     public class MyGroupEntity : MyEntity
     {
     }
-    public class MyGroupFilterEntity : AbstactDataFilter<MyGroupEntity>, IGroupFilter<MyGroupEntity, MyGroupFilterEntity>
+    public class MyGroupFilterEntity : DefaultDataFilter<MyGroupEntity>, IGroupFilter<MyGroupEntity, MyGroupFilterEntity>
     {
         public MyGroupFilterEntity Left { get; set; }
         public MyGroupFilterEntity Right { get; set; }
-        public GroupFilterFlag Flag { get; set; }
+        public GroupFilterKind Flag { get; set; }
 
-        Expression<Func<MyGroupEntity, bool>> IDataFilter<MyGroupEntity>.GetExpression()
+        Expression<Func<MyGroupEntity, bool>> IDataFilter<MyGroupEntity>.ToExpression()
         {
             throw new NotImplementedException();
         }

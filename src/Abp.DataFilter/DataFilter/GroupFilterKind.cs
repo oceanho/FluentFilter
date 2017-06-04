@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace Abp.DataFilter.DataFilter
 {
-    public enum GroupFilterFlag
+    /// <summary>
+    /// This is a enum for Group Filter Kind
+    /// </summary>
+    public enum GroupFilterKind : byte
     {
         Default = Or,
         And = 1,

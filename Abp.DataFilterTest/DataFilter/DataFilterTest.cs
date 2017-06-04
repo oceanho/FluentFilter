@@ -26,7 +26,7 @@ namespace Abp.DataFilterTest.DataFilter
     {
         public decimal Price { get; set; }
     }
-    public class MyFilterEntity :AbstactDataFilter<MyEntity>
+    public class MyFilterEntity :DefaultDataFilter<MyEntity>
     {
         public EqualField<int> Id { get; set; }
         public RangeField<decimal> Price { get; set; }

@@ -22,6 +22,6 @@ namespace Abp.DataFilter.DataFilter
         /// <summary>
         /// This is a operation tag to concat Left and Right filter
         /// </summary>
-        GroupFilterFlag Flag { get; set; }
+        GroupFilterKind Flag { get; set; }
     }
 }
