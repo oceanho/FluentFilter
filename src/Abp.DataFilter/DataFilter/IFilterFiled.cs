@@ -5,5 +5,6 @@ namespace Abp.DataFilter.DataFilter
 {
     public interface IFiledFilter
     {
+        bool IsSatisfy();
     }
 }

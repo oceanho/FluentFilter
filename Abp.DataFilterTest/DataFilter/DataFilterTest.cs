@@ -9,7 +9,7 @@ namespace Abp.DataFilterTest.DataFilter
 {
     public class DataFilterTest
     {
-        public DataFilterTest(){}
+        public DataFilterTest() { }
 
         [Fact]
         public void DataEntityFilterSerialize_ShouldBeOK_Test()
@@ -22,11 +22,11 @@ namespace Abp.DataFilterTest.DataFilter
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
     }
-    public class MyEntity:Entity<int>
+    public class MyEntity : Entity<int>
     {
         public decimal Price { get; set; }
     }
-    public class MyFilterEntity :DefaultDataFilter<MyEntity>
+    public class MyFilterEntity : DefaultDataFilter<MyEntity>
     {
         public EqualField<int> Id { get; set; }
         public RangeField<decimal> Price { get; set; }

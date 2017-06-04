@@ -5,6 +5,8 @@ using Abp.DataFilter.DataFilter;
 using Abp.DataFilter.DataFilter.Fields;
 using Abp.Domain.Entities;
 using Xunit;
+using Abp.Timing;
+using Abp.DataFilter.DataFilter.Extensions;
 
 namespace Abp.DataFilterTest.DataFilter
 {
@@ -21,12 +23,17 @@ namespace Abp.DataFilterTest.DataFilter
                 {
                     Entity = new MyGroupEntity
                     {
-                        Id=100000,
-                        Price=1000001
+                        Id = 100000,
+                        Price = 1000001,
+                        CreationTime = new BetweenAndField<DateTime>
+                        {
+                            Start = Clock.Now.ToDayOfStart(),
+                            Finish = Clock.Now.ToDayOfFinish()
+                        }
                     }
                 },
 
-                Flag = GroupFilterKind.Default,
+                Kind = GroupFilterKind.Default,
 
                 Right = new MyGroupFilterEntity()
                 {
@@ -41,18 +48,16 @@ namespace Abp.DataFilterTest.DataFilter
         }
     }
 
-    public class MyGroupEntity : MyEntity
+    public class MyGroupEntity : DefaultDataFilter<MyGroupEntity>
     {
+        public EqualField<Int32> Id { get; set; }
+        public EqualField<Decimal> Price { get; set; }
+        public BetweenAndField<DateTime> CreationTime { get; set; }
     }
     public class MyGroupFilterEntity : DefaultDataFilter<MyGroupEntity>, IGroupFilter<MyGroupEntity, MyGroupFilterEntity>
     {
+        public GroupFilterKind Kind { get; set; }
         public MyGroupFilterEntity Left { get; set; }
         public MyGroupFilterEntity Right { get; set; }
-        public GroupFilterKind Flag { get; set; }
-
-        Expression<Func<MyGroupEntity, bool>> IDataFilter<MyGroupEntity>.ToExpression()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Abp.DataFilter.DataFilter.Fields
@@ -9,18 +10,14 @@ namespace Abp.DataFilter.DataFilter.Fields
     /// This is contains field
     /// </summary>
     /// <typeparam name="TField"></typeparam>
-    public class ContainsField<TField> : AbstractFilterField<TField>
-        where TField : IConvertible
+    public struct ContainsField<TField> : IFiledFilter<TField>
+        where TField : IConvertible, IComparable<TField>, IEquatable<TField>
     {
         public TField[] Values { get; set; }
 
-        public override bool IsSatisfy()
+        public bool IsSatisfy()
         {
             return Values != null && Values.Length > 0;
-        }
-        public override Expression<Func<T, bool>> GetExpression<T>()
-        {
-            throw new NotImplementedException();
         }
     }
 }

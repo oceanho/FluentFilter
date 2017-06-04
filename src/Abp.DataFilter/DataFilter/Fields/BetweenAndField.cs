@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 namespace Abp.DataFilter.DataFilter.Fields
 {
     /// <summary>
-    /// This is Range field
+    /// This is Between And field
     /// </summary>
     /// <typeparam name="TField"></typeparam>
-    public struct RangeField<TField> : IFiledFilter<TField>
+    public struct BetweenAndField<TField> : IFiledFilter<TField>
         where TField : IConvertible, IComparable<TField>, IEquatable<TField>
     {
 
@@ -15,24 +15,24 @@ namespace Abp.DataFilter.DataFilter.Fields
         /// Gets or sets the minimum.
         /// </summary>
         /// <value>The minimum.</value>
-        public TField Min { get; set; }
+        public TField Start { get; set; }
 
         /// <summary>
         /// Gets or sets the max.
         /// </summary>
         /// <value>The max.</value>
-        public TField Max { get; set; }
+        public TField Finish { get; set; }
 
         public bool IsSatisfy()
         {
-            return (Min != null || Max != null) ? (_IsSatisfy(Min, Max)) : false;
+            return (Start != null || Finish != null) ? (_IsSatisfy(Start, Finish)) : false;
         }
 
-        private static Func<TField, TField, bool> _IsSatisfy = (min, max) =>
+        private static Func<TField, TField, bool> _IsSatisfy = (start, finish) =>
         {
-            if (min != null && max != null)
+            if (start != null && finish != null)
             {
-                return min.CompareTo(max) > -1;
+                return start.CompareTo(finish) > -1;
             }
             return true;
         };

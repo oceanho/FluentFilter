@@ -13,6 +13,12 @@ namespace Abp.DataFilter.DataFilter
         [Newtonsoft.Json.JsonIgnore]
         [System.Xml.Serialization.XmlIgnore]
         Type ElementType { get; }
+
+        /// <summary>
+        /// Get all field filters
+        /// </summary>
+        /// <returns></returns>
+        IFiledFilter[] GetFieldFilters();
     }
 
     public interface IDataFilter<TEntity> : IDataFilter

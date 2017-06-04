@@ -10,8 +10,8 @@ namespace Abp.DataFilter.DataFilter
     /// </summary>
     public enum GroupFilterKind : byte
     {
-        Default = Or,
-        And = 1,
-        Or = 2
+        Or = 1,
+        And = 2,
+        Default = Or
     }
 }

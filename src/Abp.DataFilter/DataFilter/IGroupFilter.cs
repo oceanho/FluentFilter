@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Abp.DataFilter.DataFilter
 {
-    public interface IGroupFilter<TEntity,TGroupFilter> : IDataFilter<TEntity>, IDataFilter
-        where TGroupFilter:IGroupFilter<TEntity,TGroupFilter>
-
+    public interface IGroupFilter<TEntity, TGroupFilter> : IDataFilter<TEntity>, IDataFilter
+        where TEntity : IDataFilter<TEntity>
+        where TGroupFilter : IGroupFilter<TEntity, TGroupFilter>
     {
         /// <summary>
         /// This is left group filter
@@ -18,10 +18,10 @@ namespace Abp.DataFilter.DataFilter
         /// This is right group filter
         /// </summary>
         TGroupFilter Right { get; set; }
-    
+
         /// <summary>
         /// This is a operation tag to concat Left and Right filter
         /// </summary>
-        GroupFilterKind Flag { get; set; }
+        GroupFilterKind Kind { get; set; }
     }
 }
