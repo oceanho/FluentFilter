@@ -18,8 +18,10 @@ namespace Abp.DataFilter.DataFilter
         /// This is right group filter
         /// </summary>
         TGroupFilter Right { get; set; }
-
-
+    
+        /// <summary>
+        /// This is a operation tag to concat Left and Right filter
+        /// </summary>
         GroupFilterFlag Flag { get; set; }
     }
 }
