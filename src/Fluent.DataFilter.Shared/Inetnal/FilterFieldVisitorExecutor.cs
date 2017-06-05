@@ -29,7 +29,6 @@ namespace Fluent.DataFilter.Inetnal
                     type = type.GetGenericTypeDefinition();
                 }
                 _filterFieldMethods[type] = method;
-                // _filterFieldMethods[ReflectionHelper.GetTypeUniqueName(method.GetParameters()[0].ParameterType)] = method;
             }
         }
 
@@ -43,7 +42,6 @@ namespace Fluent.DataFilter.Inetnal
                 fieldTypeKey = fieldFilterInfo.FilterFieldType.GetGenericTypeDefinition();
             }
             var method = _filterFieldMethods[fieldTypeKey];
-            // var method = _filterFieldMethods[ReflectionHelper.GetTypeUniqueName(fieldTypeKey)];
             if (isGenericFieldType)
             {
                 var filterFieldType = fieldFilterInfo.FilterFieldType;
