@@ -29,11 +29,13 @@
     <Compile Include="..\Fluent.DataFilter.Shared\IFilterField.cs" Link="IFilterField.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\IFilterField`.cs" Link="IFilterField`.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\IGroupFilter.cs" Link="IGroupFilter.cs" />
-    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\CompareFieldVisitor.cs" Link="Inetnal\CompareFieldVisitor.cs" />
-    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitor.cs" Link="Inetnal\FilterFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\DefaultDataFilterStaticObject.cs" Link="Inetnal\DefaultDataFilterStaticObject.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitorContext.cs" Link="Inetnal\FilterFieldVisitorContext.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitorExecutor.cs" Link="Inetnal\FilterFieldVisitorExecutor.cs" />
-    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\RangeFieldVisitor.cs" Link="Inetnal\RangeFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitorExecutorStaticObject.cs" Link="Inetnal\FilterFieldVisitorExecutorStaticObject.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\Visitors\CompareFieldVisitor.cs" Link="Inetnal\Visitors\CompareFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\Visitors\FilterFieldVisitor.cs" Link="Inetnal\Visitors\FilterFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\Visitors\RangeFieldVisitor.cs" Link="Inetnal\Visitors\RangeFieldVisitor.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Reflection\ReflectionHelper.cs" Link="Reflection\ReflectionHelper.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Utils\FieldFilterInfoHelper.cs" Link="Utils\FieldFilterInfoHelper.cs" />
   </ItemGroup>
@@ -41,6 +43,7 @@
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Fields\" />
+    <Folder Include="Inetnal\Visitors\" />
     <Folder Include="Reflection\" />
     <Folder Include="Utils\" />
     <Folder Include="Compability\" />

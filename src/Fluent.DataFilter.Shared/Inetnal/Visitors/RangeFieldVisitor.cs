@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Fluent.DataFilter.Inetnal
+namespace Fluent.DataFilter.Inetnal.Visitors
 {
     internal partial class FilterFieldVisitor
     {

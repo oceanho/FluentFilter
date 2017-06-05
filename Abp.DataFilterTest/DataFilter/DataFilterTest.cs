@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Fluent.DataFilter;
-using Fluent.DataFilter;
 using Xunit;
 
 namespace Fluent.DataFilterTest.DataFilter

@@ -19,12 +19,6 @@ namespace Fluent.DataFilter
         private TEntity _entityOfElement;
         private Expression<Func<TEntity, bool>> _allwaysTrueExpression;
 
-        private static readonly FilterFieldVisitorExecutor _filterFieldVisitorExecutor;
-        static DefaultDataFilter()
-        {
-            _filterFieldVisitorExecutor = new FilterFieldVisitorExecutor();
-        }
-
         public DefaultDataFilter()
         {
             _elementType = typeof(TEntity);
@@ -62,10 +56,10 @@ namespace Fluent.DataFilter
         {
             var fieldFilters = GetFieldFilters()
                 .Where(filter => filter.FilterFieldInstace != null && filter.FilterFieldInstace.IsSatisfy()).ToArray();
-
+            var _body = Expression.Lambda<Func<TEntity, bool>>(_allwaysTrueExpression.Body, Expression.Parameter(typeof(TEntity)));
             if (fieldFilters.Length == 0)
             {
-                return Expression.Lambda<Func<TEntity, bool>>(_allwaysTrueExpression.Body, Expression.Parameter(typeof(TEntity)));
+                return _body;
             }
 
             Expression<Func<TEntity, bool>> left = (TEntity t) => true;
@@ -74,10 +68,18 @@ namespace Fluent.DataFilter
             var context = new FilterFieldVisitorContext(left, right);
             foreach (var fieldFilter in fieldFilters)
             {
-                _filterFieldVisitorExecutor.Execute(context, fieldFilter);
+                DefaultDataFilterStaticObject.Execute(context, fieldFilter);
             }
 
-            var body = Expression.MakeBinary(ExpressionType.AndAlso, _allwaysTrueExpression.Body, Expression.AndAlso(left, right));
+            throw new NotImplementedException();
+
+            // TODO: how to wirte code in here?
+
+            left = Expression.Lambda<Func<TEntity, bool>>(context.Left, Expression.Parameter(typeof(TEntity)));
+            right = Expression.Lambda<Func<TEntity, bool>>(context.Right, Expression.Parameter(typeof(TEntity)));
+
+            var body = Expression.MakeBinary(ExpressionType.AndAlso, _body, Expression.AndAlso(left, right));
+
             return Expression.Lambda<Func<TEntity, bool>>(body);
         }
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Fluent.DataFilter;
-using Fluent.DataFilter;
 
 using Xunit;
 using Fluent.DataFilter.Extensions;

@@ -7,8 +7,8 @@
     <ProjectGuid>{A8E707F5-C75C-4C92-8432-2A163E51BEB2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fluent.DataFilter.Shared</RootNamespace>
-    <AssemblyName>Fluent.DataFilter.Shared</AssemblyName>
+    <RootNamespace>Fluent.DataFilter</RootNamespace>
+    <AssemblyName>Fluent.DataFilter</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -59,11 +59,13 @@
     <Compile Include="IFilterField.cs" />
     <Compile Include="IFilterField`.cs" />
     <Compile Include="IGroupFilter.cs" />
-    <Compile Include="Inetnal\FilterFieldVisitor.cs" />
+    <Compile Include="Inetnal\DefaultDataFilterStaticObject.cs" />
+    <Compile Include="Inetnal\Visitors\FilterFieldVisitor.cs" />
     <Compile Include="Inetnal\FilterFieldVisitorContext.cs" />
     <Compile Include="Inetnal\FilterFieldVisitorExecutor.cs" />
-    <Compile Include="Inetnal\CompareFieldVisitor.cs" />
-    <Compile Include="Inetnal\RangeFieldVisitor.cs" />
+    <Compile Include="Inetnal\Visitors\CompareFieldVisitor.cs" />
+    <Compile Include="Inetnal\FilterFieldVisitorExecutorStaticObject.cs" />
+    <Compile Include="Inetnal\Visitors\RangeFieldVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Utils\FieldFilterInfoHelper.cs" />
