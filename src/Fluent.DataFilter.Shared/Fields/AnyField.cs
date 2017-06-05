@@ -8,7 +8,7 @@ namespace Fluent.DataFilter
     /// This is any filter field
     /// </summary>
     /// <typeparam name="TField"></typeparam>
-    public class AnyField<TField> : FilterField, IFilterField<TField>
+    public class AnyField<TField> : FilterField<TField>
         where TField : struct, IComparable
     {
         public TField[] Values { get; set; }

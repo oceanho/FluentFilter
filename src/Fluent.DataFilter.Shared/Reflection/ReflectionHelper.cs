@@ -14,11 +14,16 @@ namespace Fluent.DataFilter.Relection
 
         public static string GetTypeUniqueName(Type type)
         {
-            if (type.AssemblyQualifiedName == null)
+            var typeName = type.FullName;
+            if (typeName == null)
             {
-                return type.FullName;
+                typeName = type.AssemblyQualifiedName;
             }
-            return type.AssemblyQualifiedName;
+            if (typeName == null)
+            {
+                typeName = type.ToString();
+            }
+            return typeName;
         }
     }
 }

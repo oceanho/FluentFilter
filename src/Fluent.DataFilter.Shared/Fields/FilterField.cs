@@ -22,6 +22,8 @@ namespace Fluent.DataFilter
             }
         }
 
+        public abstract Type FieldType { get; }
+
         public abstract bool IsSatisfy();
     }
 }

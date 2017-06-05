@@ -11,11 +11,11 @@ namespace Fluent.DataFilter.Inetnal
     internal class FilterFieldVisitorExecutor
     {
         private static readonly object _filterFieldVisitor;
-        private static readonly Dictionary<string, MethodInfo> _filterFieldMethods;
+        private static readonly Dictionary<Type, MethodInfo> _filterFieldMethods;
         static FilterFieldVisitorExecutor()
         {
             _filterFieldVisitor = new FilterFieldVisitor();
-            _filterFieldMethods = new Dictionary<string, MethodInfo>();
+            _filterFieldMethods = new Dictionary<Type, MethodInfo>();
 
             var methods = _filterFieldVisitor.GetType().GetTypeInfo()
                 .GetMethods(BindingFlags.Instance | BindingFlags.Public)
@@ -23,7 +23,13 @@ namespace Fluent.DataFilter.Inetnal
 
             foreach (var method in methods)
             {
-                _filterFieldMethods[ReflectionHelper.GetTypeUniqueName(method.GetParameters()[0].ParameterType)] = method;
+                var type = method.GetParameters()[0].ParameterType;
+                if (type.GetTypeInfo().IsGenericType)
+                {
+                    type = type.GetGenericTypeDefinition();
+                }
+                _filterFieldMethods[type] = method;
+                // _filterFieldMethods[ReflectionHelper.GetTypeUniqueName(method.GetParameters()[0].ParameterType)] = method;
             }
         }
 
@@ -36,10 +42,12 @@ namespace Fluent.DataFilter.Inetnal
                 isGenericFieldType = true;
                 fieldTypeKey = fieldFilterInfo.FilterFieldType.GetGenericTypeDefinition();
             }
-            var method = _filterFieldMethods[ReflectionHelper.GetTypeUniqueName(fieldTypeKey)];
+            var method = _filterFieldMethods[fieldTypeKey];
+            // var method = _filterFieldMethods[ReflectionHelper.GetTypeUniqueName(fieldTypeKey)];
             if (isGenericFieldType)
             {
-                method = method.MakeGenericMethod(fieldFilterInfo.FilterFieldType);
+                var filterFieldType = fieldFilterInfo.FilterFieldType;
+                method = method.MakeGenericMethod(fieldFilterInfo.FilterFieldInstace.FieldType);
             }
             if (method == null)
             {
