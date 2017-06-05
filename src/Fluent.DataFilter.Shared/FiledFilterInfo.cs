@@ -8,7 +8,7 @@ namespace Fluent.DataFilter
 {
     public abstract class FieldFilterInfo
     {
-        public abstract Type FilterFieldType { get; set; }
+        public abstract Type FilterFieldType { get; }
 
         public abstract IFilterField FilterFieldInstace { get; }
     }

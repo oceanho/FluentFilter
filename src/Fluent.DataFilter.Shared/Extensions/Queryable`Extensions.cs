@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Fluent.DataFilter.Extensions
+namespace Fluent.DataFilter
 {
     public static class QueryableExtensions
     {

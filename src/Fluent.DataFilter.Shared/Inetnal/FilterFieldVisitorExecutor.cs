@@ -32,7 +32,8 @@ namespace Fluent.DataFilter.Inetnal
                 {
                     throw new ArgumentNullException($"UnSupport {nameof(fieldFilterInfo)}.FieldType visit");
                 }
-                var expression = (Expression)method.Invoke(visitorProvider, new object[] { fieldFilterInfo.FilterFieldInstace });
+                var expression = (Expression)method.Invoke(visitorProvider, new object[] { context.Left, fieldFilterInfo.FilterFieldInstace });
+                context.Left = expression;
             });
         }
     }

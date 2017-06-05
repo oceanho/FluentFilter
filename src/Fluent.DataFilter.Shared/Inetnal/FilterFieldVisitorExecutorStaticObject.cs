@@ -23,7 +23,7 @@ namespace Fluent.DataFilter.Inetnal
 
             foreach (var method in methods)
             {
-                var type = method.GetParameters()[0].ParameterType;
+                var type = method.GetParameters()[1].ParameterType;
                 if (type.GetTypeInfo().IsGenericType)
                 {
                     type = type.GetGenericTypeDefinition();

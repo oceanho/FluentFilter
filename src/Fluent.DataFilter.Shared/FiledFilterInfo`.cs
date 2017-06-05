@@ -27,7 +27,6 @@ namespace Fluent.DataFilter
         public override Type FilterFieldType
         {
             get => _fieldFilterType;
-            set => _fieldFilterType = value;
         }
         public override IFilterField FilterFieldInstace
         {

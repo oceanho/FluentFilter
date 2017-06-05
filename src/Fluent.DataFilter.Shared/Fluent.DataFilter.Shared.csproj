@@ -60,6 +60,7 @@
     <Compile Include="IFilterField`.cs" />
     <Compile Include="IGroupFilter.cs" />
     <Compile Include="Inetnal\DefaultDataFilterStaticObject.cs" />
+    <Compile Include="Inetnal\ExpressionTreeVisitors\InnerMostWhereExpressioVisitor.cs" />
     <Compile Include="Inetnal\Visitors\FilterFieldVisitor.cs" />
     <Compile Include="Inetnal\FilterFieldVisitorContext.cs" />
     <Compile Include="Inetnal\FilterFieldVisitorExecutor.cs" />
