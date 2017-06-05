@@ -28,11 +28,11 @@ namespace Fluent.DataFilter
 
         public virtual Type ElementType => _elementType;
 
-        public virtual TEntity EntityOfFilter
-        {
-            get => _entityOfElement;
-            set => _entityOfElement = value;
-        }
+        //public virtual TEntity EntityOfFilter
+        //{
+        //    get => _entityOfElement;
+        //    set => _entityOfElement = value;
+        //}
 
         public virtual FieldFilterInfo[] GetFieldFilters()
         {

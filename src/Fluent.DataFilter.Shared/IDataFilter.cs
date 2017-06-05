@@ -21,7 +21,7 @@ namespace Fluent.DataFilter
 
     public interface IDataFilter<TEntity> : IDataFilter
     {
-        TEntity EntityOfFilter { get; set; }
+        //TEntity EntityOfFilter { get; set; }
         Expression<Func<TEntity, bool>> ToExpression();
     }
 }
