@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_6,NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Fluent.DataFilter.Shared\Compability\Expression.CompareKind.cs" Link="Compability\Expression.CompareKind.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\DefaultDataFilter`.cs" Link="DefaultDataFilter`.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\DefaultGroupFilter`.cs" Link="DefaultGroupFilter`.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Extensions\DateTimeExtensions.cs" Link="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Extensions\FiledFilterInfoExtensions.cs" Link="Extensions\FiledFilterInfoExtensions.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Extensions\IConvertibleExtension.cs" Link="Extensions\IConvertibleExtension.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Extensions\Queryable`Extensions.cs" Link="Extensions\Queryable`Extensions.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Fields\AnyField.cs" Link="Fields\AnyField.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Fields\CompareField.cs" Link="Fields\CompareField.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Fields\ContainsField.cs" Link="Fields\ContainsField.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Fields\FilterField.cs" Link="Fields\FilterField.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Fields\FilterField`.cs" Link="Fields\FilterField`.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Fields\RangeField.cs" Link="Fields\RangeField.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\FiledFilterInfo.cs" Link="FiledFilterInfo.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\FiledFilterInfo`.cs" Link="FiledFilterInfo`.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\GroupFilterKind.cs" Link="GroupFilterKind.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\IDataFilter.cs" Link="IDataFilter.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\IFilterField.cs" Link="IFilterField.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\IFilterField`.cs" Link="IFilterField`.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\IGroupFilter.cs" Link="IGroupFilter.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\CompareFieldVisitor.cs" Link="Inetnal\CompareFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitor.cs" Link="Inetnal\FilterFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitorContext.cs" Link="Inetnal\FilterFieldVisitorContext.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\FilterFieldVisitorExecutor.cs" Link="Inetnal\FilterFieldVisitorExecutor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Inetnal\RangeFieldVisitor.cs" Link="Inetnal\RangeFieldVisitor.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Reflection\ReflectionHelper.cs" Link="Reflection\ReflectionHelper.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Utils\FieldFilterInfoHelper.cs" Link="Utils\FieldFilterInfoHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Fields\" />
+    <Folder Include="Reflection\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Compability\" />
+    <Folder Include="OrderBys\" />
+  </ItemGroup>
+
+</Project>

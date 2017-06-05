@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Abp.DataFilter.DataFilter;
-using Abp.DataFilter.DataFilter.Fields;
-using Abp.Domain.Entities;
+using Fluent.DataFilter;
+using Fluent.DataFilter;
 using Xunit;
 
-namespace Abp.DataFilterTest.DataFilter
+namespace Fluent.DataFilterTest.DataFilter
 {
     public class DataFilterTest
     {
@@ -16,19 +15,19 @@ namespace Abp.DataFilterTest.DataFilter
         {
             var obj = new MyFilterEntity()
             {
-                Id = new EqualField<int>() { Value = 100 },
+                Id = new CompareField<int>() { Value = 100 },
                 Price = new RangeField<decimal>() { Min = 50, Max = 1000 }
             };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
     }
-    public class MyEntity : Entity<int>
+    public class MyEntity
     {
         public decimal Price { get; set; }
     }
     public class MyFilterEntity : DefaultDataFilter<MyEntity>
     {
-        public EqualField<int> Id { get; set; }
+        public CompareField<int> Id { get; set; }
         public RangeField<decimal> Price { get; set; }
     }
 }

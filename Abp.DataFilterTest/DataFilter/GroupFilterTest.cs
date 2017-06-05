@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Abp.DataFilter.DataFilter;
-using Abp.DataFilter.DataFilter.Fields;
-using Abp.Domain.Entities;
-using Xunit;
-using Abp.Timing;
-using Abp.DataFilter.DataFilter.Extensions;
+using Fluent.DataFilter;
+using Fluent.DataFilter;
 
-namespace Abp.DataFilterTest.DataFilter
+using Xunit;
+using Fluent.DataFilter.Extensions;
+
+namespace Fluent.DataFilterTest.DataFilter
 {
     public class GroupFilterTest
     {
@@ -21,14 +20,14 @@ namespace Abp.DataFilterTest.DataFilter
             {
                 Left = new MyGroupFilterEntity()
                 {
-                    Filter = new MyGroupEntity
+                    EntityOfFilter = new MyGroupEntity
                     {
                         Id = 100000,
                         Price = 1000001,
-                        CreationTime = new BetweenAndField<DateTime>
+                        CreationTime = new RangeField<DateTime>
                         {
-                            Start = Clock.Now.ToDayOfStart(),
-                            Finish = Clock.Now.ToDayOfFinish()
+                            Min = DateTime.Now.ToDayOfStart(),
+                            Max = DateTime.Now.ToDayOfFinish()
                         }
                     }
                 },
@@ -37,7 +36,7 @@ namespace Abp.DataFilterTest.DataFilter
 
                 Right = new MyGroupFilterEntity()
                 {
-                    Filter = new MyGroupEntity
+                    EntityOfFilter = new MyGroupEntity
                     {
                         Id = 200000,
                         Price = 2000001
@@ -50,9 +49,9 @@ namespace Abp.DataFilterTest.DataFilter
 
     public class MyGroupEntity : DefaultDataFilter<MyGroupEntity>
     {
-        public EqualField<Int32> Id { get; set; }
-        public EqualField<Decimal> Price { get; set; }
-        public BetweenAndField<DateTime> CreationTime { get; set; }
+        public CompareField<Int32> Id { get; set; }
+        public CompareField<Decimal> Price { get; set; }
+        public RangeField<DateTime> CreationTime { get; set; }
     }
     public class MyGroupFilterEntity : DefaultDataFilter<MyGroupEntity>, IGroupFilter<MyGroupEntity, MyGroupFilterEntity>
     {
