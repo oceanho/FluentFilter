@@ -1,9 +1,7 @@
-﻿using FluentFilter.Inetnal.ExprTreeVisitors;
-using FluentFilter.Inetnal.ExprTreeVisitors;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq.Expressions;
-using System.Text;
+
+using FluentFilter.Inetnal.ExprTreeVisitors;
 
 namespace FluentFilter.Inetnal.Visitors
 {

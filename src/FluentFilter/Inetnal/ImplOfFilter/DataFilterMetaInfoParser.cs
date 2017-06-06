@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Collections.Generic;
 
 namespace FluentFilter.Inetnal.ImplOfFilter
 {

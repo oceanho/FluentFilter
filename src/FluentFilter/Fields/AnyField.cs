@@ -1,6 +1,5 @@
 ﻿
 using System;
-using FluentFilter.Extensions;
 
 namespace FluentFilter
 {

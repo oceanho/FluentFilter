@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace FluentFilter
+﻿namespace FluentFilter
 {
     public abstract class FilterField<TField> : FilterField, IFilterField<TField>
     {

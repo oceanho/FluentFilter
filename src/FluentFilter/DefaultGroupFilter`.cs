@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FluentFilter
+﻿namespace FluentFilter
 {
     public class DefaultGroupFilter<TEntity, TFilterEntity, TGroupFilterEntity> : DefaultDataFilter<TEntity, TFilterEntity>, IGroupFilter<TEntity, TGroupFilterEntity>, IDataFilter<TEntity>, IDataFilter
         where TEntity : IDataFilter<TEntity>

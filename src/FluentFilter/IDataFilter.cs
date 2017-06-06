@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Linq.Expressions;
-
-namespace FluentFilter
+﻿namespace FluentFilter
 {
     public interface IDataFilter
     {

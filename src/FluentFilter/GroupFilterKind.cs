@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FluentFilter
+﻿namespace FluentFilter
 {
     /// <summary>
     /// This is a enum for Group Filter Kind
