@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_6,NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
+    <DefineConstants>NET46</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Folder Include="Inetnal\ImplOfFilter\Utils\" />
+  </ItemGroup>
+
+</Project>
