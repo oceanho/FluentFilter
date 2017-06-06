@@ -1,4 +1,5 @@
-﻿using FluentFilter.Inetnal.ExpressionTreeVisitors;
+﻿using FluentFilter.Inetnal.ExprTreeVisitors;
+using FluentFilter.Inetnal.ExprTreeVisitors;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -11,11 +12,11 @@ namespace FluentFilter.Inetnal.Visitors
     /// </summary>
     internal partial class FilterFieldVisitor
     {
-        private InnerMostWhereExpressioVisitor _visitor;
+        private InnerMostWhereExpressionVisitor _visitor;
 
         public FilterFieldVisitor()
         {
-            _visitor = new InnerMostWhereExpressioVisitor();
+            _visitor = new InnerMostWhereExpressionVisitor();
         }
 
         public Expression Visit(Expression node, IFilterField filter)

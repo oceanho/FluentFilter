@@ -9,13 +9,15 @@ namespace FluentFilter
 {
     public static class DataFilterExtensions
     {
-        public static Expression ToExpression(this IDataFilter dataFilter, IQueryable querySrc)
+        public static Expression ToExpression<TEntity>(this IDataFilter dataFilter)
         {
-            return new DataFilterExpressionBuilder(querySrc, dataFilter).Build();
+            // TODO: how to implement ?
+            throw new NotImplementedException();
+            // return dataFilter.ToExpressionFromQuery(null);
         }
-        public static Expression ToExpression<TEntity>(this IDataFilter dataFilter, IQueryable<TEntity> querySrc)
+        public static Expression ToExpressionFromQuery(this IDataFilter dataFilter, IQueryable query)
         {
-            return dataFilter.ToExpression(querySrc);
+            return new DataFilterExpressionEvaluator(query, dataFilter).Eval();
         }
     }
 }

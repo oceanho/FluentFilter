@@ -38,8 +38,10 @@ namespace FluentFilterTest
 
             var _query = from a in _orderList
                          where a.OrderId > 0 && a.CreationTime > DateTime.Now.AddDays(-1)
+                         orderby a.CreationTime descending, a.OrderId ascending
                          select a;
-            var _newQuery = _query.ApplyDataFilter(filter);
+
+            var _newQuery = _query.ApplyFluentFilter(filter);
         }
     }
 

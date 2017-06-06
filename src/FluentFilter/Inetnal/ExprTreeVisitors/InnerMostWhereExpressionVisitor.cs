@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentFilter.Inetnal.ExpressionTreeVisitors
+namespace FluentFilter.Inetnal.ExprTreeVisitors
 {
-    internal class InnerMostWhereExpressioVisitor : ExpressionVisitor
+    internal class InnerMostWhereExpressionVisitor : ExpressionVisitor
     {
         private MethodCallExpression _innerMostWhereExpression;
         public MethodCallExpression GetInnerMostWhereExpression(Expression node)

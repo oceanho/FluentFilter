@@ -22,6 +22,10 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             {
                 _fieldType = _fieldFilterType.GetTypeInfo().GetGenericArguments()[0];
             }
+            if (_fieldType == null)
+            {
+                throw new ArgumentException($"{nameof(fieldFilterInstace)} Should be an genericType.");
+            }
         }
 
         public TFilterField Instance

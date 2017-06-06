@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
+namespace FluentFilter.Inetnal.ImplOfFilter.Utils
 {
-    internal class FilterReflectionHelper
+    internal static class DataFilterMetaInfoHelper
     {
+        
     }
 }

@@ -12,9 +12,5 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
     <DefineConstants>NET46</DefineConstants>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Folder Include="Inetnal\ImplOfFilter\Utils\" />
-  </ItemGroup>
 
 </Project>
