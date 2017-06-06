@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fluent.DataFilter.Inetnal.ImplOfFilterField;
 
 namespace Fluent.DataFilter.Inetnal
 {
@@ -14,9 +15,9 @@ namespace Fluent.DataFilter.Inetnal
             _filterFieldVisitorExecutor = new FilterFieldVisitorExecutor();
         }
 
-        public static void Execute(FilterFieldVisitorContext context, FieldFilterInfo fieldFilterInfo)
+        public static void Execute(FilterFieldVisitorContext context, FilterFieldMetaInfo metaInfo)
         {
-            _filterFieldVisitorExecutor.Execute(context, fieldFilterInfo);
+            _filterFieldVisitorExecutor.Execute(context, metaInfo);
         }
     }
 }

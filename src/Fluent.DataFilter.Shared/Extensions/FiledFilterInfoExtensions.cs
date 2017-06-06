@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Fluent.DataFilter.Extensions
 {
-    public static class FieldFilterInfoExtensions
+    public static class FilterFieldMetaInfoExtensions
     {
-        //public static TFieldFilterInfo AsFieldFilterInfo<TFieldFilterInfo>(this FieldFilterInfo FieldFilterInfo)
-        //    where TFieldFilterInfo : FieldFilterInfo
+        //public static TFilterFieldMetaInfo AsFilterFieldMetaInfo<TFilterFieldMetaInfo>(this FilterFieldMetaInfo FilterFieldMetaInfo)
+        //    where TFilterFieldMetaInfo : FilterFieldMetaInfo
         //{
         //    return (T)Convert.ChangeType(convertible, typeof(T));
         //}

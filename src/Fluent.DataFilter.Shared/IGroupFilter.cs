@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Fluent.DataFilter
 {
-    public interface IGroupFilter<TEntity, TGroupFilter> : IDataFilter<TEntity>, IDataFilter
-        where TEntity : IDataFilter<TEntity>
-        where TGroupFilter : IGroupFilter<TEntity, TGroupFilter>
+    public interface IGroupFilter<TDataFilterEntity, TGroupFilter> : IDataFilter<TDataFilterEntity>, IDataFilter
+        where TDataFilterEntity : IDataFilter<TDataFilterEntity>
+        where TGroupFilter : IGroupFilter<TDataFilterEntity, TGroupFilter>
     {
         /// <summary>
         /// This is left group filter

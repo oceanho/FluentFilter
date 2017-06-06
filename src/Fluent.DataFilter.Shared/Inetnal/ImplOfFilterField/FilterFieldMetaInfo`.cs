@@ -4,18 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fluent.DataFilter
+namespace Fluent.DataFilter.Inetnal.ImplOfFilterField
 {
-    public class FieldFilterInfo<TFilterField> : FieldFilterInfo
+    internal class FilterFieldMetaInfo<TFilterField> : FilterFieldMetaInfo
         where TFilterField : IFilterField
     {
+        private Type _fieldType;
         private Type _fieldFilterType;
         private TFilterField _fieldFilterInstace;
 
-        public FieldFilterInfo(TFilterField fieldInstace)
+        public FilterFieldMetaInfo(TFilterField fieldFilterInstace)
         {
             _fieldFilterType = typeof(TFilterField);
-            _fieldFilterInstace = fieldInstace;
+            _fieldFilterInstace = fieldFilterInstace;
+            if (_fieldFilterType.IsGenericType)
+            {
+                _fieldType = _fieldFilterType.GetGenericArguments()[0];
+            }
         }
 
         public TFilterField Instance
@@ -28,9 +33,12 @@ namespace Fluent.DataFilter
         {
             get => _fieldFilterType;
         }
+
         public override IFilterField FilterFieldInstace
         {
             get => Instance;
         }
+
+        public override Type FieldType => _fieldType;
     }
 }

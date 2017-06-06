@@ -12,6 +12,7 @@
     <Compile Include="..\Fluent.DataFilter.Shared\Compability\Expression.CompareKind.cs" Link="Compability\Expression.CompareKind.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\DefaultDataFilter`.cs" Link="DefaultDataFilter`.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\DefaultGroupFilter`.cs" Link="DefaultGroupFilter`.cs" />
+    <Compile Include="..\Fluent.DataFilter.Shared\Extensions\DataFilterExtensions.cs" Link="Extensions\DataFilterExtensions.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Extensions\DateTimeExtensions.cs" Link="Extensions\DateTimeExtensions.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Extensions\FiledFilterInfoExtensions.cs" Link="Extensions\FiledFilterInfoExtensions.cs" />
     <Compile Include="..\Fluent.DataFilter.Shared\Extensions\IConvertibleExtension.cs" Link="Extensions\IConvertibleExtension.cs" />

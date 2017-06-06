@@ -7,7 +7,7 @@ namespace Fluent.DataFilter
 #if NET
     [Serializable]
 #endif
-    public class DefaultDataFilter<TEntity, TFilterEntity> : IDataFilter<TFilterEntity>
+    public abstract class DataFilter<TEntity, TFilterEntity> : IDataFilter<TFilterEntity>
         where TFilterEntity : IDataFilter<TFilterEntity>
     {
     }

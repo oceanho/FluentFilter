@@ -1,23 +1,22 @@
-﻿using Fluent.DataFilter.Relection;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
+using System.Linq.Expressions;
+
+using Fluent.DataFilter.Inetnal.ImplOfFilterField;
 
 namespace Fluent.DataFilter.Inetnal
 {
     internal class FilterFieldVisitorExecutor
     {
-        public void Execute(FilterFieldVisitorContext context, FieldFilterInfo fieldFilterInfo)
+        public void Execute(FilterFieldVisitorContext context, FilterFieldMetaInfo metaInfo)
         {
             var isGenericFieldType = false;
-            var fieldTypeKey = fieldFilterInfo.FilterFieldType;
+            var fieldTypeKey = metaInfo.FilterFieldType;
             if (fieldTypeKey.GetTypeInfo().IsGenericType)
             {
                 isGenericFieldType = true;
-                fieldTypeKey = fieldFilterInfo.FilterFieldType.GetGenericTypeDefinition();
+                fieldTypeKey = metaInfo.FilterFieldType.GetGenericTypeDefinition();
             }
 
             FilterFieldVisitorExecutorStaticObject.Visit((visitorProvider, visitorMethods) =>
@@ -25,14 +24,14 @@ namespace Fluent.DataFilter.Inetnal
                 var method = visitorMethods[fieldTypeKey];
                 if (isGenericFieldType)
                 {
-                    var filterFieldType = fieldFilterInfo.FilterFieldType;
-                    method = method.MakeGenericMethod(fieldFilterInfo.FilterFieldInstace.FieldType);
+                    var filterFieldType = metaInfo.FilterFieldType;
+                    method = method.MakeGenericMethod(metaInfo.FieldType);
                 }
                 if (method == null)
                 {
-                    throw new ArgumentNullException($"UnSupport {nameof(fieldFilterInfo)}.FieldType visit");
+                    throw new ArgumentNullException($"UnSupport {nameof(metaInfo)}.FieldType visit");
                 }
-                var expression = (Expression)method.Invoke(visitorProvider, new object[] { context.Left, fieldFilterInfo.FilterFieldInstace });
+                var expression = (Expression)method.Invoke(visitorProvider, new object[] { context.Left, metaInfo.FilterFieldInstace });
                 context.Left = expression;
             });
         }

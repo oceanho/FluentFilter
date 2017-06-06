@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace Fluent.DataFilter
 {
-    public class DefaultGroupFilter<TEntity, TGroupFilter> : DefaultDataFilter<TEntity>, IGroupFilter<TEntity, TGroupFilter>, IDataFilter<TEntity>, IDataFilter
+    public class DefaultGroupFilter<TEntity, TFilterEntity, TGroupFilterEntity> : DefaultDataFilter<TEntity, TFilterEntity>, IGroupFilter<TEntity, TGroupFilterEntity>, IDataFilter<TEntity>, IDataFilter
         where TEntity : IDataFilter<TEntity>
-        where TGroupFilter : IGroupFilter<TEntity, TGroupFilter>
+        where TFilterEntity : IDataFilter<TFilterEntity>
+        where TGroupFilterEntity : IGroupFilter<TEntity, TGroupFilterEntity>
 
     {
-        public TGroupFilter Left { get; set; }
-        public TGroupFilter Right { get; set; }
         public GroupFilterKind Kind { get; set; }
+        public TGroupFilterEntity Left { get; set; }
+        public TGroupFilterEntity Right { get; set; }
     }
 }
