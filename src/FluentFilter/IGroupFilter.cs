@@ -1,8 +1,8 @@
 ﻿namespace FluentFilter
 {
-    public interface IGroupFilter<TDataFilterEntity, TGroupFilter> : IDataFilter<TDataFilterEntity>, IDataFilter
-        where TDataFilterEntity : IDataFilter<TDataFilterEntity>
-        where TGroupFilter : IGroupFilter<TDataFilterEntity, TGroupFilter>
+    public interface IGroupFilter<TFilterEntity, TGroupFilter> : IDataFilter<TFilterEntity>, IDataFilter
+        where TFilterEntity : IDataFilter<TFilterEntity>
+        where TGroupFilter : IGroupFilter<TFilterEntity, TGroupFilter>
     {
         /// <summary>
         /// This is left group filter

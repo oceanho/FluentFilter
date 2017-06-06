@@ -1,9 +1,9 @@
 ﻿namespace FluentFilter
 {
-    public class DefaultGroupFilter<TEntity, TFilterEntity, TGroupFilterEntity> : DefaultDataFilter<TEntity, TFilterEntity>, IGroupFilter<TEntity, TGroupFilterEntity>, IDataFilter<TEntity>, IDataFilter
-        where TEntity : IDataFilter<TEntity>
+    public class DefaultGroupFilter<TEntity, TFilterEntity, TGroupFilterEntity> : DefaultDataFilter<TEntity, TFilterEntity>, IGroupFilter<TFilterEntity, TGroupFilterEntity>
+        where TEntity : class, new()
         where TFilterEntity : IDataFilter<TFilterEntity>
-        where TGroupFilterEntity : IGroupFilter<TEntity, TGroupFilterEntity>
+        where TGroupFilterEntity : IGroupFilter<TFilterEntity, TGroupFilterEntity>
 
     {
         public GroupFilterKind Kind { get; set; }
