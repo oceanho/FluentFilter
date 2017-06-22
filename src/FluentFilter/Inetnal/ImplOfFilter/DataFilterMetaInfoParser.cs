@@ -3,9 +3,11 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
+using OhPrimitiveTypes;
+
 namespace FluentFilter.Inetnal.ImplOfFilter
 {
-    using FluentFilter.Relection;
+    using FluentFilter.Reflection;
     using FluentFilter.Inetnal.ImplOfFilterField;
     using FluentFilter.Inetnal.ImplOfFilterField.Utils;
 
@@ -29,7 +31,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             var context = new FilterFieldVisitorContext(left, right);
             foreach (var fieldFilter in fieldFilters)
             {
-                DefaultDataFilterStaticObject.Execute(context, fieldFilter);
+                // DefaultDataFilterStaticObject.Execute(context, fieldFilter);
             }
 
             // throw new NotImplementedException();
@@ -47,7 +49,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         public static FilterFieldMetaInfo[] GetFieldFilters(IDataFilter filter)
         {
             // TODO: This is should cache all property for every IDataFilter
-            var properties = ReflectionHelper.GetProperties(filter, typeof(IFilterField));
+            var properties = ReflectionHelper.GetProperties(filter, typeof(IField));
 
             var fieldFilterIndex = 0;
             object fieldFilterValue = null;

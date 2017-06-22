@@ -6,8 +6,8 @@
         where TGroupFilterEntity : IGroupFilter<TFilterEntity, TGroupFilterEntity>
 
     {
-        public GroupFilterOption Kind { get; set; }
         public TGroupFilterEntity Left { get; set; }
+        public GroupFilterOption Option { get; set; }
         public TGroupFilterEntity Right { get; set; }
     }
 }

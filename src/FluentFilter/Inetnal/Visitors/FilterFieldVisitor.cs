@@ -2,13 +2,14 @@
 using System.Linq.Expressions;
 
 using FluentFilter.Inetnal.ExprTreeVisitors;
+using OhPrimitiveTypes;
 
 namespace FluentFilter.Inetnal.Visitors
 {
     /// <summary>
     /// All visitor method should be start with visit
     /// </summary>
-    internal partial class FilterFieldVisitor
+    internal  class FilterFieldVisitor
     {
         private InnerMostWhereExpressionVisitor _visitor;
 
@@ -17,7 +18,7 @@ namespace FluentFilter.Inetnal.Visitors
             _visitor = new InnerMostWhereExpressionVisitor();
         }
 
-        public Expression Visit(Expression node, IFilterField filter)
+        public Expression Visit(Expression node, IField filter)
         {
             throw new NotImplementedException();
         }

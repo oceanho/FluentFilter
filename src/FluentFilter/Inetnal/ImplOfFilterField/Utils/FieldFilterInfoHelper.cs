@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 
+using OhPrimitiveTypes;
+
 namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 {
     internal static class FilterFieldMetaInfoHelper
@@ -9,7 +11,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             .GetTypeInfo().GetMethod(nameof(CreateFilterFieldMetaInfo), BindingFlags.Static | BindingFlags.Public);
 
         public static FilterFieldMetaInfo CreateFilterFieldMetaInfo<TField>(TField Field)
-            where TField : IFilterField
+            where TField : IField
         {
             return new FilterFieldMetaInfo<TField>(Field);
         }

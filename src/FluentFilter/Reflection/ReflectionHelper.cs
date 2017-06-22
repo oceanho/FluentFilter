@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace FluentFilter.Relection
+namespace FluentFilter.Reflection
 {
     public static class ReflectionHelper
     {

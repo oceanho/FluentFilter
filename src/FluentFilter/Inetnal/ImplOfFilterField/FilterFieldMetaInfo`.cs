@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OhPrimitiveTypes;
+using System;
 using System.Reflection;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField
 {
     internal class FilterFieldMetaInfo<TFilterField> : FilterFieldMetaInfo
-        where TFilterField : IFilterField
+        where TFilterField : IField
     {
         private Type _fieldType;
         private Type _fieldFilterType;

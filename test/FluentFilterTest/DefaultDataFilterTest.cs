@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xunit;
 using FluentFilter;
 using System.Linq;
+using OhPrimitiveTypes;
 
 namespace FluentFilterTest
 {
@@ -13,16 +14,16 @@ namespace FluentFilterTest
         public void DefaultDataFilter_ShouldBeOK_Test()
         {
             var filter = new MyOrderDataFilter();
-            filter.OrderId = 10000;
-            filter.CreationTime = DateTime.Now;
+            filter.OrderId = new CompareField<int>(1000);
+            filter.CreationTime = new CompareField<DateTime>(DateTime.Now);
         }
 
         [Fact]
         public void DefaultDataFilter_ApplyFilter_ShouldBeOK_Test()
         {
             var filter = new MyOrderDataFilter();
-            filter.OrderId = 10000;
-            filter.CreationTime = DateTime.Now;
+            filter.OrderId = new CompareField<int>(1000);
+            filter.CreationTime = new CompareField<DateTime>(DateTime.Now);
 
             var _orderList = new List<MyOrder>() {
                 new MyOrder(){ OrderId=1000,OrderFee=100.00M,CreationTime=DateTime.Now },

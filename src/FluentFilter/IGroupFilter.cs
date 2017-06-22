@@ -17,6 +17,6 @@
         /// <summary>
         /// This is a operation tag to concat Left and Right filter
         /// </summary>
-        GroupFilterOption Kind { get; set; }
+        GroupFilterOption Option { get; set; }
     }
 }

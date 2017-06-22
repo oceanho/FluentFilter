@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OhPrimitiveTypes;
+using System;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField
 {
     internal abstract class FilterFieldMetaInfo
     {
-        public FilterFieldMetaInfo(IFilterField filterField)
+        public FilterFieldMetaInfo(IField filterField)
         {
             FilterFieldInstace = filterField;
         }
@@ -22,6 +23,6 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         /// <summary>
         /// 
         /// </summary>
-        public virtual IFilterField FilterFieldInstace { get; }
+        public virtual  IField FilterFieldInstace { get; }
     }
 }

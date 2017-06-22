@@ -12,5 +12,22 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
     <DefineConstants>NET46</DefineConstants>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="FilterField.cs" />
+    <Compile Remove="FilterField`.cs" />
+    <Compile Remove="IFilterField.cs" />
+    <Compile Remove="IFilterField`.cs" />
+    <Compile Remove="Inetnal\DefaultDataFilterStaticObject.cs" />
+    <Compile Remove="Inetnal\Visitors\CompareFieldVisitor.cs" />
+    <Compile Remove="Inetnal\Visitors\DataFilterVisitor.cs" />
+    <Compile Remove="Inetnal\Visitors\DataFilterVisitorProvider.cs" />
+    <Compile Remove="Inetnal\Visitors\RangeFieldVisitor.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="OhDotNetLib" Version="1.1.0" />
+    <PackageReference Include="OhPrimitiveTypes" Version="1.0.1" />
+  </ItemGroup>
 
 </Project>

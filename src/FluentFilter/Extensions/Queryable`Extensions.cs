@@ -21,7 +21,6 @@ namespace FluentFilter
             var left = source.Expression;
             var right = filter.ToExpressionFromQuery(source);
             return source;
-            // System.Linq.Queryable.Where()
         }
     }
 }
