@@ -25,7 +25,7 @@ namespace FluentFilter.Inetnal
                 if (isGenericFieldType)
                 {
                     var filterFieldType = metaInfo.FilterFieldType;
-                    method = method.MakeGenericMethod(metaInfo.FieldType);
+                    method = method.MakeGenericMethod(metaInfo.PrimitiveType);
                 }
                 if (method == null)
                 {

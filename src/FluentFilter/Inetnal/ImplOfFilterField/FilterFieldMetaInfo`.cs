@@ -11,6 +11,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         private TFilterField _fieldFilterInstace;
 
         public FilterFieldMetaInfo(TFilterField fieldFilterInstace)
+            : base(fieldFilterInstace)
         {
             _fieldFilterType = typeof(TFilterField);
             _fieldFilterInstace = fieldFilterInstace;
@@ -24,22 +25,16 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             }
         }
 
-        public TFilterField Instance
+        public new TFilterField FilterFieldInstace
         {
             get => _fieldFilterInstace;
             set => _fieldFilterInstace = value;
         }
-
         public override Type FilterFieldType
         {
             get => _fieldFilterType;
         }
 
-        public override IFilterField FilterFieldInstace
-        {
-            get => Instance;
-        }
-
-        public override Type FieldType => _fieldType;
+        public override Type PrimitiveType => _fieldType;
     }
 }
