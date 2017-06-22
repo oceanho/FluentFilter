@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-using OhPrimitiveTypes;
+using OhPrimitives;
 
 namespace FluentFilter.Inetnal.ImplOfFilter
 {

@@ -26,8 +26,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="OhDotNetLib" Version="1.1.0" />
-    <PackageReference Include="OhPrimitiveTypes" Version="1.0.1" />
+    <PackageReference Include="OhDotNetLib" Version="2.0.1-Alpha" />
+    <PackageReference Include="OhPrimitives" Version="1.0.0-Alpha" />
   </ItemGroup>
 
 </Project>

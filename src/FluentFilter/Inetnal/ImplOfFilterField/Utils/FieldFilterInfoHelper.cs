@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-using OhPrimitiveTypes;
+using OhPrimitives;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 {

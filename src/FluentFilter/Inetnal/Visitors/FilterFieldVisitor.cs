@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 
 using FluentFilter.Inetnal.ExprTreeVisitors;
-using OhPrimitiveTypes;
+using OhPrimitives;
 
 namespace FluentFilter.Inetnal.Visitors
 {

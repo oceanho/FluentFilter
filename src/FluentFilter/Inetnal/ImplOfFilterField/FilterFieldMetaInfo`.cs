@@ -1,4 +1,4 @@
-﻿using OhPrimitiveTypes;
+﻿using OhPrimitives;
 using System;
 using System.Reflection;
 

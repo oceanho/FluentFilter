@@ -1,12 +1,12 @@
 ﻿using FluentFilter.Inetnal.ImplOfFilter;
-using OhPrimitiveTypes;
+using OhPrimitives;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace FluentFilter
 {
-    internal static class FilterFieldExtensions
+    public static class FilterFieldExtensions
     {
         public static bool IsSatisfy(this IField filterField)
         {
