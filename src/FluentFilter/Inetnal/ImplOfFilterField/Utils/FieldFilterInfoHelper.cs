@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using OhPrimitives;
+using System.Linq;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 {
@@ -18,6 +19,11 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
         public static FilterFieldMetaInfo CreateFilterFieldMetaInfoByType(Type FieldType, object value)
         {
             return (FilterFieldMetaInfo)_createFilterFieldMetaInfoMethodInfo.MakeGenericMethod(FieldType).Invoke(null, new object[] { value });
+        }
+
+        public static PropertyInfo[] GetFieldPropertiesFromFilter(IDataFilter filter)
+        {
+            return OhDotNetLib.Reflection.ReflectionHelper.GetProperties(filter.GetType(), typeof(IField)).ToArray();
         }
     }
 }

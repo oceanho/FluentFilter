@@ -1,6 +1,11 @@
 ﻿namespace FluentFilter
 {
-    public interface IGroupFilter<TFilterEntity, TGroupFilter> : IDataFilter<TFilterEntity>, IDataFilter
+    public interface IGroupFilter
+    {
+
+    }
+
+    public interface IGroupFilter<TFilterEntity, TGroupFilter> : IGroupFilter, IDataFilter<TFilterEntity>, IDataFilter
         where TFilterEntity : IDataFilter<TFilterEntity>
         where TGroupFilter : IGroupFilter<TFilterEntity, TGroupFilter>
     {
