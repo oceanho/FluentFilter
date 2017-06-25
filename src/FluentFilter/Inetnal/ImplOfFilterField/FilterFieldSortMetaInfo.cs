@@ -4,18 +4,16 @@ using System.Reflection;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField
 {
-    internal class FilterFieldMetaInfo<TFilterField> : FilterFieldMetaInfo
-        where TFilterField : IField
+    internal class FilterFieldSortMetaInfo : FilterFieldMetaInfo
     {
         private Type _fieldType;
         private Type _fieldFilterType;
-        private TFilterField _fieldFilterInstace;
+        private IHasSortField _fieldFilterInstace;
 
-        public FilterFieldMetaInfo(TFilterField fieldFilterInstace)
+        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace)
             : base(fieldFilterInstace)
         {
-            _fieldFilterType = typeof(TFilterField);
-            _fieldFilterInstace = fieldFilterInstace;
+            _fieldFilterType = fieldFilterInstace.GetType();
             if (_fieldFilterType.GetTypeInfo().IsGenericType)
             {
                 _fieldType = _fieldFilterType.GetTypeInfo().GetGenericArguments()[0];
@@ -24,13 +22,15 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             {
                 throw new ArgumentException($"{nameof(fieldFilterInstace)} Should be an genericType.");
             }
+            _fieldFilterInstace = base.FilterFieldInstace as IHasSortField;
         }
 
-        public new TFilterField FilterFieldInstace
+        public new IHasSortField FilterFieldInstace
         {
             get => _fieldFilterInstace;
             set => _fieldFilterInstace = value;
         }
+
         public override Type PrimitiveType => _fieldType;
         public override Type FilterFieldType => _fieldFilterType;
     }
