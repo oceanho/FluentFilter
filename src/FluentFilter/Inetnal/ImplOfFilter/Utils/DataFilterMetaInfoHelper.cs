@@ -7,7 +7,8 @@ namespace FluentFilter.Inetnal.ImplOfFilter.Utils
     {
         public static DataFilterMetaInfo GetFilterMeatInfo(IDataFilter filter)
         {
-            return new DataFilterMetaInfo(filter, FilterFieldMetaInfoHelper.GetFilterFields(filter));
+            return new DataFilterMetaInfo(filter, FilterFieldMetaInfoHelper.GetFilterFields(filter)
+                .Where(filterField => filterField.FilterFieldInstace != null && filterField.FilterFieldInstace.IsSatisfy()));
         }
     }
 }

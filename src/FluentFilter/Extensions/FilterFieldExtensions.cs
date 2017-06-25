@@ -6,11 +6,16 @@ using System.Linq.Expressions;
 
 namespace FluentFilter
 {
-    public static class FilterFieldExtensions
+    internal static class FilterFieldExtensions
     {
+        /// <summary>
+        /// Check someone field is satisfy condition
+        /// </summary>
+        /// <param name="filterField"></param>
+        /// <returns></returns>
         public static bool IsSatisfy(this IField filterField)
         {
-            throw new NotImplementedException();
+            return filterField != null;
         }
     }
 }

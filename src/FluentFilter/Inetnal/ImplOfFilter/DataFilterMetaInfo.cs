@@ -20,7 +20,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
                 .Select((filter) =>
                 {
                     return new FilterFieldSortMetaInfo(filter.FilterFieldInstace as IHasSortField);
-                }).ToImmutableList();
+                }).OrderBy(p => p.FilterFieldInstace).ToImmutableList();
         }
         public Type FilterType { get; }
         public IDataFilter FilterInstance { get; }

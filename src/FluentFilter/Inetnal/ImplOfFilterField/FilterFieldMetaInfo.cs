@@ -3,7 +3,10 @@ using System;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField
 {
-    internal abstract class FilterFieldMetaInfo
+    /// <summary>
+    /// Filter字段元数据信息载体对象类
+    /// </summary>
+    public abstract class FilterFieldMetaInfo
     {
         public FilterFieldMetaInfo(IField filterField)
         {
@@ -23,6 +26,6 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         /// <summary>
         /// 
         /// </summary>
-        public virtual  IField FilterFieldInstace { get; }
+        public virtual IField FilterFieldInstace { get; }
     }
 }

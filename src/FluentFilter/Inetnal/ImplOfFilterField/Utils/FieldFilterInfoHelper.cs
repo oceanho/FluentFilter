@@ -23,7 +23,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 
         public static PropertyInfo[] GetFieldPropertiesFromFilter(IDataFilter filter)
         {
-            return OhDotNetLib.Reflection.ReflectionHelper.GetCanAssignabledTypeProperties(filter.GetType(), typeof(IField)).ToArray();
+            return OhDotNetLib.Reflection.ReflectionHelper.GetCanAssignabledTypeProperties(filter, typeof(IField)).ToArray();
         }
 
         public static FilterFieldMetaInfo[] GetFilterFields(IDataFilter filter)

@@ -19,7 +19,7 @@ namespace FluentFilter
         private static IQueryable<TEntity> _ApplyFluentFilter<TEntity>(IQueryable<TEntity> source, IDataFilter filter)
         {
             var left = source.Expression;
-            var right = filter.ToExpressionFromQuery(source);
+            var right = filter.ToExpression<TEntity>();
             return source;
         }
     }

@@ -14,6 +14,12 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Inetnal\ImplOfFilterField\新文件夹\**" />
+    <EmbeddedResource Remove="Inetnal\ImplOfFilterField\新文件夹\**" />
+    <None Remove="Inetnal\ImplOfFilterField\新文件夹\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Compile Remove="FilterField.cs" />
     <Compile Remove="FilterField`.cs" />
     <Compile Remove="IFilterField.cs" />
@@ -27,7 +33,7 @@
   
   <ItemGroup>
     <PackageReference Include="OhDotNetLib" Version="2.1.0" />
-    <PackageReference Include="OhPrimitives" Version="2.2.0" />
+    <PackageReference Include="OhPrimitives" Version="2.2.3-Alpha" />
   </ItemGroup>
 
 </Project>
