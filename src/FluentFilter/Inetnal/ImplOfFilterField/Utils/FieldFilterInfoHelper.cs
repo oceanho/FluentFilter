@@ -30,7 +30,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
         public static FilterFieldMetaInfo[] GetFilterFields(IDataFilter filter)
         {
             // TODO: This is should cache all property for every IDataFilter
-            var properties = FilterFieldMetaInfoHelper.GetFieldPropertiesFromFilter(filter);
+            var properties = GetFieldPropertiesFromFilter(filter);
 
             var fieldFilterIndex = 0;
             object fieldFilterValue = null;
