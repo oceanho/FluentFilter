@@ -25,5 +25,24 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
         {
             return OhDotNetLib.Reflection.ReflectionHelper.GetCanAssignabledTypeProperties(filter.GetType(), typeof(IField)).ToArray();
         }
+
+
+        public static FilterFieldMetaInfo[] GetFilterFields(IDataFilter filter)
+        {
+            // TODO: This is should cache all property for every IDataFilter
+            var properties = FilterFieldMetaInfoHelper.GetFieldPropertiesFromFilter(filter);
+
+            var fieldFilterIndex = 0;
+            object fieldFilterValue = null;
+            var FilterFieldMetaInfos = new FilterFieldMetaInfo[properties.Count()];
+
+            foreach (var property in properties)
+            {
+                fieldFilterValue = property.GetValue(filter, null);
+                FilterFieldMetaInfos[fieldFilterIndex++] = FilterFieldMetaInfoHelper.CreateFilterFieldMetaInfoByType(property.PropertyType, fieldFilterValue);
+            }
+
+            return FilterFieldMetaInfos;
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter.Utils
     {
         public static DataFilterMetaInfo GetFilterMeatInfo(IDataFilter filter)
         {
-            return new DataFilterMetaInfo(filter, DataFilterMetaInfoParser.GetFieldFilters(filter));
+            return new DataFilterMetaInfo(filter, FilterFieldMetaInfoHelper.GetFilterFields(filter));
         }
     }
 }

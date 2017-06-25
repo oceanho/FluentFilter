@@ -12,7 +12,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
     {
         public static Expression<Func<TEntity, bool>> ToExpression<TEntity>(IDataFilter dataFilter)
         {
-            var fieldFilters = GetFieldFilters(dataFilter)
+            var fieldFilters = FilterFieldMetaInfoHelper.GetFilterFields(dataFilter)
                 .Where(filter => filter.FilterFieldInstace != null && filter.FilterFieldInstace.IsSatisfy()).ToArray();
 
             Expression<Func<TEntity, bool>> _entityAllwaysTureExpresionn = (TEntity entity) => true;
@@ -41,24 +41,6 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             var body = Expression.MakeBinary(ExpressionType.AndAlso, _body, Expression.AndAlso(left, right));
 
             return Expression.Lambda<Func<TEntity, bool>>(body);
-        }
-
-        public static FilterFieldMetaInfo[] GetFieldFilters(IDataFilter filter)
-        {
-            // TODO: This is should cache all property for every IDataFilter
-            var properties = FilterFieldMetaInfoHelper.GetFieldPropertiesFromFilter(filter);
-
-            var fieldFilterIndex = 0;
-            object fieldFilterValue = null;
-            var FilterFieldMetaInfos = new FilterFieldMetaInfo[properties.Count()];
-
-            foreach (var property in properties)
-            {
-                fieldFilterValue = property.GetValue(filter, null);
-                FilterFieldMetaInfos[fieldFilterIndex++] = FilterFieldMetaInfoHelper.CreateFilterFieldMetaInfoByType(property.PropertyType, fieldFilterValue);
-            }
-
-            return FilterFieldMetaInfos;
         }
     }
 }
