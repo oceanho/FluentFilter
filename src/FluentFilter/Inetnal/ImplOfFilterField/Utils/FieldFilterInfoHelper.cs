@@ -39,7 +39,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             foreach (var property in properties)
             {
                 fieldFilterValue = property.GetValue(filter, null);
-                FilterFieldMetaInfos[fieldFilterIndex++] = FilterFieldMetaInfoHelper.CreateFilterFieldMetaInfoByType(property.PropertyType, fieldFilterValue);
+                FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, fieldFilterValue);
             }
 
             return FilterFieldMetaInfos;
