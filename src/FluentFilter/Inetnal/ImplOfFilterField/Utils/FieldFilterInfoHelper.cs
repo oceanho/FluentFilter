@@ -26,7 +26,6 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             return OhDotNetLib.Reflection.ReflectionHelper.GetCanAssignabledTypeProperties(filter.GetType(), typeof(IField)).ToArray();
         }
 
-
         public static FilterFieldMetaInfo[] GetFilterFields(IDataFilter filter)
         {
             // TODO: This is should cache all property for every IDataFilter
