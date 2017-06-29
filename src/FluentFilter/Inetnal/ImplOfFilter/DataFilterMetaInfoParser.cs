@@ -8,6 +8,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
     using OhPrimitives;
     using FluentFilter.Inetnal.ImplOfFilter.Utils;
     using FluentFilter.Inetnal.ImplOfFilterField.Handlers;
+    using FluentFilter.Inetnal.ImplOfFilterField;
 
     internal class DataFilterMetaInfoParser
     {
@@ -18,73 +19,32 @@ namespace FluentFilter.Inetnal.ImplOfFilter
 
         public static Expression<Func<TEntity, bool>> ToExpression<TEntity>(IDataFilter dataFilter)
         {
-            var filterMetaInfo = DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter);
+            var filterInfo = DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter);
 
-            var filterFields = filterMetaInfo.FilterFieldList;
+            var filterFields = filterInfo.FilterFieldList;
+            
+            var predicateBody = Expression.Constant(true, typeof(bool));
 
-            Expression<Func<TEntity, bool>> _entityAllwaysTureExpresionn = (TEntity entity) => true;
-            var _body = Expression.Lambda<Func<TEntity, bool>>(_entityAllwaysTureExpresionn, Expression.Parameter(typeof(TEntity)));
+            var parameter = Expression.Parameter(typeof(TEntity),"entity");
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(predicateBody, parameter);
             if (filterFields.Count == 0)
             {
-                return _body;
+                return lambda;
             }
-
-            Expression<Func<TEntity, bool>> left = (TEntity t) => true;
-            Expression<Func<TEntity, bool>> right = (TEntity t) => true;
-
+           
             // condition
-            var _body2 = (Expression)_body;
+            var body = (Expression)lambda;
             foreach (var filterField in filterFields)
             {
-                var handler = default(IFilterFieldHandler);
-                if (filterField is ILikeField)
-                {
-                    // ILikeField - > LikeField<T>
-                    handler = new LikeFilterFieldHandler();
-                }
-                else if (filterField is IRangeField)
-                {
-                    // IRangeField - > RangeField<T>
-                    handler = new LikeFilterFieldHandler();
-                }
-                else if (filterField is IBetweenField)
-                {
-                    // IBetweenField - > IBetweenField<T>
-                    handler = new BetweenFilterFieldHandler();
-                }
-                else if (filterField is ICompareField)
-                {
-                    // ICompareField - > CompareField<T>
-                    handler = new CompareFilterFieldHandler();
-                }
-                else if (filterField is IFreeDomRangeField)
-                {
-                    // IFreeDomRangeField - > FreeDomRangeField<T>
-                    handler = new FreeDomRangeFilterFieldHandler();
-                }
-                else
-                {
-                    // Custom Filter's field. There is should be get User's custom filter from some where !
-                    handler = null;// new EmptyFilterFieldHandler();
-                }
-
+                var handler = FilterFieldHandlerFactory.GetHandler(filterField.FilterFieldType);
                 if (handler == null)
                 {
                     handler = new EmptyFilterFieldHandler();
                 }
-                _body2 = handler.Handle(_body2, filterField);
+                body = handler.Handle(body, filterField);
             }
-
-            // order
-
-            // TODO: how to wirte code in here?
-
-            //left = Expression.Lambda<Func<TEntity, bool>>(context.Left, Expression.Parameter(typeof(TEntity)));
-            //right = Expression.Lambda<Func<TEntity, bool>>(context.Right, Expression.Parameter(typeof(TEntity)));
-
-            var body = Expression.MakeBinary(ExpressionType.AndAlso, _body, Expression.AndAlso(left, right));
-
-            return Expression.Lambda<Func<TEntity, bool>>(body);
+            
+            return body as Expression<Func<TEntity, bool>>;// Expression.Lambda<Func<TEntity, bool>>(body,body);
         }
     }
 }

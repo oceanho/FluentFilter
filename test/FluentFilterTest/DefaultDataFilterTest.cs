@@ -5,54 +5,39 @@ using Xunit;
 using FluentFilter;
 using System.Linq;
 using OhPrimitives;
-
+using OhDotNetLib.Extension;
 namespace FluentFilterTest
 {
-    public class DefaultDataFilterTest
+    public class DefaultDataFilterTest : FluentFilterTestBase
     {
         [Fact]
         public void DefaultDataFilter_ShouldBeOK_Test()
         {
             var filter = new MyOrderDataFilter();
             filter.OrderId = new CompareField<int>(1000);
-            filter.CreationTime = new CompareField<DateTime>(DateTime.Now);
+            filter.CreationTime = new FreeDomRangeField<DateTime>(DateTime.Now.GetMinOfDay(), DateTime.Now.GetMaxOfDay());
         }
 
         [Fact]
         public void DefaultDataFilter_ApplyFilter_ShouldBeOK_Test()
         {
             var filter = new MyOrderDataFilter();
-            filter.OrderId = new CompareField<int>(1000);
-            filter.CreationTime = new CompareField<DateTime>(DateTime.Now);
+            filter.OrderId = new CompareField<int>(1006)
+            {
+                CompareMode = CompareMode.GreaterThanOrEqual
+            };
 
-            var _orderList = new List<MyOrder>() {
-                new MyOrder(){ OrderId=1000,OrderFee=100.00M,CreationTime=DateTime.Now },
-                new MyOrder(){ OrderId=1001,OrderFee=101.00M,CreationTime=DateTime.Now },
-                new MyOrder(){ OrderId=1002,OrderFee=102.00M,CreationTime=DateTime.Now },
-                new MyOrder(){ OrderId=1003,OrderFee=103.03M,CreationTime=DateTime.Now },
-                new MyOrder(){ OrderId=1004,OrderFee=104.00M,CreationTime=DateTime.Now },
-                new MyOrder(){ OrderId=1005,OrderFee=108.00M,CreationTime=DateTime.Now },
-                new MyOrder(){ OrderId=1006,OrderFee=199.99M,CreationTime=DateTime.Now },
-            }.AsQueryable();
+            filter.CreationTime = new FreeDomRangeField<DateTime>(DateTime.Now.GetMinOfDay(), DateTime.Now.GetMaxOfDay());
+
+            var _orderList = DataSoures;
 
             var _query = from a in _orderList
-                         where (a.OrderId >= 1000 && a.OrderId <= 1002) || (a.OrderFee == 199.99M)
+                         where a.OrderId > 0
                          orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
                          select a;
 
             var _newQuery = _query.ApplyFluentFilter(filter);
+            Assert.Equal(_newQuery.ToList().Count(), 4);
         }
-    }
-
-    public class MyOrder
-    {
-        public int OrderId { get; set; }
-        public decimal OrderFee { get; set; }
-        public DateTime CreationTime { get; set; }
-    }
-    public class MyOrderDataFilter : DefaultDataFilter<MyOrder, MyOrderDataFilter>
-    {
-        public CompareField<int> OrderId { get; set; }
-        public CompareField<DateTime> CreationTime { get; set; }
     }
 }

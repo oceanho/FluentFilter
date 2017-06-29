@@ -12,8 +12,8 @@ namespace FluentFilter
     /// <summary>
     /// 定义一个表示用于处理某一类型 <see cref="IField"/> 接口实现子类的Handler
     /// </summary>
-    public interface IFilterFieldHandler<TField> : IFilterFieldHandler
-        where TField : IField
+    public interface IFilterFieldHandler //: IFilterFieldHandler
+       // where TField : IField
     {
     }
 }

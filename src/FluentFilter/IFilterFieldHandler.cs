@@ -14,6 +14,17 @@ namespace FluentFilter
     /// </summary>
     public interface IFilterFieldHandler
     {
+        /// <summary>
+        /// 获取一个之，该值表示用于处理某类型 <see cref="IField"/> 的 <see cref="Type"/>
+        /// </summary>
+        Type FilterType { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="metaData"></param>
+        /// <returns></returns>
         Expression Handle(Expression node, FilterFieldMetaInfo metaData);
     }
 }

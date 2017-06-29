@@ -8,8 +8,10 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
 {
     using OhPrimitives;
     using System.Linq.Expressions;
-    internal class BetweenFilterFieldHandler : DefaultFilterFieldHandler<IBetweenField>
+    internal class BetweenFilterFieldHandler : DefaultFilterFieldHandler
     {
+        public override Type FilterType => typeof(BetweenField<>);
+
         public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(Expression node, FilterFieldMetaInfo metaData)
         {
             return base.HandleSort<TPrimitive, TFiledOfPrimitive>(node, metaData);

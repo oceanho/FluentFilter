@@ -8,8 +8,10 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
 {
     using OhPrimitives;
     using System.Linq.Expressions;
-    internal class FreeDomRangeFilterFieldHandler : DefaultFilterFieldHandler<IFreeDomRangeField>
+    internal class RangeFilterFieldHandler : DefaultFilterFieldHandler
     {
+        public override Type FilterType => typeof(RangeField<>);
+
         public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(Expression node, FilterFieldMetaInfo metaData)
         {
             return base.HandleSort<TPrimitive, TFiledOfPrimitive>(node, metaData);

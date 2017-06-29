@@ -11,8 +11,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         private Type _fieldFilterType;
         private TFilterField _fieldFilterInstace;
 
-        public FilterFieldMetaInfo(TFilterField fieldFilterInstace)
-            : base(fieldFilterInstace)
+        public FilterFieldMetaInfo(TFilterField fieldFilterInstace,string fieldExprName)
+            : base(fieldFilterInstace, fieldExprName)
         {
             _fieldFilterType = typeof(TFilterField);
             _fieldFilterInstace = fieldFilterInstace;

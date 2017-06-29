@@ -1,5 +1,7 @@
 ﻿
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace FluentFilter
@@ -18,9 +20,8 @@ namespace FluentFilter
         }
         private static IQueryable<TEntity> _ApplyFluentFilter<TEntity>(IQueryable<TEntity> source, IDataFilter filter)
         {
-            var left = source.Expression;
-            var right = filter.ToExpression<TEntity>();
-            return source;
+            var filterPredicate = filter.ToExpression<TEntity>() as Expression<Func<TEntity, bool>>;
+            return source.Where(filterPredicate).AsQueryable();
         }
     }
 }

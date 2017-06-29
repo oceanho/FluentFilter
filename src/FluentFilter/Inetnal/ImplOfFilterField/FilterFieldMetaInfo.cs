@@ -8,9 +8,10 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
     /// </summary>
     public abstract class FilterFieldMetaInfo
     {
-        public FilterFieldMetaInfo(IField filterField)
+        public FilterFieldMetaInfo(IField filterField, string fieldExprName)
         {
-            FilterFieldInstace = filterField;
+            FilterFieldName = fieldExprName;
+            FilterFieldInstace = filterField;            
         }
 
         /// <summary>
@@ -22,6 +23,11 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         /// 
         /// </summary>
         public abstract Type FilterFieldType { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual string FilterFieldName { get; }
 
         /// <summary>
         /// 

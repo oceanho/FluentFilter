@@ -10,8 +10,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         private Type _fieldFilterType;
         private IHasSortField _fieldFilterInstace;
 
-        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace)
-            : base(fieldFilterInstace)
+        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace, string fieldExprName)
+            : base(fieldFilterInstace, fieldExprName)
         {
             _fieldFilterType = fieldFilterInstace.GetType();
             if (_fieldFilterType.GetTypeInfo().IsGenericType)
