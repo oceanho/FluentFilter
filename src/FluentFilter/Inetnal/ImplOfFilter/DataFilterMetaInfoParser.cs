@@ -46,6 +46,17 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             }
 
             // sort
+            var filterSortFields = filterInfo.FilterFiledSortList.Where(p 
+                => p.FilterFieldInstace.SortMode != SortMode.Disable && p.FilterFieldInstace.SortPriority >= 0);
+            foreach (var filterSortField in filterSortFields)
+            {
+                var handler = FilterFieldHandlerFactory.GetHandler(filterSortField.FilterFieldType);
+                if (handler == null)
+                {
+                    handler = new EmptyFilterFieldHandler();
+                }
+                body = handler.Handle(body, filterSortField, true);
+            }
 
             return body as Expression<Func<TEntity, bool>>;
         }
