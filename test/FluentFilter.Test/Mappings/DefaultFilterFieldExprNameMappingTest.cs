@@ -7,7 +7,7 @@ using Shouldly;
 using FluentFilter;
 using FluentFilter.Mappings;
 
-namespace FluentFilterTest.Mappings
+namespace FluentFilter.Test.Mappings
 {
     public class DefaultFilterFieldExprNameMappingTest : FluentFilterTestBase
     {

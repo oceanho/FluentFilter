@@ -6,7 +6,7 @@ using FluentFilter;
 using System.Linq;
 using OhPrimitives;
 using OhDotNetLib.Extension;
-namespace FluentFilterTest
+namespace FluentFilter.Test
 {
     public class DefaultDataFilterTest : FluentFilterTestBase
     {

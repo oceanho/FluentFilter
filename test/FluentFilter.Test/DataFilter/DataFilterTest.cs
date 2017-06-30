@@ -2,7 +2,7 @@
 using OhPrimitives;
 using Xunit;
 
-namespace FluentFilterTest.DataFilter
+namespace FluentFilter.Test.DataFilter
 {
     public class DataFilterTest
     {

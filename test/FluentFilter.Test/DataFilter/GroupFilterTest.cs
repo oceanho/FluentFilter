@@ -6,7 +6,7 @@
 //using Xunit;
 //using FluentFilter.Extensions;
 
-//namespace FluentFilterTest.DataFilter
+//namespace FluentFilter.Test.DataFilter
 //{
 //    public class GroupFilterTest
 //    {

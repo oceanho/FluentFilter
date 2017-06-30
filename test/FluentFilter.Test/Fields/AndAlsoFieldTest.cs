@@ -7,7 +7,7 @@ using FluentFilter;
 using FluentFilter.Extensions;
 using OhPrimitives;
 
-namespace FluentFilterTest.Fields
+namespace FluentFilter.Test.Fields
 {
     using OhDotNetLib.Extension;
 
