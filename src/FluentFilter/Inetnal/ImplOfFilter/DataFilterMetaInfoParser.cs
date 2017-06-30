@@ -23,7 +23,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             var filterInfo = DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter);
 
             var filterFields = filterInfo.FilterFieldList;
-            
+
             var predicateBody = Expression.Constant(true, typeof(bool));
 
             var parameter = PredicateBuilder.Paramters<TEntity>();
@@ -32,7 +32,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             {
                 return lambda;
             }
-           
+
             // filter
             var body = (Expression)lambda;
             foreach (var filterField in filterFields)
@@ -42,9 +42,9 @@ namespace FluentFilter.Inetnal.ImplOfFilter
                 {
                     handler = new EmptyFilterFieldHandler();
                 }
-                body = handler.Handle(body, filterField);
+                body = handler.Handle(body, filterField, false);
             }
-            
+
             // sort
 
             return body as Expression<Func<TEntity, bool>>;

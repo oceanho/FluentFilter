@@ -12,12 +12,12 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
     {
         public override Type FilterType => typeof(FreeDomRangeField<>);
 
-        public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(Expression node, FilterFieldMetaInfo metaData)
+        public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
         {
             return base.HandleSort<TPrimitive, TFiledOfPrimitive>(node, metaData);
         }
 
-        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(Expression node, FilterFieldMetaInfo metaData)
+        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
         {
             return base.HandleWhere<TPrimitive, TFiledOfPrimitive>(node, metaData);
         }

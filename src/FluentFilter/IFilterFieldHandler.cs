@@ -24,7 +24,8 @@ namespace FluentFilter
         /// </summary>
         /// <param name="node"></param>
         /// <param name="metaData"></param>
+        /// <param name="isSort"></param>
         /// <returns></returns>
-        Expression Handle(Expression node, FilterFieldMetaInfo metaData);
+        Expression Handle(Expression node, FilterFieldMetaInfo metaData, bool isSort);
     }
 }

@@ -12,18 +12,13 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
     {
         public override Type FilterType => typeof(CompareField<>);
 
-        public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(Expression node, FilterFieldMetaInfo metaData)
+        public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
         {
             return base.HandleSort<TPrimitive, TFiledOfPrimitive>(node, metaData);
         }
 
-        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(Expression node, FilterFieldMetaInfo metaData)
-        {
-            var lambda = node as LambdaExpression;
-            if (lambda == null)
-            {
-                throw new ArgumentException($"node should be LambdaExpression");
-            }
+        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        {            
             var field = metaData.FilterFieldInstace as CompareField<TPrimitive>;
             if (field == null)
             {
@@ -31,7 +26,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
             }
 
             var left = Expression.Property(
-                lambda.Parameters[0], metaData.FilterFieldName);
+                node.Parameters[0], metaData.FilterFieldName);
             var right = Expression.Constant(field.Value);
 
             var expressionType = ExpressionType.Default;
@@ -51,7 +46,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
             {
                 throw new ArgumentException($"invalid CompareMode {field.CompareMode.ToString()}");
             }
-            return Expression.Lambda(Expression.AndAlso(lambda.Body, Expression.MakeBinary(expressionType, left, right)), lambda.Parameters);
+            return Expression.Lambda(Expression.AndAlso(node.Body, Expression.MakeBinary(expressionType, left, right)), node.Parameters);
         }
     }
 }
