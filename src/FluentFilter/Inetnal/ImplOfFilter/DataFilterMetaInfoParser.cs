@@ -38,24 +38,22 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             foreach (var filterField in filterFields)
             {
                 var handler = FilterFieldHandlerFactory.GetHandler(filterField.FilterFieldType);
-                if (handler == null)
+                if (handler != null)
                 {
-                    handler = new EmptyFilterFieldHandler();
+                    body = handler.Handle(body, filterField, false);
                 }
-                body = handler.Handle(body, filterField, false);
             }
 
             // sort
-            var filterSortFields = filterInfo.FilterFiledSortList.Where(p 
+            var filterSortFields = filterInfo.FilterFiledSortList.Where(p
                 => p.FilterFieldInstace.SortMode != SortMode.Disable && p.FilterFieldInstace.SortPriority >= 0);
             foreach (var filterSortField in filterSortFields)
             {
                 var handler = FilterFieldHandlerFactory.GetHandler(filterSortField.FilterFieldType);
-                if (handler == null)
+                if (handler != null)
                 {
-                    handler = new EmptyFilterFieldHandler();
+                    body = handler.Handle(body, filterSortField, true);
                 }
-                body = handler.Handle(body, filterSortField, true);
             }
 
             return body as Expression<Func<TEntity, bool>>;
