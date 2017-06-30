@@ -10,20 +10,17 @@ using OhDotNetLib.Reflection;
 using OhDotNetLib.Extension;
 using OhDotNetLib.Utils;
 
-namespace FluentFilter.Mappings
+namespace FluentFilter.Mappings.Internal
 {
-    internal class DefaultExprNameMapping<TFilter> : DefaultFilterFieldExprNameMapping<DefaultExprNameMapping<TFilter>, TFilter>
+    public class InternalExprNameMapping<TFilter> : EmptyFilterExprNameMapping<TFilter>
         where TFilter : class, IDataFilter
     {
         public override void Mapping()
         {
-            var filterType = Filter.GetType();
-            var filterTypeUniqueName = TypeHelper.GetGenericTypeUniqueName(filterType);
-            var filterTypeProperties = ReflectionHelper.GetPropertiesFromType(filterType);
-            FieldExprNameMappingFactory.Add(filterTypeUniqueName, (maps) =>
+            FieldExprNameMappingFactory.Add(FilterTypeUniqueName, (maps) =>
             {
                 var mapinfo = default(MappingInfo);
-                foreach (var property in filterTypeProperties)
+                foreach (var property in FilterProperties)
                 {
                     var exprAttr = property.GetCustomAttribute<ExprNameAttribute>(true);
                     var exprName = ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.ExprName) ? property.Name : exprAttr.ExprName;

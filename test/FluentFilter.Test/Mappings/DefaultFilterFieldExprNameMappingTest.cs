@@ -17,13 +17,7 @@ namespace FluentFilter.Test.Mappings
         }
     }
 
-    public class MyFilterFieldMapping : DefaultFilterFieldExprNameMapping<MyFilterFieldMapping, MyOrderDataFilter>
+    public class MyFilterFieldMapping : EmptyFilterExprNameMapping<MyOrderDataFilter>
     {
-        public override void Mapping()
-        {
-            base.Mapping();
-
-            // Map(p => p.OrderId);
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace FluentFilter.Mappings.Internal
         private static void InternalCreateFilterExprNameMappings<TDataFilter>()
             where TDataFilter : class, IDataFilter
         {
-            ReflectionHelper.CreateInstance<DefaultExprNameMapping<TDataFilter>>().Mapping();
+            ReflectionHelper.CreateInstance<InternalExprNameMapping<TDataFilter>>().Mapping();
         }
     }
 }
