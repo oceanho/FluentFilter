@@ -6,7 +6,7 @@ $NugetKey="$ENV:NUGETAPIKEY"
 $NugetSvr="https://www.nuget.org/api/v2/package"
 
 $NugetPack="../../packs"
-$CsProject="../../src/OhDotNetLib/OhDotNetLib.csproj"
+$CsProject="../../src/FluentFilter/FluentFilter.csproj"
 
 Function BuildProj($Configuration="Debug"){
 	Invoke-Expression "dotnet restore $CsProject"
