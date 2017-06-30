@@ -9,6 +9,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
     using FluentFilter.Inetnal.ImplOfFilter.Utils;
     using FluentFilter.Inetnal.ImplOfFilterField.Handlers;
     using FluentFilter.Inetnal.ImplOfFilterField;
+    using OhDotNetLib.Linq;
 
     internal class DataFilterMetaInfoParser
     {
@@ -25,14 +26,14 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             
             var predicateBody = Expression.Constant(true, typeof(bool));
 
-            var parameter = Expression.Parameter(typeof(TEntity),"entity");
+            var parameter = PredicateBuilder.Paramters<TEntity>();
             var lambda = Expression.Lambda<Func<TEntity, bool>>(predicateBody, parameter);
             if (filterFields.Count == 0)
             {
                 return lambda;
             }
            
-            // condition
+            // filter
             var body = (Expression)lambda;
             foreach (var filterField in filterFields)
             {
@@ -44,7 +45,9 @@ namespace FluentFilter.Inetnal.ImplOfFilter
                 body = handler.Handle(body, filterField);
             }
             
-            return body as Expression<Func<TEntity, bool>>;// Expression.Lambda<Func<TEntity, bool>>(body,body);
+            // sort
+
+            return body as Expression<Func<TEntity, bool>>;
         }
     }
 }

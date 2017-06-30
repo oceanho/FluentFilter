@@ -9,7 +9,7 @@ namespace FluentFilter
     internal static class FilterFieldExtensions
     {
         /// <summary>
-        /// Check someone field is satisfy condition
+        /// 判断某个字段是否满足过滤条件，提前筛选出不满足条件的过滤字段，可以减少不必要的表达式构建，提升性能
         /// </summary>
         /// <param name="filterField"></param>
         /// <returns></returns>

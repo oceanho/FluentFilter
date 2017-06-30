@@ -6,8 +6,8 @@
     }
 
     public interface IGroupFilter<TFilterEntity, TGroupFilter> : IGroupFilter, IDataFilter<TFilterEntity>, IDataFilter
-        where TFilterEntity : IDataFilter<TFilterEntity>
-        where TGroupFilter : IGroupFilter<TFilterEntity, TGroupFilter>
+        where TFilterEntity : class, IDataFilter<TFilterEntity>
+        where TGroupFilter : class, IGroupFilter<TFilterEntity, TGroupFilter>
     {
         /// <summary>
         /// This is left group filter

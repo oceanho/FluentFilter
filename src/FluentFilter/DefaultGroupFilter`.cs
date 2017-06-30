@@ -2,8 +2,8 @@
 {
     public class DefaultGroupFilter<TEntity, TFilterEntity, TGroupFilterEntity> : DefaultDataFilter<TEntity, TFilterEntity>, IGroupFilter<TFilterEntity, TGroupFilterEntity>
         where TEntity : class, new()
-        where TFilterEntity : IDataFilter<TFilterEntity>
-        where TGroupFilterEntity : IGroupFilter<TFilterEntity, TGroupFilterEntity>
+        where TFilterEntity : class, IDataFilter<TFilterEntity>
+        where TGroupFilterEntity : class, IGroupFilter<TFilterEntity, TGroupFilterEntity>
 
     {
         public TGroupFilterEntity Left { get; set; }

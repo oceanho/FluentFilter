@@ -27,6 +27,12 @@ namespace FluentFilter.Test
                 CompareMode = CompareMode.GreaterThanOrEqual
             };
 
+            filter.TotalFee = new CompareField<decimal>
+            {
+                Value = 0.0M,
+                CompareMode = CompareMode.GreaterThanOrEqual,
+            };
+
             filter.CreationTime = new FreeDomRangeField<DateTime>(DateTime.Now.GetMinOfDay(), DateTime.Now.GetMaxOfDay());
 
             var _orderList = DataSoures;

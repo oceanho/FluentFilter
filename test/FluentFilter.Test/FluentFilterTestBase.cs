@@ -1,4 +1,5 @@
 ﻿using FluentFilter;
+using FluentFilter.Mappings;
 using OhPrimitives;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,10 @@ namespace FluentFilter.Test
     public class MyOrderDataFilter : DefaultDataFilter<MyOrder, MyOrderDataFilter>
     {
         public CompareField<int> OrderId { get; set; }
-        public CompareField<decimal> OrderFee { get; set; }
+
+        [ExprName("OrderFee")]
+        public CompareField<decimal> TotalFee { get; set; }
+
         public FreeDomRangeField<DateTime> CreationTime { get; set; }
     }
 }

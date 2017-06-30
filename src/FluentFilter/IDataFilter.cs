@@ -5,7 +5,7 @@
     }
 
     public interface IDataFilter<TFilterEntity> : IDataFilter
-        where TFilterEntity : IDataFilter<TFilterEntity>
-    {        
+        where TFilterEntity : class, IDataFilter<TFilterEntity>
+    {
     }
 }

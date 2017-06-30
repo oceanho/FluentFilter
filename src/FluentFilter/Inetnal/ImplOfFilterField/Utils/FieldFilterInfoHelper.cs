@@ -3,6 +3,9 @@ using System.Reflection;
 
 using OhPrimitives;
 using System.Linq;
+using FluentFilter.Mappings;
+using OhDotNetLib.Reflection;
+using FluentFilter.Mappings.Internal;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 {
@@ -12,7 +15,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             .GetTypeInfo().GetMethod(nameof(CreateFilterFieldMetaInfo), BindingFlags.Static | BindingFlags.Public);
 
         public static FilterFieldMetaInfo CreateFilterFieldMetaInfo<TField>(TField field, string fieldExprName)
-            where TField : IField
+            where TField : class, IField
         {
             return new FilterFieldMetaInfo<TField>(field, fieldExprName);
         }
@@ -28,19 +31,23 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 
         public static FilterFieldMetaInfo[] GetFilterFields(IDataFilter filter)
         {
-            // TODO: This is should cache all property for every IDataFilter
             var properties = GetFieldPropertiesFromFilter(filter);
+            var filterUniqueName = TypeHelper.GetGenericTypeUniqueName(filter.GetType());
+            var propertyExprNameMappings = FieldExprNameMappingFactory.Get(filterUniqueName, () =>
+            {
+                InternalExprNameMappingFacde.CreateFilterExprNameMappings(filter);
+            });
 
             var fieldExprName = "";
             var fieldFilterIndex = 0;
-            object fieldFilterValue = null;
+            object fieldValue = null;
             var FilterFieldMetaInfos = new FilterFieldMetaInfo[properties.Count()];
 
             foreach (var property in properties)
             {
-                fieldExprName = property.Name;
-                fieldFilterValue = property.GetValue(filter, null);
-                FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, fieldFilterValue, fieldExprName);
+                fieldValue = property.GetValue(filter, null);
+                fieldExprName = propertyExprNameMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name)).ExprName;
+                FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, fieldValue, fieldExprName);
             }
 
             return FilterFieldMetaInfos;
