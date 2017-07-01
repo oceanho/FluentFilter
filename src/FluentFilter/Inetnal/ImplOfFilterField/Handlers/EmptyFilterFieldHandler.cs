@@ -10,12 +10,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
     using System.Linq.Expressions;
     internal class EmptyFilterFieldHandler : DefaultFilterFieldHandler
     {
-        public override Type FilterType => typeof(IField);
-
-        public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
-        {
-            return base.HandleSort<TPrimitive, TFiledOfPrimitive>(node, metaData);
-        }
+        private static readonly Type filterFieldType = typeof(IField);
+        public override Type FilterFieldType => filterFieldType;
 
         public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
         {

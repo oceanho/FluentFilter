@@ -3,48 +3,54 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
+using OhDotNetLib.Extension;
+
 namespace FluentFilter.Inetnal.ImplOfFilter
 {
-    using OhPrimitives;
-    using FluentFilter.Inetnal.ImplOfFilter.Utils;
-    using FluentFilter.Inetnal.ImplOfFilterField.Handlers;
-    using FluentFilter.Inetnal.ImplOfFilterField;
     using OhDotNetLib.Linq;
+    using OhDotNetLib.Utils;
+
+    using FluentFilter.Inetnal.ImplOfFilterField;
+    using FluentFilter.Inetnal.ImplOfFilter.Utils;
 
     internal class DataFilterMetaInfoParser
     {
-        public static Expression<Func<TEntity, bool>> ToExpression<TEntity>(IGroupFilter dataFilter)
+        public static Expression<Func<TEntity, bool>> Parse<TEntity>(IGroupFilter dataFilter)
         {
             throw new NotImplementedException();
         }
 
-        public static Expression<Func<TEntity, bool>> ToExpression<TEntity>(IDataFilter dataFilter)
+        public static Expression<Func<TEntity, bool>> Parse<TEntity>(IDataFilter dataFilter, string paramName)
         {
-            var filterInfo = DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter);
+            return Parse<TEntity>(dataFilter, DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter), paramName);
+        }
 
-            var filterFields = filterInfo.FilterFieldList;
+        public static Expression<Func<TEntity, bool>> Parse<TEntity>(IDataFilter dataFilter, DataFilterMetaInfo filterInfo, string paramName)
+        {
+            var body = Expression.Constant(true, typeof(bool));
+            var parameter = paramName.IsEmpty() ? PredicateBuilder.Paramters<TEntity>() : PredicateBuilder.Paramters<TEntity>(paramName);
+            var lambdaExpr = Expression.Lambda<Func<TEntity, bool>>(body, parameter);
+            return Parse<TEntity>(dataFilter, filterInfo, lambdaExpr);
+        }
 
-            var predicateBody = Expression.Constant(true, typeof(bool));
-
-            var parameter = PredicateBuilder.Paramters<TEntity>();
-            var lambda = Expression.Lambda<Func<TEntity, bool>>(predicateBody, parameter);
+        public static Expression<Func<TEntity, bool>> Parse<TEntity>(IDataFilter dataFilter, DataFilterMetaInfo filterInfo, Expression node)
+        {
+            ObjectChecker.CheckNotNull(filterInfo);
+            var filterFields = filterInfo.FilterFields;
             if (filterFields.Count == 0)
             {
-                return lambda;
+                return (Expression<Func<TEntity, bool>>)node;
             }
 
             // filter
-            var body = (Expression)lambda;
+            var body = node;// (Expression)lambda;
             foreach (var filterField in filterFields)
             {
                 var handler = FilterFieldHandlerFactory.GetHandler(filterField.FilterFieldType);
                 if (handler != null)
                 {
-                    // Filter
-                    body = handler.Handle(body, filterField, false);
-
-                    // Sort
-                    body = handler.Handle(body, filterField, true);
+                    // call FilterFieldHandler
+                    body = handler.Handle(body, filterField);
                 }
             }
             return body as Expression<Func<TEntity, bool>>;

@@ -12,10 +12,15 @@ using OhDotNetLib.Utils;
 
 namespace FluentFilter.Mappings.Internal
 {
-    public class InternalExprNameMapping<TFilter> : EmptyFilterExprNameMapping<TFilter>
+    public class InternalExprNameMapping<TFilter> : DefaultExprNameMapping<TFilter>
         where TFilter : class, IDataFilter
     {
-        public override void Mapping()
+        public override MappingInfo[] Mapping()
+        {
+            InternalMapping();
+            return null;
+        }
+        public void InternalMapping()
         {
             FieldExprNameMappingFactory.Add(FilterTypeUniqueName, (maps) =>
             {

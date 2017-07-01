@@ -10,11 +10,16 @@ using System.Threading.Tasks;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField
 {
-    public static class FilterFieldHandlerFactory
+    internal static class FilterFieldHandlerFactory
     {
         private static readonly ConcurrentDictionary<string, Func<IFilterFieldHandler>> handlers = new ConcurrentDictionary<string, Func<IFilterFieldHandler>>();
 
         static FilterFieldHandlerFactory()
+        {
+            RegisterInternalFilterFieldHandlers();
+        }
+
+        private static void RegisterInternalFilterFieldHandlers()
         {
             Register(() =>
             {
@@ -40,16 +45,15 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             {
                 return new FreeDomRangeFilterFieldHandler();
             });
-
         }
 
-        internal static IFilterFieldHandler GetHandler(Type filterFieldType)
+        public static IFilterFieldHandler GetHandler(Type filterFieldType)
         {
             var name = TypeHelper.GetGenericTypeUniqueName(filterFieldType);
             return handlers.ContainsKey(name) ? handlers[name]() : default(IFilterFieldHandler);
         }
 
-        internal static TFilterFieldHandler GetHandler<TFilterFieldHandler>(Type filterFieldType)
+        public static TFilterFieldHandler GetHandler<TFilterFieldHandler>(Type filterFieldType)
             where TFilterFieldHandler : class, IFilterFieldHandler
         {
             return (TFilterFieldHandler)GetHandler(filterFieldType);
@@ -58,8 +62,18 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         public static void Register<TFilterFieldHandler>(Func<TFilterFieldHandler> creationHandler)
             where TFilterFieldHandler : class, IFilterFieldHandler
         {
-            var name = TypeHelper.GetGenericTypeUniqueName(creationHandler().FilterType);
-            handlers[name] = creationHandler;
+            handlers[creationHandler().FilterFieldTypeUniqueName] = creationHandler;
+        }
+
+        public static void Clear()
+        {
+            handlers.Clear();
+        }
+
+        public static void Reset()
+        {
+            Clear();
+            RegisterInternalFilterFieldHandlers();
         }
     }
 }

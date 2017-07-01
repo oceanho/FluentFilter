@@ -9,14 +9,14 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         private IQueryable _query;
         private IDataFilter _datafilter;
 
-        private InnerMostWhereExpressionVisitor _whereVisitor;
+        private InnerMostWhereExpressionFinder _whereVisitor;
         private OrderByExpressionVisitorFacde _orderByVisitorFacde;
 
         public DataFilterExpressionEvaluator(IQueryable query, IDataFilter datafilter)
         {
             _query = query;
             _datafilter = datafilter;
-            _whereVisitor = new InnerMostWhereExpressionVisitor();
+            _whereVisitor = new InnerMostWhereExpressionFinder();
             _orderByVisitorFacde = new OrderByExpressionVisitorFacde();
         }
         public Expression Eval()

@@ -11,13 +11,19 @@ namespace FluentFilter.Test.Mappings
 {
     public class DefaultFilterFieldExprNameMappingTest : FluentFilterTestBase
     {
+        public DefaultFilterFieldExprNameMappingTest()
+        {
+            FluentFilterManager.Reset();
+            FluentFilterManager.AddMapping<MyFilterFieldMapping>();
+        }
+
         [Fact]
         public void Verify_MappingShouldBeWork()
         {
         }
     }
 
-    public class MyFilterFieldMapping : EmptyFilterExprNameMapping<MyOrderDataFilter>
+    public class MyFilterFieldMapping : DefaultExprNameMapping<MyOrderDataFilter>
     {
     }
 }

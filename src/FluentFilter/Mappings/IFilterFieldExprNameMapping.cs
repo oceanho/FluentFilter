@@ -8,6 +8,7 @@ namespace FluentFilter.Mappings
 {
     public interface IFilterFieldExprNameMapping
     {
-        void Mapping();
+        MappingInfo[] Mapping();
+        Type FilterType { get; }
     }
 }

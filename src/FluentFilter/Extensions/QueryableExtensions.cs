@@ -20,11 +20,7 @@ namespace FluentFilter
         }
         private static IQueryable<TEntity> _ApplyFluentFilter<TEntity>(IQueryable<TEntity> source, IDataFilter filter)
         {
-            var filterPredicate = filter.ToExpression<TEntity>() as Expression<Func<TEntity, bool>>;
-
-            // 
-
-            return source.Where(filterPredicate).AsQueryable();
+            return filter.VisitAndAccept(source);
         }
     }
 }

@@ -13,9 +13,9 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         {
             FilterInstance = filterInstance;
             FilterType = filterInstance.GetType();
-            FilterFieldList = filterFieldList.ToImmutableList();
+            FilterFields = filterFieldList.ToImmutableList();
 
-            FilterFiledSortList = filterFieldList
+            FilterFiledsOfSort = filterFieldList
                 .Where(p => ((p.FilterFieldInstace as IHasSortField) != null))
                 .Select((filter) =>
                 {
@@ -24,7 +24,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         }
         public Type FilterType { get; }
         public IDataFilter FilterInstance { get; }
-        public IReadOnlyCollection<FilterFieldMetaInfo> FilterFieldList { get; }
-        public IReadOnlyCollection<FilterFieldSortMetaInfo> FilterFiledSortList { get; }
+        public IReadOnlyCollection<FilterFieldMetaInfo> FilterFields { get; }
+        public IReadOnlyCollection<FilterFieldSortMetaInfo> FilterFiledsOfSort { get; }
     }
 }

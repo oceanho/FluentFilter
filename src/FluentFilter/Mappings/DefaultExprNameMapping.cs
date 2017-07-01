@@ -13,25 +13,31 @@ using System.Collections.Immutable;
 
 namespace FluentFilter.Mappings
 {
-    public class EmptyFilterExprNameMapping<TFilter> : IFilterFieldExprNameMapping
+    public class DefaultExprNameMapping<TFilter> : IFilterFieldExprNameMapping
         where TFilter : class, IDataFilter
     {
         private readonly TFilter m_filter;
+        private readonly Type m_filterType;
         private readonly string m_filterTypeUniqueName;
         private readonly IReadOnlyList<PropertyInfo> m_filterProperties;
-        public EmptyFilterExprNameMapping()
+        public DefaultExprNameMapping()
         {
             m_filter = ReflectionHelper.CreateInstance<TFilter>();
             m_filterProperties = ReflectionHelper.GetProperties(m_filter).ToImmutableList();
             m_filterTypeUniqueName = TypeHelper.GetGenericTypeUniqueName(m_filter.GetType());
+
+            m_filterType = m_filter.GetType();
         }
 
-        public virtual void Mapping()
+        public virtual MappingInfo[] Mapping()
         {
+            return null;
         }
 
+        public Type FilterType => m_filterType;
         protected TFilter Filter => m_filter;
         protected string FilterTypeUniqueName => m_filterTypeUniqueName;
         protected IReadOnlyList<PropertyInfo> FilterProperties => m_filterProperties;
+
     }
 }

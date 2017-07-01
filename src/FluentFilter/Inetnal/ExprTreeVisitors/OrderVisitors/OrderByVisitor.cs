@@ -15,7 +15,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.OrderVisitors
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
-            if (node.Method.Name.Equals("ThenBy", StringComparison.OrdinalIgnoreCase))
+            if (node.Method.Name.Equals("OrderBy", StringComparison.OrdinalIgnoreCase))
                 OrderByExpression = node;
             Visit(node.Arguments[0]);
             return node;

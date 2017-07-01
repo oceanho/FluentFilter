@@ -11,11 +11,11 @@ namespace FluentFilter.Inetnal.Visitors
     /// </summary>
     internal  class FilterFieldVisitor
     {
-        private InnerMostWhereExpressionVisitor _visitor;
+        private InnerMostWhereExpressionFinder _visitor;
 
         public FilterFieldVisitor()
         {
-            _visitor = new InnerMostWhereExpressionVisitor();
+            _visitor = new InnerMostWhereExpressionFinder();
         }
 
         public Expression Visit(Expression node, IField filter)

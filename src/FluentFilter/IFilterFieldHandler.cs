@@ -17,7 +17,12 @@ namespace FluentFilter
         /// <summary>
         /// 获取一个之，该值表示用于处理某类型 <see cref="IField"/> 的 <see cref="Type"/>
         /// </summary>
-        Type FilterType { get; }
+        Type FilterFieldType { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        String FilterFieldTypeUniqueName { get; }
 
         /// <summary>
         /// 
@@ -26,6 +31,6 @@ namespace FluentFilter
         /// <param name="metaData"></param>
         /// <param name="isSort"></param>
         /// <returns></returns>
-        Expression Handle(Expression node, FilterFieldMetaInfo metaData, bool isSort);
+        Expression Handle(Expression node, FilterFieldMetaInfo metaData);
     }
 }

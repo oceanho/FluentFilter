@@ -7,37 +7,46 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Reflection;
 
+using OhDotNetLib.Extension;
+
 namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
 {
+    using OhDotNetLib.Reflection;
+    using OhDotNetLib.Utils;
     using OhPrimitives;
 
     public abstract class DefaultFilterFieldHandler : IFilterFieldHandler
     {
-        private static readonly string sortName = nameof(HandleSort);
+        private string filterFieldTypeUniqueName = string.Empty;
         private static readonly string filterName = nameof(HandleWhere);
         public DefaultFilterFieldHandler()
         {
         }
 
-        public abstract Type FilterType { get; }
+        public abstract Type FilterFieldType { get; }
 
-        public Expression Handle(Expression node, FilterFieldMetaInfo metaData, bool isSort)
+        public virtual String FilterFieldTypeUniqueName
+        {
+            get
+            {
+                if (ObjectNullChecker.IsNullOrEmpty(filterFieldTypeUniqueName))
+                {
+                    filterFieldTypeUniqueName = TypeHelper.GetGenericTypeUniqueName(FilterFieldType);
+                }
+                return filterFieldTypeUniqueName;
+            }
+        }
+
+        public Expression Handle(Expression node, FilterFieldMetaInfo metaData)
         {
             if (node.NodeType != ExpressionType.Lambda)
             {
                 throw new ArgumentException($"invalid node.NodeType {node.NodeType}. It's should be {ExpressionType.Lambda.ToString()}");
             }
 
-            var method = GetType().GetTypeInfo().GetMethod((isSort ? sortName : filterName));
+            var method = this.GetType().GetTypeInfo().GetMethod(filterName);
             var genericMethod = method.MakeGenericMethod(metaData.PrimitiveType, metaData.FilterFieldType);
             return (Expression)genericMethod.Invoke(this, new object[] { (LambdaExpression)node, metaData });
-        }
-
-        public virtual Expression HandleSort<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
-            where TPrimitive : IConvertible, IComparable
-            where TFiledOfPrimitive : class, IField<TPrimitive>
-        {
-            return node;
         }
 
         public virtual Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)

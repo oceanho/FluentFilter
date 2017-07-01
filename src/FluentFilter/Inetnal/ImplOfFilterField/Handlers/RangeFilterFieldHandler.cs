@@ -10,12 +10,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
     using System.Linq.Expressions;
     internal class RangeFilterFieldHandler : DefaultFilterFieldHandler
     {
-        public override Type FilterType => typeof(RangeField<>);
-
-        public override Expression HandleSort<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
-        {
-            return base.HandleSort<TPrimitive, TFiledOfPrimitive>(node, metaData);
-        }
+        private static readonly Type filterFieldType = typeof(RangeField<>);
+        public override Type FilterFieldType => filterFieldType;
 
         public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
         {
