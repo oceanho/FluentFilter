@@ -15,6 +15,8 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
         {
             if (node.Method.Name.Equals(MethodName, StringComparison.OrdinalIgnoreCase))
             {
+                throw new NotImplementedException();
+
                 //
                 // 此处如何实现？
                 // 需要达到效果：
@@ -22,10 +24,10 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                 //   比如：node 上的 Where(p=> p.Id>=0) , RightBody 的 Where(p=> p.OrderFee >= 50)
                 //   需要把这两个条件合并，最终结果是 node 的 Where(p=> p.Id>=0 && p.OrderFee >=50)
 
-                var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
-                var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
-                var lambdaExpr = Expression.Lambda(expr, left.Parameters[0]);
-                node = Expression.Call(node.Method, Expression.Constant(Queryable), lambdaExpr);
+                //var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
+                //var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
+                //var lambdaExpr = Expression.Lambda(expr, left.Parameters[0]);
+                // return Expression.Call(lambdaExpr, node.Method);
             }
             return base.VisitMethodCall(node);
         }
