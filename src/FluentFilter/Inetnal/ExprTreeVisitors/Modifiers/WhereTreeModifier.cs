@@ -20,14 +20,12 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                 // 需要达到效果：
                 //   在 node 上现在有一个 Where(p=>p.Id>=0) , 需要把 RightBody 的条件（与node Where 的参数是一样的）追加到 node 的 Where 上
 
-                //var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
-                //var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
-                //var lambdaExpr = Expression.Lambda(expr, left.Parameters[0]);
-                //this.Visit(lambdaExpr);
-                //return Expression.Call(node.Method, Expression.Constant(Queryable), lambdaExpr);
+                var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
+                var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
+                var lambdaExpr = Expression.Lambda(expr, left.Parameters[0]);
+                node = Expression.Call(node.Method, Expression.Constant(Queryable), lambdaExpr);
             }
-            this.Visit(node.Arguments[0]);
-            return node;
+            return base.VisitMethodCall(node);
         }
 
         //protected override Expression VisitBinary(BinaryExpression node)
