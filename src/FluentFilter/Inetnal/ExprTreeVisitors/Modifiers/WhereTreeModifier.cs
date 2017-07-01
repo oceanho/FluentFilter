@@ -18,7 +18,9 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                 //
                 // 此处如何实现？
                 // 需要达到效果：
-                //   在 node 上现在有一个 Where(p=>p.Id>=0) , 需要把 RightBody 的条件（与node Where 的参数是一样的）追加到 node 的 Where 上
+                //   node现有一个 Where(p=>p.Id>=0) , 需要把 RightBody 的 Where 追加到 node 的 Where 上（它们的参数名，类型都一样）
+                //   比如：node 上的 Where(p=> p.Id>=0) , RightBody 的 Where(p=> p.OrderFee >= 50)
+                //   需要把这两个条件合并，最终结果是 node 的 Where(p=> p.Id>=0 && p.OrderFee >=50)
 
                 var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
                 var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
