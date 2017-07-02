@@ -34,8 +34,8 @@ namespace FluentFilter
                     var maps = mapping.Mapping();
                     if (maps != null && maps.Count() > 0)
                     {
-                        list.Clear();
                         list.AddRange(mapping.Mapping());
+                        list = list.Distinct().ToList();
                     }
                 });
             }

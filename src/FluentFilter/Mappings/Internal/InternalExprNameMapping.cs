@@ -17,11 +17,11 @@ namespace FluentFilter.Mappings.Internal
     {
         public override MappingInfo[] Mapping()
         {
-            InternalMapping();
-            return null;
+            return InternalMapping();
         }
-        public void InternalMapping()
+        protected MappingInfo[] InternalMapping()
         {
+            var _maps = default(MappingInfo[]);
             FieldExprNameMappingFactory.Add(FilterTypeUniqueName, (maps) =>
             {
                 var mapinfo = default(MappingInfo);
@@ -36,7 +36,9 @@ namespace FluentFilter.Mappings.Internal
                     };
                     maps.Add(mapinfo);
                 }
+                _maps = maps.ToArray();
             });
+            return _maps;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using FluentFilter.Mappings;
 using OhDotNetLib.Reflection;
 using FluentFilter.Mappings.Internal;
+using OhDotNetLib.Extension;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 {
@@ -33,20 +34,22 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
         {
             var properties = GetFieldPropertiesFromFilter(filter);
             var filterUniqueName = TypeHelper.GetGenericTypeUniqueName(filter.GetType());
-            var propertyExprNameMappings = FieldExprNameMappingFactory.Get(filterUniqueName, () =>
+
+            var propExprMappings = FieldExprNameMappingFactory.Get(filterUniqueName, () =>
             {
-                InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter);
+                return InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter).ToList();
             });
+
+            var newpropExprMappings = propExprMappings.IsEmpty() ? InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter) : propExprMappings;
 
             var fieldExprName = "";
             var fieldFilterIndex = 0;
             object fieldValue = null;
             var FilterFieldMetaInfos = new FilterFieldMetaInfo[properties.Count()];
-
             foreach (var property in properties)
             {
                 fieldValue = property.GetValue(filter, null);
-                fieldExprName = propertyExprNameMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name)).ExprName;
+                fieldExprName = newpropExprMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name)).ExprName;
                 FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, fieldValue, fieldExprName);
             }
 

@@ -17,15 +17,15 @@ namespace FluentFilter.Mappings.Internal
             internalCreateFilterExprNameMappingsAPI = typeof(InternalExprNameMappingUtil)
                 .GetTypeInfo().GetMethod(nameof(InternalCreateFilterExprNameMappings), BindingFlags.Static | BindingFlags.NonPublic);
         }
-        public static void CreateFilterExprNameMappings(IDataFilter filter)
+        public static MappingInfo[] CreateFilterExprNameMappings(IDataFilter filter)
         {
-            internalCreateFilterExprNameMappingsAPI.MakeGenericMethod(filter.GetType()).Invoke(null, null);
+            return (MappingInfo[])internalCreateFilterExprNameMappingsAPI.MakeGenericMethod(filter.GetType()).Invoke(null, null);
         }
 
-        private static void InternalCreateFilterExprNameMappings<TDataFilter>()
+        private static MappingInfo[] InternalCreateFilterExprNameMappings<TDataFilter>()
             where TDataFilter : class, IDataFilter
         {
-            FluentFilterManager.AddMapping(ReflectionHelper.CreateInstance<InternalExprNameMapping<TDataFilter>>());
+            return ReflectionHelper.CreateInstance<InternalExprNameMapping<TDataFilter>>().Mapping();
         }
     }
 }

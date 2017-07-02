@@ -25,7 +25,6 @@ namespace FluentFilter.Mappings
             m_filter = ReflectionHelper.CreateInstance<TFilter>();
             m_filterProperties = ReflectionHelper.GetProperties(m_filter).ToImmutableList();
             m_filterTypeUniqueName = TypeHelper.GetGenericTypeUniqueName(m_filter.GetType());
-
             m_filterType = m_filter.GetType();
         }
 

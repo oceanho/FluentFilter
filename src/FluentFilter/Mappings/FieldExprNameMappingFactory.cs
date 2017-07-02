@@ -11,6 +11,7 @@ namespace FluentFilter.Mappings
 {
     internal static class FieldExprNameMappingFactory
     {
+        private static object safeAddLocker = new object();
         private static ConcurrentDictionary<string, List<MappingInfo>> fieldExprNameMappings;
         static FieldExprNameMappingFactory()
         {
@@ -24,19 +25,13 @@ namespace FluentFilter.Mappings
             addFunc(fieldExprNameMappings[typeUniqueName]);
         }
 
-        public static IReadOnlyList<MappingInfo> Get(string typeUniqueName, Action ifNotFindAction)
+        public static IReadOnlyList<MappingInfo> Get(string typeUniqueName, Func<List<MappingInfo>> ifNotFindFunc)
         {
             var result = default(List<MappingInfo>);
-            var count = 0;
-            while (count < 2)
+            if (!fieldExprNameMappings.TryGetValue(typeUniqueName, out result))
             {
-               if(!fieldExprNameMappings.TryGetValue(typeUniqueName, out result))
-                {
-                    ifNotFindAction?.Invoke();
-                    count++;
-                    continue;
-                }
-                break;
+                result = ifNotFindFunc();
+                fieldExprNameMappings[typeUniqueName] = result;
             }
             return result?.ToImmutableList();
         }
