@@ -12,9 +12,6 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
 {
     internal class FluentFilterQueryableBuilder<TEntity>
     {
-        public IDataFilter Filter;
-        public IQueryable<TEntity> Queryable;
-        protected DataFilterMetaInfo FilterMateInfo;
         public FluentFilterQueryableBuilder()
         {
         }
@@ -24,6 +21,10 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
             Filter = filter;
             Queryable = queryable;
         }
+        
+        public IDataFilter Filter { get; set; }
+        public IQueryable<TEntity> Queryable { get; set; }
+        protected DataFilterMetaInfo FilterMateInfo { get; set; }
 
         public IQueryable<TEntity> Build()
         {
