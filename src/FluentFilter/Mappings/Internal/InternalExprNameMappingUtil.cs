@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace FluentFilter.Mappings.Internal
 {
-    internal static class InternalExprNameMappingFacde
+    internal static class InternalExprNameMappingUtil
     {
         private static readonly MethodInfo internalCreateFilterExprNameMappingsAPI = null;
-        static InternalExprNameMappingFacde()
+        static InternalExprNameMappingUtil()
         {
-            internalCreateFilterExprNameMappingsAPI = typeof(InternalExprNameMappingFacde)
+            internalCreateFilterExprNameMappingsAPI = typeof(InternalExprNameMappingUtil)
                 .GetTypeInfo().GetMethod(nameof(InternalCreateFilterExprNameMappings), BindingFlags.Static | BindingFlags.NonPublic);
         }
         public static void CreateFilterExprNameMappings(IDataFilter filter)

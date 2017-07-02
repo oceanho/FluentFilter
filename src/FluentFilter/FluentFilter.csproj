@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Description>This is a exntended data filter for Linq Query(support Linq to Entities, Linq to SQL.)</Description>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/oceanho/FluentFilter</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/oceanho/FluentFilter.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Version>1.0.0</Version>
+    <Authors>hehai</Authors>
+    <Company>OhTeam</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -12,12 +20,6 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
     <DefineConstants>NET46</DefineConstants>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Inetnal\ImplOfFilterField\新文件夹\**" />
-    <EmbeddedResource Remove="Inetnal\ImplOfFilterField\新文件夹\**" />
-    <None Remove="Inetnal\ImplOfFilterField\新文件夹\**" />
-  </ItemGroup>
   
   <ItemGroup>
     <Compile Remove="FilterField.cs" />

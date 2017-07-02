@@ -35,7 +35,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             var filterUniqueName = TypeHelper.GetGenericTypeUniqueName(filter.GetType());
             var propertyExprNameMappings = FieldExprNameMappingFactory.Get(filterUniqueName, () =>
             {
-                InternalExprNameMappingFacde.CreateFilterExprNameMappings(filter);
+                InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter);
             });
 
             var fieldExprName = "";
