@@ -13,7 +13,6 @@
     <PackageProjectUrl>https://github.com/oceanho/FluentFilter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/oceanho/FluentFilter.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.0</Version>
     <Authors>hehai</Authors>
     <Company>OhTeam</Company>
   </PropertyGroup>
