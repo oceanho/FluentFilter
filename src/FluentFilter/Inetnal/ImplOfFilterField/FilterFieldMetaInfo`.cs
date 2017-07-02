@@ -11,7 +11,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         private Type _fieldFilterType;
         private TFilterField _fieldFilterInstace;
 
-        public FilterFieldMetaInfo(TFilterField fieldFilterInstace,string fieldExprName)
+        public FilterFieldMetaInfo(TFilterField fieldFilterInstace, string fieldExprName)
             : base(fieldFilterInstace, fieldExprName)
         {
             _fieldFilterType = typeof(TFilterField);
@@ -20,6 +20,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             {
                 _fieldType = _fieldFilterType.GetTypeInfo().GetGenericArguments()[0];
             }
+            _fieldType = (_fieldFilterType == typeof(LikeField)) ? typeof(String) : _fieldType;
             if (_fieldType == null)
             {
                 throw new ArgumentException($"{nameof(fieldFilterInstace)} Should be an genericType.");

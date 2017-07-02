@@ -39,9 +39,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             {
                 return InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter).ToList();
             });
-
-            // var newpropExprMappings = propExprMappings.IsEmpty() ? InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter) : propExprMappings;
-
+            
             var fieldExprName = "";
             var fieldFilterIndex = 0;
             object fieldValue = null;

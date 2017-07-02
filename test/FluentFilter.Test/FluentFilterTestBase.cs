@@ -22,10 +22,10 @@ namespace FluentFilter.Test
                 new MyOrder(){ UserId=1002,OrderId=1003, OrderState= OrderState.Completed, OrderFee=103.03M,CreationTime=DateTime.Now },
                 new MyOrder(){ UserId=1003,OrderId=1004, OrderState= OrderState.Completed, OrderFee=104.00M,CreationTime=DateTime.Now },
                 new MyOrder(){ UserId=1003,OrderId=1005, OrderState= OrderState.Completed, OrderFee=108.00M,CreationTime=DateTime.Now },
-                new MyOrder(){ UserId=1004,OrderId=1006, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now },
-                new MyOrder(){ UserId=1010,OrderId=1007, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now },
-                new MyOrder(){ UserId=2000,OrderId=1008, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now },
-                new MyOrder(){ UserId=2009,OrderId=1009, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now },
+                new MyOrder(){ UserId=2009,OrderId=1009, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now,OrderRemarks="Left查找" },
+                new MyOrder(){ UserId=2000,OrderId=1008, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now,OrderRemarks="查找Right" },
+                new MyOrder(){ UserId=1010,OrderId=1007, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now,OrderRemarks="Full查找1"},
+                new MyOrder(){ UserId=1004,OrderId=1006, OrderState= OrderState.Completed, OrderFee=199.99M,CreationTime=DateTime.Now,OrderRemarks="Full查找2"},
             }.AsQueryable();
         }
         protected IQueryable<MyOrder> DataSoures { get; }
@@ -38,6 +38,7 @@ namespace FluentFilter.Test
         public decimal OrderFee { get; set; }
         public OrderState OrderState { get; set; }
         public DateTime CreationTime { get; set; }
+        public String OrderRemarks { get; set; }
     }
 
     public enum OrderState
@@ -58,5 +59,8 @@ namespace FluentFilter.Test
         public CompareField<decimal> TotalFee { get; set; }
 
         public FreeDomRangeField<DateTime> CreationTime { get; set; }
+
+        [FilterExprName("OrderRemarks")]
+        public LikeField Remarks { get; set; }
     }
 }

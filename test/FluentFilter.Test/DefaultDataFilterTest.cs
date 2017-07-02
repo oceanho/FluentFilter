@@ -82,6 +82,45 @@ namespace FluentFilter.Test
             Assert.Equal(OrderState.Completed, _newQuery4.ToList().FirstOrDefault().OrderState);
 
 
+            // ----------------测试LikeField--------------------//            
+            orderFilter.State = null;
+            orderFilter.Remarks = new LikeField
+            {
+                CompareMode = CompareMode.LeftLike,
+                Value = "Left"
+            };
+            var _query5 = from a in orders
+                          select a;
+            var _newQuery5 = _query5.ApplyFluentFilter(orderFilter);
+            Assert.Equal(1, _newQuery5.ToList().Count());
+            Assert.Equal("Left查找", _newQuery5.ToList().FirstOrDefault().OrderRemarks);
+
+
+            //  Right Search
+            orderFilter.Remarks = new LikeField
+            {
+                CompareMode = CompareMode.RightLike,
+                Value = "Right"
+            };
+            var _query6 = from a in orders
+                          select a;
+            var _newQuery6 = _query6.ApplyFluentFilter(orderFilter);
+            Assert.Equal(1, _newQuery6.ToList().Count());
+            Assert.Equal("查找Right", _newQuery6.ToList().FirstOrDefault().OrderRemarks);
+
+            // Full Search
+            orderFilter.Remarks = new LikeField
+            {
+                CompareMode = CompareMode.FullSearchLike,
+                Value = "ll查"
+            };
+            var _query7 = from a in orders
+                          select a;
+            var _newQuery7 = _query7.ApplyFluentFilter(orderFilter);
+            Assert.Equal(2, _newQuery7.ToList().Count());
+            Assert.Contains("Full查找", _newQuery7.ToList().LastOrDefault().OrderRemarks);
+            Assert.Contains("Full查找", _newQuery7.ToList().FirstOrDefault().OrderRemarks);
+
             //var _query2 = from a in _orderList
             //              orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
             //              select a;

@@ -44,7 +44,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
                 throw new ArgumentException($"invalid node.NodeType {node.NodeType}. It's should be {ExpressionType.Lambda.ToString()}");
             }
 
-            var method = this.GetType().GetTypeInfo().GetMethod(filterName);
+            var method = GetType().GetTypeInfo().GetMethod(filterName);
             var genericMethod = method.MakeGenericMethod(metaData.PrimitiveType, metaData.FilterFieldType);
             return (Expression)genericMethod.Invoke(this, new object[] { (LambdaExpression)node, metaData });
         }

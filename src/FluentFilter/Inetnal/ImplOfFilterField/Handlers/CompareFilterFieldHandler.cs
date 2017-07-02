@@ -20,10 +20,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
             {
                 throw new ArgumentException($"field should be {typeof(CompareField<TPrimitive>)}");
             }
-
-            var left = Expression.Property(
-                node.Parameters[0], metaData.FilterFieldName);
-            var right = Expression.Constant(field.Value);
+            var property = Expression.Property(node.Parameters[0], metaData.FilterFieldName);
+            var predicateBody = Expression.Constant(field.Value);
 
             var expressionType = ExpressionType.Default;
             if (field.CompareMode == CompareMode.Equal)
@@ -42,7 +40,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
             {
                 throw new ArgumentException($"invalid CompareMode {field.CompareMode.ToString()}");
             }
-            return Expression.Lambda(Expression.AndAlso(node.Body, Expression.MakeBinary(expressionType, left, right)), node.Parameters);
+            return Expression.Lambda(Expression.AndAlso(node.Body, Expression.MakeBinary(expressionType, property, predicateBody)), node.Parameters);
         }
     }
 }

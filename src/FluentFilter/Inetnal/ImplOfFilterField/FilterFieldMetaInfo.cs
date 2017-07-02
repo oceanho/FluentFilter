@@ -11,7 +11,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         public FilterFieldMetaInfo(IField filterField, string fieldExprName)
         {
             FilterFieldName = fieldExprName;
-            FilterFieldInstace = filterField;            
+            FilterFieldInstace = filterField;
         }
 
         /// <summary>

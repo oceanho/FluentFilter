@@ -18,6 +18,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             {
                 _fieldType = _fieldFilterType.GetTypeInfo().GetGenericArguments()[0];
             }
+            _fieldType = (_fieldFilterType == typeof(LikeField)) ? typeof(String) : _fieldType;
             if (_fieldType == null)
             {
                 throw new ArgumentException($"{nameof(fieldFilterInstace)} Should be an genericType.");
