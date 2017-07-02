@@ -16,9 +16,6 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
         {
             if (node.Method.Name.Equals(MethodName, StringComparison.OrdinalIgnoreCase))
             {
-
-                // throw new NotImplementedException();
-
                 //
                 // 此处如何实现？
                 // 需要达到效果：
@@ -38,8 +35,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                 // 替换后的结果，无法作用到 node 的 Where 上，代码有问题!!!
                 return replacedCall;
             }
-
-            // 递归遍历 Expression Node，查找指定 MethodName 的 CallMethodExpression
+            // 递归遍历 Expression Node，查找指定 MethodName 的 CallMethodExpression 对其 MethodCall 进行替换操作
             Visit(node.Arguments[0]);
             return node;
             // return base.VisitMethodCall(node);
