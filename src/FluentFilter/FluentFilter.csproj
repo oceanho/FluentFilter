@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <NugetPackVersion>1.0.0$(VersionSuffix)</NugetPackVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
+    <Version>$(NugetPackVersion)</Version>
     <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Description>This is a exntended data filter for Linq Query(support Linq to Entities, Linq to SQL.)</Description>
