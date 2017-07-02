@@ -38,7 +38,7 @@ namespace FluentFilter.Test
     {
         public CompareField<int> OrderId { get; set; }
 
-        [ExprName("OrderFee")]
+        [FilterExprName("OrderFee")]
         public CompareField<decimal> TotalFee { get; set; }
 
         public FreeDomRangeField<DateTime> CreationTime { get; set; }

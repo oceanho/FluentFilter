@@ -39,7 +39,7 @@ namespace FluentFilter.Mappings
             var _maps = new List<MappingInfo>();
             foreach (var property in FilterProperties)
             {
-                var exprAttr = property.GetCustomAttribute<ExprNameAttribute>(true);
+                var exprAttr = property.GetCustomAttribute<FilterExprNameAttribute>(true);
                 var exprName = ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.ExprName) ? property.Name : exprAttr.ExprName;
                 _maps.Add(new MappingInfo()
                 {

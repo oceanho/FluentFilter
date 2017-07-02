@@ -1,4 +1,5 @@
 ﻿using FluentFilter;
+using FluentFilter.Mappings;
 using OhPrimitives;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace FluentFilter.Test.DataFilter
         [Fact]
         public void DataEntityFilterSerialize_ShouldBeOK_Test()
         {
-            var obj = new MyFilterEntity()
+            var obj = new MyEntityFilter()
             {
                 Id = new CompareField<int>() { Value = 100 },
                 Price = new RangeField<decimal>() { Min = 50, Max = 1000 }
@@ -23,9 +24,10 @@ namespace FluentFilter.Test.DataFilter
     {
         public decimal Price { get; set; }
     }
-    public class MyFilterEntity : DefaultDataFilter<MyEntity, MyFilterEntity>
+    public class MyEntityFilter : DefaultDataFilter<MyEntity, MyEntityFilter>
     {
         public CompareField<int> Id { get; set; }
+
         public RangeField<decimal> Price { get; set; }
     }
 }
