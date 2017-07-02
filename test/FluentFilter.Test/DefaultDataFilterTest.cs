@@ -44,6 +44,7 @@ namespace FluentFilter.Test
             var _newQuery1 = _query1.ApplyFluentFilter(filter);
             Assert.Equal(_newQuery1.ToList().Count(), 4);
 
+            //  当 Query 中存在 Where 筛选条件，目前（2017-07-02）的实现问题，需要完善实现后再进行单元测试。以下测试先屏蔽了
             //var _query = from a in _orderList
             //             where a.OrderId > 0
             //             orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
