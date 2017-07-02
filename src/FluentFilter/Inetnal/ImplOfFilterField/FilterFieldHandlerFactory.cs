@@ -21,9 +21,15 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
 
         private static void RegisterInternalFilterFieldHandlers()
         {
+
             Register(() =>
             {
                 return new LikeFilterFieldHandler();
+            });
+
+            Register(() =>
+            {
+                return new EqualFilterFieldHandler();
             });
 
             Register(() =>
@@ -39,6 +45,11 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
             Register(() =>
             {
                 return new BetweenFilterFieldHandler();
+            });
+
+            Register(() =>
+            {
+                return new ContainsFilterFieldHandler();
             });
 
             Register(() =>

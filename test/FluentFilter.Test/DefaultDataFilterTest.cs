@@ -39,11 +39,24 @@ namespace FluentFilter.Test
 
             var _query1 = from a in _orderList
                           select a;
-
             var _newQuery1 = _query1.ApplyFluentFilter(filter);
-
             // _newQuery1 的 Where 条件应该为 OrderId >= 1006 && OrderFee >= 0 ，根据数据源 _orderList 所筛选出来的结果，应该是 4 条记录
             Assert.Equal(4, _newQuery1.ToList().Count());
+
+            // ------------------------------------------------//
+
+            filter.OrderId = null;
+            filter.TotalFee = null;
+            filter.CreationTime = null;
+            filter.UserId = new ContainsField<int>
+            {
+                Values = new int[] { 2009 }
+            };
+            var _query2 = from a in _orderList
+                          select a;
+            var _newQuery2 = _query2.ApplyFluentFilter(filter);
+            // _newQuery1 的 Where 条件应该为 OrderId >= 1006 && OrderFee >= 0 ，根据数据源 _orderList 所筛选出来的结果，应该是 4 条记录
+            Assert.Equal(1, _newQuery2.ToList().Count());
 
             //var _query2 = from a in _orderList
             //              orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
