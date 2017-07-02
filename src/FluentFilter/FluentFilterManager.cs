@@ -29,15 +29,7 @@ namespace FluentFilter
             if (mapping.GetType().GetTypeInfo().IsClass)
             {
                 var name = TypeHelper.GetGenericTypeUniqueName(mapping.FilterType);
-                FieldExprNameMappingFactory.Add(name, (list) =>
-                {
-                    var maps = mapping.Mapping();
-                    if (maps != null && maps.Count() > 0)
-                    {
-                        list.AddRange(mapping.Mapping());
-                        list = list.Distinct().ToList();
-                    }
-                });
+                FieldExprNameMappingFactory.Add(name, mapping.Mapping().ToList());
             }
         }
         public static void AddMapping<TMapping>(TMapping mapping)

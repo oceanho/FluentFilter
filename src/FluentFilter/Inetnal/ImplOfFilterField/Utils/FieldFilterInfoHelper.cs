@@ -40,7 +40,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
                 return InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter).ToList();
             });
 
-            var newpropExprMappings = propExprMappings.IsEmpty() ? InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter) : propExprMappings;
+            // var newpropExprMappings = propExprMappings.IsEmpty() ? InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter) : propExprMappings;
 
             var fieldExprName = "";
             var fieldFilterIndex = 0;
@@ -49,7 +49,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             foreach (var property in properties)
             {
                 fieldValue = property.GetValue(filter, null);
-                fieldExprName = newpropExprMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name)).ExprName;
+                fieldExprName = propExprMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name)).ExprName;
                 FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, fieldValue, fieldExprName);
             }
 

@@ -20,6 +20,7 @@ namespace FluentFilter.Mappings
         private readonly Type m_filterType;
         private readonly string m_filterTypeUniqueName;
         private readonly IReadOnlyList<PropertyInfo> m_filterProperties;
+
         public DefaultExprNameMapping()
         {
             m_filter = ReflectionHelper.CreateInstance<TFilter>();
@@ -30,9 +31,24 @@ namespace FluentFilter.Mappings
 
         public virtual MappingInfo[] Mapping()
         {
-            return null;
+            return InternalMapping();
         }
 
+        protected MappingInfo[] InternalMapping()
+        {
+            var _maps = new List<MappingInfo>();
+            foreach (var property in FilterProperties)
+            {
+                var exprAttr = property.GetCustomAttribute<ExprNameAttribute>(true);
+                var exprName = ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.ExprName) ? property.Name : exprAttr.ExprName;
+                _maps.Add(new MappingInfo()
+                {
+                    Property = property,
+                    ExprName = exprName
+                });
+            }
+            return _maps.ToArray();
+        }
         public Type FilterType => m_filterType;
         protected TFilter Filter => m_filter;
         protected string FilterTypeUniqueName => m_filterTypeUniqueName;

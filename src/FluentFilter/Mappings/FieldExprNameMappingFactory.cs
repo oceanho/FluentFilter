@@ -18,11 +18,13 @@ namespace FluentFilter.Mappings
             fieldExprNameMappings = new ConcurrentDictionary<string, List<MappingInfo>>();
         }
 
-        public static void Add(string typeUniqueName, Action<List<MappingInfo>> addFunc)
+        public static List<MappingInfo> Add(string typeUniqueName, IEnumerable<MappingInfo> mappings)
         {
-            if (!fieldExprNameMappings.ContainsKey(typeUniqueName))
-                fieldExprNameMappings.TryAdd(typeUniqueName, new List<MappingInfo>());
-            addFunc(fieldExprNameMappings[typeUniqueName]);
+            return fieldExprNameMappings.AddOrUpdate(typeUniqueName, mappings.ToList(), (name, old) =>
+            {
+                old.AddRange(mappings);
+                return old.Distinct().ToList();
+            });
         }
 
         public static IReadOnlyList<MappingInfo> Get(string typeUniqueName, Func<List<MappingInfo>> ifNotFindFunc)
@@ -30,8 +32,7 @@ namespace FluentFilter.Mappings
             var result = default(List<MappingInfo>);
             if (!fieldExprNameMappings.TryGetValue(typeUniqueName, out result))
             {
-                result = ifNotFindFunc();
-                fieldExprNameMappings[typeUniqueName] = result;
+                result = Add(typeUniqueName, ifNotFindFunc());
             }
             return result?.ToImmutableList();
         }

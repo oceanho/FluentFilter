@@ -9,6 +9,7 @@ using OhDotNetLib.Reflection;
 
 using OhDotNetLib.Extension;
 using OhDotNetLib.Utils;
+using System.Collections.Immutable;
 
 namespace FluentFilter.Mappings.Internal
 {
@@ -17,28 +18,7 @@ namespace FluentFilter.Mappings.Internal
     {
         public override MappingInfo[] Mapping()
         {
-            return InternalMapping();
-        }
-        protected MappingInfo[] InternalMapping()
-        {
-            var _maps = default(MappingInfo[]);
-            FieldExprNameMappingFactory.Add(FilterTypeUniqueName, (maps) =>
-            {
-                var mapinfo = default(MappingInfo);
-                foreach (var property in FilterProperties)
-                {
-                    var exprAttr = property.GetCustomAttribute<ExprNameAttribute>(true);
-                    var exprName = ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.ExprName) ? property.Name : exprAttr.ExprName;
-                    mapinfo = new MappingInfo()
-                    {
-                        Property = property,
-                        ExprName = exprName
-                    };
-                    maps.Add(mapinfo);
-                }
-                _maps = maps.ToArray();
-            });
-            return _maps;
+            return FieldExprNameMappingFactory.Add(FilterTypeUniqueName, InternalMapping().ToList()).ToArray();
         }
     }
 }
