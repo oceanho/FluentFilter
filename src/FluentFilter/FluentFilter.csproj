@@ -30,15 +30,11 @@
     <Compile Remove="Inetnal\FilterFieldVisitorContext.cs" />
     <Compile Remove="Inetnal\FilterFieldVisitorExecutor.cs" />
     <Compile Remove="Inetnal\FilterFieldVisitorExecutorStaticObject.cs" />
-    <Compile Remove="Inetnal\Visitors\CompareFieldVisitor.cs" />
-    <Compile Remove="Inetnal\Visitors\DataFilterVisitor.cs" />
-    <Compile Remove="Inetnal\Visitors\DataFilterVisitorProvider.cs" />
-    <Compile Remove="Inetnal\Visitors\RangeFieldVisitor.cs" />
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="OhDotNetLib" Version="2.1.10-Alpha" />
-    <PackageReference Include="OhPrimitives" Version="2.2.4-Alpha" />
+    <PackageReference Include="OhDotNetLib" Version="2.1.11-Alpha" />
+    <PackageReference Include="OhPrimitives" Version="2.2.6-Alpha" />
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>

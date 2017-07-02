@@ -38,12 +38,20 @@ namespace FluentFilter.Test
             var _orderList = DataSoures;
 
             var _query1 = from a in _orderList
-                          orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
                           select a;
 
             var _newQuery1 = _query1.ApplyFluentFilter(filter);
+
             // _newQuery1 的 Where 条件应该为 OrderId >= 1006 && OrderFee >= 0 ，根据数据源 _orderList 所筛选出来的结果，应该是 4 条记录
             Assert.Equal(4, _newQuery1.ToList().Count());
+
+            //var _query2 = from a in _orderList
+            //              orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
+            //              select a;
+
+            //var _newQuery2 = _query2.ApplyFluentFilter(filter);
+            //// _newQuery1 的 Where 条件应该为 OrderId >= 1006 && OrderFee >= 0 ，根据数据源 _orderList 所筛选出来的结果，应该是 4 条记录
+            //Assert.Equal(4, _newQuery2.ToList().Count());
 
 
             //  当 Query 中存在 Where 筛选条件，目前（2017-07-02）的实现问题，需要完善实现后再进行单元测试。以下测试先屏蔽了

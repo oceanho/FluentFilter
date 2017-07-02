@@ -32,7 +32,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
                 expressionType = ExpressionType.NotEqual;
             else if (field.CompareMode == CompareMode.LessThan)
                 expressionType = ExpressionType.LessThan;
-            else if (field.CompareMode == CompareMode.LessThanOrEqaual)
+            else if (field.CompareMode == CompareMode.LessThanOrEqual)
                 expressionType = ExpressionType.LessThanOrEqual;
             else if (field.CompareMode == CompareMode.GreaterThan)
                 expressionType = ExpressionType.GreaterThan;

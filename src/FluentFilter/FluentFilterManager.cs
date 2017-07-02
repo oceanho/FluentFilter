@@ -4,6 +4,7 @@ using OhDotNetLib.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,20 +24,26 @@ namespace FluentFilter
         {
             AddMapping(ReflectionHelper.CreateInstance<TMapping>());
         }
-
+        internal static void InternalAddMapping(IFilterFieldExprNameMapping mapping)
+        {
+            if (mapping.GetType().GetTypeInfo().IsClass)
+            {
+                var name = TypeHelper.GetGenericTypeUniqueName(mapping.FilterType);
+                FieldExprNameMappingFactory.Add(name, (list) =>
+                {
+                    var maps = mapping.Mapping();
+                    if (maps != null && maps.Count() > 0)
+                    {
+                        list.Clear();
+                        list.AddRange(mapping.Mapping());
+                    }
+                });
+            }
+        }
         public static void AddMapping<TMapping>(TMapping mapping)
             where TMapping : class, IFilterFieldExprNameMapping
         {
-            var name = TypeHelper.GetGenericTypeUniqueName(mapping.FilterType);
-            FieldExprNameMappingFactory.Add(name, (list) =>
-            {
-                var maps = mapping.Mapping();
-                if (maps != null && maps.Count() > 0)
-                {
-                    list.Clear();
-                    list.AddRange(mapping.Mapping());
-                }
-            });
+            InternalAddMapping(mapping);
         }
 
         public static void AddFilterFieldHandler<TFilterFieldHandler>(Func<TFilterFieldHandler> filterFiledHandlerFunc)
