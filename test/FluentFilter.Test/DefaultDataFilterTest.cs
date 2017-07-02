@@ -36,13 +36,13 @@ namespace FluentFilter.Test
 
             orderFilter.CreationTime = new FreeDomRangeField<DateTime>(DateTime.Now.GetMinOfDay(), DateTime.Now.GetMaxOfDay());
 
-
             var _query1 = from a in orders
                           select a;
             var _newQuery1 = _query1.ApplyFluentFilter(orderFilter);
             // _newQuery1 的 Where 条件应该为 OrderId >= 1006 && OrderFee >= 0 ，根据数据源 _orderList 所筛选出来的结果，应该是 4 条记录
             Assert.Equal(4, _newQuery1.ToList().Count());
 
+            #region 测试ContainsField
 
             // ----------------测试ContainsField<int>--------------------//
             // 清空 OrderId / TotalFee / CreationTime 查询条件 -
@@ -80,7 +80,9 @@ namespace FluentFilter.Test
             var _newQuery4 = _query4.ApplyFluentFilter(orderFilter);
             Assert.Equal(9, _newQuery4.ToList().Count());
             Assert.Equal(OrderState.Completed, _newQuery4.ToList().FirstOrDefault().OrderState);
+            #endregion
 
+            #region 测试LikeField
 
             // ----------------测试LikeField--------------------//            
             orderFilter.State = null;
@@ -120,6 +122,24 @@ namespace FluentFilter.Test
             Assert.Equal(2, _newQuery7.ToList().Count());
             Assert.Contains("Full查找", _newQuery7.ToList().LastOrDefault().OrderRemarks);
             Assert.Contains("Full查找", _newQuery7.ToList().FirstOrDefault().OrderRemarks);
+
+            #endregion
+
+            #region EqualField test
+
+            // EqualField
+            orderFilter.Remarks = null;
+            orderFilter.OrderIdOfEqual = new EqualsField<int>
+            {
+                Value = 1000,
+            };
+            var _query8 = from a in orders
+                          select a;
+            var _newQuery8 = _query8.ApplyFluentFilter(orderFilter);
+            Assert.Equal(1, _newQuery8.ToList().Count());
+            Assert.Equal(1000, _newQuery8.ToList().LastOrDefault().OrderId);
+
+            #endregion
 
             //var _query2 = from a in _orderList
             //              orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending

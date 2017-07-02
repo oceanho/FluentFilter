@@ -50,6 +50,10 @@ namespace FluentFilter.Test
     public class MyOrderFilter : DefaultDataFilter<MyOrder, MyOrderFilter>
     {
         public CompareField<int> OrderId { get; set; }
+
+        [FilterExprName("OrderId")]
+        public EqualsField<int> OrderIdOfEqual { get; set; }
+
         public ContainsField<int> UserId { get; set; }
 
         [FilterExprName("OrderState")]
