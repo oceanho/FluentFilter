@@ -37,13 +37,20 @@ namespace FluentFilter.Test
 
             var _orderList = DataSoures;
 
-            var _query = from a in _orderList
-                         where a.OrderId > 0
+            var _query1 = from a in _orderList
                          orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
                          select a;
 
-            var _newQuery = _query.ApplyFluentFilter(filter);
-            Assert.Equal(_newQuery.ToList().Count(), 4);
+            var _newQuery1 = _query1.ApplyFluentFilter(filter);
+            Assert.Equal(_newQuery1.ToList().Count(), 4);
+
+            //var _query = from a in _orderList
+            //             where a.OrderId > 0
+            //             orderby a.CreationTime descending, a.OrderId ascending, a.OrderFee ascending
+            //             select a;
+
+            //var _newQuery = _query.ApplyFluentFilter(filter);
+            //Assert.Equal(_newQuery.ToList().Count(), 4);
         }
     }
 }
