@@ -23,14 +23,14 @@ namespace FluentFilter.Test.Mappings
         }
     }
 
-    public class MyFilterFieldMapping : DefaultExprNameMapping<MyOrderDataFilter>
+    public class MyFilterFieldMapping : DefaultExprNameMapping<MyOrderFilter>
     {
         public override MappingInfo[] Mapping()
         {
             var maps = base.Mapping();
 
             //
-            // Modify here if your need then return modified MappingInfo[]
+            // Modify here if your need. then return modified MappingInfo[]
             //
 
             return maps;
