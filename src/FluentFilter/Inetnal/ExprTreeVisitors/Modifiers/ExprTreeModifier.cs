@@ -17,7 +17,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
         protected Expression RightBody { get; private set; }
 
 
-        public void Accept(Expression node, LambdaExpression right, string methodName)
+        public void Modify(Expression node, LambdaExpression right, string methodName)
         {
             Right = right;
             RightBody = right.Body;

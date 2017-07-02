@@ -60,7 +60,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
             else
             {
                 var modifier = new WhereTreeModifier(Queryable);
-                modifier.Accept(Queryable.Expression, filterWhereExpression, "Where");
+                modifier.Modify(Queryable.Expression, filterWhereExpression, "Where");
                 Queryable = Queryable.Provider.CreateQuery<TEntity>(modifier.Result);
             }
         }

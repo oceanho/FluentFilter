@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OhDotNetLib.Linq;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -15,7 +16,8 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
         {
             if (node.Method.Name.Equals(MethodName, StringComparison.OrdinalIgnoreCase))
             {
-                throw new NotImplementedException();
+
+                // throw new NotImplementedException();
 
                 //
                 // 此处如何实现？
@@ -24,12 +26,23 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                 //   比如：node 上的 Where(p=> p.Id>=0) , RightBody 的 Where(p=> p.OrderFee >= 50)
                 //   需要把这两个条件合并，最终结果是 node 的 Where(p=> p.Id>=0 && p.OrderFee >=50)
 
-                //var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
-                //var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
-                //var lambdaExpr = Expression.Lambda(expr, left.Parameters[0]);
-                // return Expression.Call(lambdaExpr, node.Method);
+                var mi = node.Method;
+                var obj = Visit(node.Object);
+                var args = Visit(node.Arguments);
+
+                var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
+                var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
+
+                var replacedCall = Expression.Call(obj, mi, args[0], Expression.Lambda(expr, left.Parameters[0]));
+                
+                // 替换后的结果，无法作用到 node 的 Where 上，代码有问题？
+                return replacedCall;
             }
-            return base.VisitMethodCall(node);
+
+            // 递归遍历 Expression Node，查找指定 MethodName 的 CallMethodExpression
+            Visit(node.Arguments[0]);
+            return node;
+            // return base.VisitMethodCall(node);
         }
 
         //protected override Expression VisitBinary(BinaryExpression node)
