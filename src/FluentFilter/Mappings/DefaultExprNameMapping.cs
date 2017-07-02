@@ -34,7 +34,7 @@ namespace FluentFilter.Mappings
             return InternalMapping();
         }
 
-        protected MappingInfo[] InternalMapping()
+        internal MappingInfo[] InternalMapping()
         {
             var _maps = new List<MappingInfo>();
             foreach (var property in FilterProperties)
@@ -49,10 +49,10 @@ namespace FluentFilter.Mappings
             }
             return _maps.ToArray();
         }
+
         public Type FilterType => m_filterType;
         protected TFilter Filter => m_filter;
         protected string FilterTypeUniqueName => m_filterTypeUniqueName;
         protected IReadOnlyList<PropertyInfo> FilterProperties => m_filterProperties;
-
     }
 }
