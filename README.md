@@ -1,2 +1,2 @@
 # FluentFilter
-This is a data filter for .net Linq Query
+This is a data filter of Linq Query for .net 
