@@ -49,7 +49,7 @@ var orderFilter = new OrderFilter{
 // 应用过滤器，完成数据过滤功能，该结果最终会筛选出订单号等于1的订单记录
 var result = orderSources.ApplyFluentFilter(orderFilter);
 ```
-注：以上代码仅简单示例，更详细使用手册请查阅：https://github.com/oceanho/FluentFilterSample或相关文档、
+注：以上代码仅简单示例，更详细使用手册请查阅：https://github.com/oceanho/FluentFilterSample 或 相关文档、
 
 ## 我要贡献
 1. 您在使用fluentfilter,发现有任何bug或想法，请一定提issue给我，谢谢
