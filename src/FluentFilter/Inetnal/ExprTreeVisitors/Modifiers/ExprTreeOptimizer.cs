@@ -5,15 +5,15 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
 {
     internal class ExprTreeOptimizer : ExpressionVisitor
     {
-        private Expression m_rawExpr;
+        private Expression m_expr;
         public ExprTreeOptimizer(Expression expr)
         {
-            m_rawExpr = expr;
+            m_expr = expr;
         }
 
         public Expression Optimize()
         {
-            return Visit(m_rawExpr);
+            return Visit(m_expr);
         }
 
         protected override Expression VisitBlock(BlockExpression node)
