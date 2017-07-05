@@ -34,8 +34,8 @@ public class OrderFilter:DefaultFilter<Order,OrderFilter>{
 
 // 订单数据源（实际项目中通常由DbContext或者仓储层[Repository]提供）
 var orderSources = new List<Order>{
-  new Order{OrderId=1,CreateTime=DateTime.Now},
-  new Order{OrderId=2,CreateTime=DateTime.Now},
+  new Order{OrderId=1,CreationTime=DateTime.Now},
+  new Order{OrderId=2,CreationTime=DateTime.Now},
 }.AsQueryable();
 
 // 创建一个OrderSources的数据过滤器，在实际项目中，这些参数通常由前端传到后台，后台通过
