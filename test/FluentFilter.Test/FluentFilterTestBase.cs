@@ -8,10 +8,11 @@ using OhPrimitives;
 using OhDotNetLib.Extension;
 namespace FluentFilter.Test
 {
+    public abstract class FluentFilterTestBase :
 #if !DBTEST
-    public class DefaultDataFilterTest : FluentFilterTestDataBase
+         FluentFilterTestDataBase
 #else
-    public abstract class FluentFilterTestBase : FluentFilterTestDataBaseFromDb
+     FluentFilterTestDataBaseFromDb
 #endif
     {
     }
