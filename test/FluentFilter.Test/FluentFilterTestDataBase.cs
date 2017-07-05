@@ -3,6 +3,7 @@ using FluentFilter.Mappings;
 using OhPrimitives;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace FluentFilter.Test
         {
             get
             {
-                return TempnoaryList.AsQueryable();
+                return TempnoaryList.ToImmutableList().AsQueryable();
             }
         }
 
