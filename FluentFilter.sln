@@ -12,14 +12,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentFilter.Test", "test\F
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DbTest|Any CPU = DbTest|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C954C6C-1E7F-41FD-BE23-AC2B627F6B1D}.DbTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C954C6C-1E7F-41FD-BE23-AC2B627F6B1D}.DbTest|Any CPU.Build.0 = Debug|Any CPU
 		{4C954C6C-1E7F-41FD-BE23-AC2B627F6B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C954C6C-1E7F-41FD-BE23-AC2B627F6B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C954C6C-1E7F-41FD-BE23-AC2B627F6B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C954C6C-1E7F-41FD-BE23-AC2B627F6B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAB3CFAA-D9EF-4CDE-A618-31E670301BC3}.DbTest|Any CPU.ActiveCfg = DbTest|Any CPU
+		{BAB3CFAA-D9EF-4CDE-A618-31E670301BC3}.DbTest|Any CPU.Build.0 = DbTest|Any CPU
 		{BAB3CFAA-D9EF-4CDE-A618-31E670301BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BAB3CFAA-D9EF-4CDE-A618-31E670301BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAB3CFAA-D9EF-4CDE-A618-31E670301BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
