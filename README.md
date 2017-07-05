@@ -11,6 +11,8 @@ b. 多值比较（Contains<TPrimitive>）包含，不包含
 
 c. 区间比较（FreeDomRange<TPrimitive>,BetweenRange<TPrimitive>,Range<TPrimitive>）大于[等于] && 小于[等于]，大于等于 && 小于等于，大于 && 小于 。
 
+d. 模糊查询（LikeField）COLUMN like '%XXX', COLUMN like 'XXX%', COLUMN like 'XX%YY'
+
 ## Nuget Package
 `PM> Install-Package FluentFilter -Pre`
 
