@@ -22,8 +22,9 @@ namespace FluentFilter.Mappings
         {
             return fieldExprNameMappings.AddOrUpdate(typeUniqueName, mappings.ToList(), (name, old) =>
             {
-                old.AddRange(mappings);
-                return old.Distinct().ToList();
+                var newList = mappings.ToList();
+                newList.AddRange(old);
+                return newList.Distinct().ToImmutableList().ToList();
             });
         }
 

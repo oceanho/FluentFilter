@@ -15,5 +15,9 @@ namespace FluentFilter.Test
      FluentFilterTestDataBaseFromDb
 #endif
     {
+        public FluentFilterTestBase()
+        {
+            FluentFilterManager.Reset();
+        }
     }
 }

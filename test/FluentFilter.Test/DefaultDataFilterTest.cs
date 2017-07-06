@@ -10,11 +10,6 @@ namespace FluentFilter.Test
 {
     public class DefaultDataFilterTest : FluentFilterTestBase
     {
-        public DefaultDataFilterTest()
-        {
-            FluentFilterManager.Reset();
-        }
-
         [Fact]
         public void DefaultDataFilter_ShouldBeOK_Test()
         {
