@@ -11,7 +11,6 @@ namespace FluentFilter.Mappings
 {
     internal static class FieldExprNameMappingFactory
     {
-        private static readonly object safeAddLocker = new object();
         private static readonly ConcurrentDictionary<string, List<MappingInfo>> fieldExprNameMappings;
         static FieldExprNameMappingFactory()
         {
