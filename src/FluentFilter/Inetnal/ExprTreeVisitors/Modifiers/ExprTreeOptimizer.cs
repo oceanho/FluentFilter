@@ -30,24 +30,16 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
             var constExpr = node.Left as ConstantExpression;
             var constExprValue = false;
             if (constExpr != null && constExpr.Value != null && constExpr.Value.GetType() == typeof(bool))
-            {
                 constExprValue = (bool)constExpr.Value;
-            }
-            if (constExprValue == true)
-            {
+            if (constExprValue)
                 return node.Right;
-            }
 
             constExprValue = false;
             constExpr = node.Right as ConstantExpression;
             if (constExpr != null && constExpr.Value != null && constExpr.Value.GetType() == typeof(bool))
-            {
                 constExprValue = (bool)constExpr.Value;
-            }
-            if (constExprValue == true)
-            {
+            if (constExprValue)
                 return node.Left;
-            }
             return base.VisitBinary(node);
         }
     }
