@@ -21,7 +21,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
             Filter = filter;
             Queryable = queryable;
         }
-        
+
         public IDataFilter Filter { get; set; }
         public IQueryable<TEntity> Queryable { get; set; }
         protected DataFilterMetaInfo FilterMateInfo { get; set; }
@@ -52,10 +52,9 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
             var innerWhereFinder = new InnerMostWhereExpressionFinder();
             var innerQueryableWhereExpr = innerWhereFinder.GetInnerMostWhereExpression(Queryable.Expression);
             var filterWhereExpression = DataFilterMetaInfoParser.Parse<TEntity>(Filter, FilterMateInfo, innerWhereFinder.ParamterName);
-
+            filterWhereExpression = new ExprTreeOptimizer(filterWhereExpression).Optimize() as Expression<Func<TEntity, bool>>;
             if (innerQueryableWhereExpr == null)
             {
-                // Queryable.Where()
                 Queryable = Queryable.Where(filterWhereExpression);
             }
             else

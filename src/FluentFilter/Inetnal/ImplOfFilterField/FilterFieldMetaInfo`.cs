@@ -7,8 +7,6 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
     internal class FilterFieldMetaInfo<TFilterField> : FilterFieldSortMetaInfo
         where TFilterField : IField
     {
-        private readonly Type _fieldType;
-        private readonly Type _fieldFilterType;
         private readonly TFilterField _fieldFilterInstace;
 
         public FilterFieldMetaInfo(TFilterField fieldFilterInstace, string fieldExprName)
