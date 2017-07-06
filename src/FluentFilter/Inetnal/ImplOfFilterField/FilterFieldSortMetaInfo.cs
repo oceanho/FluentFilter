@@ -6,33 +6,33 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
 {
     internal class FilterFieldSortMetaInfo : FilterFieldMetaInfo
     {
-        private Type _fieldType;
-        private Type _fieldFilterType;
-        private IHasSortField _fieldFilterInstace;
+        private readonly Type _fieldPrimitiveType;
+        private readonly Type _fieldFilterFieldType;
+        private readonly IHasSortField _fieldFilterInstace;
 
-        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace, string fieldExprName)
+        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace, Type fieldFilterFieldType, string fieldExprName)
             : base(fieldFilterInstace, fieldExprName)
         {
-            _fieldFilterType = fieldFilterInstace.GetType();
-            if (_fieldFilterType.GetTypeInfo().IsGenericType)
+            _fieldFilterInstace = fieldFilterInstace;
+            _fieldFilterFieldType = fieldFilterFieldType;
+            if (_fieldFilterFieldType.GetTypeInfo().IsGenericType)
             {
-                _fieldType = _fieldFilterType.GetTypeInfo().GetGenericArguments()[0];
+                _fieldPrimitiveType = _fieldFilterFieldType.GetTypeInfo().GetGenericArguments()[0];
             }
-            _fieldType = (_fieldFilterType == typeof(LikeField)) ? typeof(String) : _fieldType;
-            if (_fieldType == null)
+            _fieldPrimitiveType = (_fieldFilterFieldType == typeof(LikeField)) ? typeof(String) : _fieldPrimitiveType;
+            if (_fieldPrimitiveType == null)
             {
-                throw new ArgumentException($"{nameof(fieldFilterInstace)} Should be an genericType.");
+                throw new ArgumentException($"{nameof(fieldFilterInstace)} Should be an genericType Or LikeField.");
             }
-            _fieldFilterInstace = base.FilterFieldInstace as IHasSortField;
         }
 
         public new IHasSortField FilterFieldInstace
         {
             get => _fieldFilterInstace;
-            set => _fieldFilterInstace = value;
         }
 
-        public override Type PrimitiveType => _fieldType;
-        public override Type FilterFieldType => _fieldFilterType;
+        public override Type PrimitiveType => _fieldPrimitiveType;
+
+        public override Type FilterFieldType => _fieldFilterFieldType;
     }
 }
