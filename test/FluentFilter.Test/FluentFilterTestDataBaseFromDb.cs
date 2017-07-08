@@ -13,7 +13,7 @@ namespace FluentFilter.Test
     /// <summary>
     /// FluentFilter 测试基类，用于提供测试所需的数据源
     /// </summary>
-    public  class FluentFilterTestDataBaseFromDb: FluentFilterTestDataBase
+    public class FluentFilterTestDataBaseFromDb : FluentFilterTestDataBase
     {
         public FluentFilterTestDataBaseFromDb()
         {
@@ -21,16 +21,28 @@ namespace FluentFilter.Test
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 
             var db = new MyTestDb(options);
-            _myorder = db.MyOrders;
+            MyOrders = db.Orders;
+            OrderDetails = db.OrderDetails;
+            Products = db.Products;
 
             // 初始化数据
-            _myorder.AddRange(TempnoaryList);
+            MyOrders.AddRange(TempnoaryList);
+
+            var details = TempnoaryList.SelectMany(p => p.Details).Distinct();
+            OrderDetails.AddRange(details);
+
+            var products = details.Select(p => p.ProductInfo).Distinct(new ProductEqualityComparer());
+            Products.AddRange(products);
+
             db.SaveChanges();
         }
 
-        private DbSet<MyOrder> _myorder;
-
-        protected override IQueryable<MyOrder> DataSoures => _myorder;
+        protected DbSet<MyOrder> MyOrders { get; }
+        protected DbSet<MyOrderDetail> OrderDetails { get; }
+        protected DbSet<MyProduct> Products { get; }
+        protected override IQueryable<MyOrder> OrderDataSoures => MyOrders;
+        protected override IQueryable<MyOrderDetail> OrderDetailDataSoures => OrderDetails;
+        protected override IQueryable<MyProduct> ProductDataSoures => Products;
 
         /// <summary>
         /// more info
@@ -38,11 +50,11 @@ namespace FluentFilter.Test
         /// </summary>
         private sealed class MyTestDb : DbContext
         {
-            public MyTestDb()             
+            public MyTestDb()
             {
             }
 
-            public MyTestDb(DbContextOptions options) 
+            public MyTestDb(DbContextOptions options)
                 : base(options)
             {
             }
@@ -56,10 +68,25 @@ namespace FluentFilter.Test
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
-                modelBuilder.Entity<MyOrder>();
+                modelBuilder.Entity<MyOrder>((action) =>
+                {
+                    action
+                    .Ignore(p => p.Details)                    
+                    .HasMany(nav=>nav.Details);
+                });
+
+                modelBuilder.Entity<MyOrderDetail>((action) =>
+                {
+                    action
+                    .Ignore(p => p.ProductInfo)
+                    .HasOne(nav => nav.ProductInfo);
+                });
+                modelBuilder.Entity<MyProduct>();
             }
 
-            public DbSet<MyOrder> MyOrders { get; set; }
+            public DbSet<MyOrder> Orders { get; set; }
+            public DbSet<MyOrderDetail> OrderDetails { get; set; }
+            public DbSet<MyProduct> Products { get; set; }
         }
     }
 }

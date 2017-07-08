@@ -4,6 +4,7 @@ using FluentFilter.Inetnal.ImplOfFilterField;
 using System.Collections.Immutable;
 using System.Linq;
 using OhPrimitives;
+using System.Reflection;
 
 namespace FluentFilter.Inetnal.ImplOfFilter
 {
@@ -13,13 +14,18 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         {
             FilterInstance = filterInstance;
             FilterType = filterInstance.GetType();
-            FilterFields = filterFieldList.ToImmutableList();
 
+            // Exclude SortField<T>
+            FilterFields = filterFieldList.Where(field =>
+                field.FilterFieldInstace.FilterSwitch == FilterSwitch.Open &&
+                !(field.FilterFieldType.GetTypeInfo().IsGenericType && field.FilterFieldType.GetGenericTypeDefinition() == typeof(SortField<>))).ToImmutableList();
+
+            // Sort Field List
             FilterFiledsOfSort = filterFieldList
-                .Where(p => ((p.FilterFieldInstace as IHasSortField)?.SortMode != SortMode.Disable))
+                .Where(p => p.FilterFieldType.GetTypeInfo().IsGenericType && ((p.FilterFieldInstace as _SortField)?.SortMode != SortMode.Disable))
                 .Select((filter) =>
                 {
-                    return new FilterFieldSortMetaInfo(filter.FilterFieldInstace as IHasSortField, filter.FilterFieldType, filter.FilterFieldName, filter.FilterFieldOfElementBinderType);
+                    return new FilterFieldSortMetaInfo(filter.FilterFieldInstace as _SortField, filter.FilterFieldType, filter.FilterFieldName, filter.FilterFieldOfElementBinderType);
                 }).OrderByDescending(p => p.FilterFieldInstace).ToImmutableList();
         }
         public Type FilterType { get; }

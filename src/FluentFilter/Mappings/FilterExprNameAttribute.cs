@@ -13,68 +13,16 @@ namespace FluentFilter.Mappings
         /// <summary>
         /// 实例化 <see cref="FilterExprNameAttribute"/>
         /// </summary>
-        /// <param name="exprName"><see cref="ExprName"/></param>
-        /// <param name="shouldMapExprName"><see cref="ShouldMapExprName"/></param>
+        /// <param name="exprName"></param>
         public FilterExprNameAttribute(string exprName)
-            : this(exprName, true)
-        {
-        }
-
-        /// <summary>
-        /// 实例化 <see cref="FilterExprNameAttribute"/>
-        /// </summary>
-        /// <param name="exprName"><see cref="ExprName"/></param>
-        /// <param name="shouldMapExprName"><see cref="ShouldMapExprName"/></param>
-        public FilterExprNameAttribute()
-            : this(string.Empty, false)
-        {
-        }
-
-        /// <summary>
-        /// 实例化 <see cref="FilterExprNameAttribute"/>
-        /// </summary>
-        /// <param name="exprName"><see cref="ExprName"/></param>
-        /// <param name="shouldMapExprName"><see cref="ShouldMapExprName"/></param>
-        public FilterExprNameAttribute(string exprName, bool shouldMapExprName)
-            : this(exprName, shouldMapExprName, SortMode.Disable)
-        {
-        }
-
-        /// <summary>
-        /// 实例化 <see cref="FilterExprNameAttribute"/>
-        /// </summary>
-        /// <param name="exprName"><see cref="ExprName"/></param>
-        /// <param name="shouldMapExprName"><see cref="ShouldMapExprName"/></param>
-        /// <param name="sortMode"><see cref="SortMode"/></param>
-        public FilterExprNameAttribute(string exprName, bool shouldMapExprName, SortMode sortMode) 
-            : this(exprName, shouldMapExprName, sortMode, 0)
-        {
-        }
-
-        /// <summary>
-        /// 实例化 <see cref="FilterExprNameAttribute"/>
-        /// </summary>
-        /// <param name="exprName"><see cref="ExprName"/></param>
-        /// <param name="shouldMapExprName"><see cref="ShouldMapExprName"/></param>
-        /// <param name="sortMode"><see cref="SortMode"/></param>
-        /// <param name="sortPriority"<see cref="SortPriority"/>
-        public FilterExprNameAttribute(string exprName, bool shouldMapExprName, SortMode sortMode, int sortPriority)
         {
             ExprName = exprName;
-            ShouldMapExprName = shouldMapExprName;
-
-            SortMode = sortMode;
-            SortPriority = sortPriority;
-
+            SortMode = SortMode.Disable;
+            SortPriority = 0;
         }
 
         /// <summary>
-        /// 获取或者设置一个值，该值表示是否映射为过滤实体对象的字段名称（属性名），默认为True。若需要禁用映射，请将此属性设为False
-        /// </summary>
-        public bool ShouldMapExprName { get; set; }
-
-        /// <summary>
-        /// 映射到过滤实体对象的字段名称（属性名）
+        /// 映射到过滤实体对象的字段名称（属性）
         /// </summary>
         public string ExprName { get; set; }
 

@@ -20,7 +20,7 @@ namespace FluentFilter.Test.ImplOfFilter
             var myfilterInfo = DataFilterMetaInfoHelper.GetFilterMeatInfo(myfilter);
             Assert.Equal(0, myfilterInfo.FilterFields.Count);
 
-            myfilter.OrderId = new CompareField<int>
+            myfilter.Id = new CompareField<int>
             {
                 Value = 1000,
                 CompareMode = CompareMode.GreaterThanOrEqual

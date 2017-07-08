@@ -8,25 +8,45 @@ using OhPrimitives;
 using OhDotNetLib.Extension;
 namespace FluentFilter.Test
 {
-    public class DefaultDataFilterTest : FluentFilterTestBase
+    public class FluentFilterBasicTest : FluentFilterTestBase
     {
+        #region Verify_OnlySortShouldBeWork
+
+        [Fact]
+        public void Verify_OnlySortShouldBeWork()
+        {
+            var _orderList = OrderDataSoures;
+
+            //  OrderId主键倒序排列,详细见 MyOrderFilter 构造函数
+            var filter = new MyOrderFilter();
+
+            var _query = _orderList;
+            var _newQuery = _query.ApplyFluentFilter(filter);
+            var _newQueryList = _newQuery.ToList();
+            for (int i = 0; i < 10; i++)
+            {
+                // 排序出来的结果，订单号应该是(从1009递减到1)
+                Assert.Equal((1009 - i), _newQueryList[i].Id);
+            }
+        }
+        #endregion
+
         #region Verify_HasWhereExprShouldBeWork
 
         [Fact]
         public void Verify_HasWhereExprShouldBeWork()
         {
-            var _orderList = DataSoures;
+            var _orderList = OrderDataSoures;
             var filter = new MyOrderFilter
             {
-                OrderIdOfEqual = new EqualsField<int>
+                Id = new EqualsField<int>
                 {
                     Value = 1000
                 }
             };
 
-            //  当 Query 中存在 Where 筛选条件，目前（2017-07-02）的实现有问题，需要重新实现后再进行单元测试。以下测试先屏蔽了
             var _query = from a in _orderList
-                         where a.OrderId > 0
+                         where a.Id > 0
                          select a;
 
             var _newQuery = _query.ApplyFluentFilter(filter);
@@ -39,28 +59,28 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_HasWhereAndSortExprShouldBeWork()
         {
-            var _orderList = DataSoures;
+            var _orderList = OrderDataSoures;
 
             /* 
              * 查询订单号 大于等于 1000 且 订单金额大于等于 100 ，按金额升序，然后订单号降序 后的结果列表
              */
 
             var filter = new MyOrderFilter
-            {              
+            {
+                // 订单号大于等于 1002
+                Id = new CompareField<int>
+                {
+                    Value = 1002,
+                    CompareMode = CompareMode.GreaterThanOrEqual,
+                    SortMode = SortMode.Desc,
+                    SortPriority = 100
+                },
                 // 订单金额大于等于 100
                 TotalFee = new CompareField<decimal>
                 {
                     Value = 100,
                     CompareMode = CompareMode.GreaterThanOrEqual,
                     SortMode = SortMode.Asc,
-                    SortPriority = 100
-                },
-                // 订单号大于等于 1002
-                OrderId = new CompareField<int>
-                {
-                    Value = 1002,
-                    CompareMode = CompareMode.GreaterThanOrEqual,
-                    SortMode = SortMode.Desc,
                     SortPriority = 100
                 }
             };
@@ -72,7 +92,7 @@ namespace FluentFilter.Test
             Assert.Equal(8, _newQuery.ToList().Count());
 
             var str = _newQuery.Expression.ToString();
-            Assert.Contains(".ThenBy(p => p.OrderFee).ThenByDescending(p => p.OrderId)", str);
+            Assert.Contains(".ThenBy(p => p.OrderFee).ThenByDescending(p => p.Id)", str);
         }
         #endregion
 
@@ -81,7 +101,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_HasWhereButNoSortExprShouldBeWork()
         {
-            var _orderList = DataSoures;
+            var _orderList = OrderDataSoures;
 
             /* 
              * 查询订单号 大于等于 1000 且 订单金额大于等于 100 ，按金额升序，然后订单号降序 后的结果列表
@@ -89,22 +109,22 @@ namespace FluentFilter.Test
 
             var filter = new MyOrderFilter
             {
-                // 订单金额大于等于 100
-                TotalFee = new CompareField<decimal>
-                {
-                    Value = 100,
-                    CompareMode = CompareMode.GreaterThanOrEqual,
-                    SortMode = SortMode.Asc,
-                    SortPriority = 100
-                },
                 // 订单号大于等于 1002
-                OrderId = new CompareField<int>
+                Id = new CompareField<int>
                 {
                     Value = 1002,
                     CompareMode = CompareMode.GreaterThanOrEqual,
                     SortMode = SortMode.Desc,
                     SortPriority = 100
-                }
+                },
+                // 订单金额大于等于 100
+                TotalFee = new CompareField<decimal>
+                {
+                    Value = 100.0M,
+                    CompareMode = CompareMode.GreaterThanOrEqual,
+                    SortMode = SortMode.Asc,
+                    SortPriority = 100
+                }                
             };
 
             var _query = _orderList.AsQueryable();
@@ -118,7 +138,7 @@ namespace FluentFilter.Test
             Assert.True(lastOrderFee >= firsrtOrderFee);
 
             var str = _newQuery.Expression.ToString();
-            Assert.Contains(".OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.OrderId)", str);
+            Assert.Contains(".OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.Id)", str);
         }
         #endregion
 
@@ -127,9 +147,9 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_DataFilterApplyFilterShouldBeWork()
         {
-            var orders = DataSoures;
+            var orders = OrderDataSoures;
             var orderFilter = new MyOrderFilter();
-            orderFilter.OrderId = new CompareField<int>(1006)
+            orderFilter.Id = new CompareField<int>(1006)
             {
                 CompareMode = CompareMode.GreaterThanOrEqual
             };
@@ -152,7 +172,7 @@ namespace FluentFilter.Test
 
             // ----------------测试ContainsField<int>--------------------//
             // 清空 OrderId / TotalFee / CreationTime 查询条件 -
-            orderFilter.OrderId = null;
+            orderFilter.Id = null;
             orderFilter.TotalFee = null;
             orderFilter.CreationTime = null;
             orderFilter.UserId = new ContainsField<int>
@@ -235,7 +255,7 @@ namespace FluentFilter.Test
 
             // EqualField
             orderFilter.Remarks = null;
-            orderFilter.OrderIdOfEqual = new EqualsField<int>
+            orderFilter.Id = new EqualsField<int>
             {
                 Value = 1000,
             };
@@ -243,7 +263,7 @@ namespace FluentFilter.Test
                           select a;
             var _newQuery8 = _query8.ApplyFluentFilter(orderFilter);
             Assert.Equal(1, _newQuery8.ToList().Count());
-            Assert.Equal(1000, _newQuery8.ToList().LastOrDefault().OrderId);
+            Assert.Equal(1000, _newQuery8.ToList().LastOrDefault().Id);
 
             #endregion
 

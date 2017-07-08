@@ -40,7 +40,7 @@
   
   <ItemGroup>
     <PackageReference Include="OhDotNetLib" Version="2.1.14" />
-    <PackageReference Include="OhPrimitives" Version="2.2.8" />
+    <PackageReference Include="OhPrimitives" Version="2.3.2" />
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>
