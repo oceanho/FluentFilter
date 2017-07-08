@@ -13,7 +13,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_HasOneShouldBeWork()
         {
-            var orderQuery = OrderDataSoures.AsQueryable();
+            var orderQuery = OrderDataSources.AsQueryable();
             var orderFilter = new MyOrderFilter()
             {
                 Id = new CompareField<int>
