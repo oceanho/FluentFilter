@@ -42,8 +42,8 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
         public IQueryable<TEntity> Build()
         {
             Init();
+            VisitSort();
             VisitWhere();
-            VisitOrderSort();
             return Queryable.Provider.CreateQuery<TEntity>(m_InternalExpr);
         }
 
@@ -62,22 +62,13 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
 
         protected void VisitWhere()
         {
-            var innerWhereFinder = new InnerMostWhereExpressionFinder();
-            var innerQueryableWhereExpr = innerWhereFinder.GetInnerMostWhereExpression(Queryable.Expression);
-            var filterWhereExpression = DataFilterMetaInfoParser.Parse<TEntity>(Filter, FilterMateInfo, innerWhereFinder.ParamterName);
-            if (innerQueryableWhereExpr == null)
-            {
-                Queryable = Queryable.Where(filterWhereExpression);//.Expression;
-            }
-            else
-            {
-                var modifier = new WhereTreeModifier(Queryable);
-                modifier.Modify(m_InternalExpr, filterWhereExpression);
-                m_InternalExpr = modifier.ModifiedResult;
-            }
+            var modifier = new WhereTreeModifier(Queryable);
+            var filterWhereExpr = DataFilterMetaInfoParser.Parse<TEntity>(Filter, FilterMateInfo, string.Empty);
+            modifier.Modify(m_InternalExpr, filterWhereExpr);
+            m_InternalExpr = modifier.ModifiedResult;
         }
 
-        protected void VisitOrderSort()
+        protected void VisitSort()
         {
             var modifier = new OrderByTreeModifier(Queryable, FilterMateInfo.FilterFiledsOfSort);
             modifier.Modify(m_InternalExpr, null);

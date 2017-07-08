@@ -76,6 +76,52 @@ namespace FluentFilter.Test
         }
         #endregion
 
+        #region Verify_HasWhereButNoSortExprShouldBeWork
+
+        [Fact]
+        public void Verify_HasWhereButNoSortExprShouldBeWork()
+        {
+            var _orderList = DataSoures;
+
+            /* 
+             * 查询订单号 大于等于 1000 且 订单金额大于等于 100 ，按金额升序，然后订单号降序 后的结果列表
+             */
+
+            var filter = new MyOrderFilter
+            {
+                // 订单金额大于等于 100
+                TotalFee = new CompareField<decimal>
+                {
+                    Value = 100,
+                    CompareMode = CompareMode.GreaterThanOrEqual,
+                    SortMode = SortMode.Asc,
+                    SortPriority = 100
+                },
+                // 订单号大于等于 1002
+                OrderId = new CompareField<int>
+                {
+                    Value = 1002,
+                    CompareMode = CompareMode.GreaterThanOrEqual,
+                    SortMode = SortMode.Desc,
+                    SortPriority = 100
+                }
+            };
+
+            var _query = _orderList.AsQueryable();
+
+            var _newQuery = _query.ApplyFluentFilter(filter);
+
+            Assert.Equal(8, _newQuery.ToList().Count());
+
+            var lastOrderFee = _newQuery.ToList().Last().OrderFee;
+            var firsrtOrderFee = _newQuery.ToList().First().OrderFee;
+            Assert.True(lastOrderFee >= firsrtOrderFee);
+
+            var str = _newQuery.Expression.ToString();
+            Assert.Contains(".OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.OrderId)", str);
+        }
+        #endregion
+
         #region Verify_DataFilterApplyFilterShouldBeWork
 
         [Fact]

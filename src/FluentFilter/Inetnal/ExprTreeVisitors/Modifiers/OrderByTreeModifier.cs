@@ -1,4 +1,5 @@
 ﻿using FluentFilter.Inetnal.ImplOfFilterField;
+using OhDotNetLib.Linq;
 using OhPrimitives;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
 
             var expr = base.Visit(node);
             if (!m_IsModified)
-                expr = new SubTreeModifier(Queryable).InitSort(expr);
+                expr = new SubTreeModifier(Queryable).InitSort(expr, m_SortedFilterFieldMetaInfos);
             return expr;
         }
 
@@ -81,20 +82,68 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
 
         public class SubTreeModifier : ExpressionVisitor
         {
+            private bool m_ismodified;
             private IQueryable m_queryable;
+            private List<FilterFieldSortMetaInfo> m_SortedFilterFieldMetaInfos;
             public SubTreeModifier(IQueryable queryable)
             {
+                m_ismodified = false;
                 m_queryable = queryable;
             }
 
-            public Expression InitSort(Expression node)
+            public Expression InitSort(Expression node, IEnumerable<FilterFieldSortMetaInfo> sortedFilterFieldMetaInfos)
             {
+                m_SortedFilterFieldMetaInfos = sortedFilterFieldMetaInfos.ToList();
                 return Visit(node);
             }
-
-            protected override Expression VisitBinary(BinaryExpression node)
+            protected override Expression VisitConstant(ConstantExpression node)
             {
-                return base.VisitBinary(node);
+                if (m_ismodified)
+                    return base.VisitConstant(node);
+                var typeInfo = node.Type.GetTypeInfo();
+                if (typeInfo.IsGenericType && typeInfo.GetGenericArguments().Contains(m_queryable.ElementType))
+                {
+                    m_ismodified = true;
+                    Expression result = node;
+                    var methodName = "OrderBy";
+                    var isFirst = true;
+                    var p = PredicateBuilder.Paramter(m_queryable.ElementType);
+                    foreach (var item in m_SortedFilterFieldMetaInfos)
+                    {
+                        Expression memberAccess = null;
+                        var parameter = PredicateBuilder.Paramter(m_queryable.ElementType);
+                        foreach (var property in item.FilterFieldName.Split('.'))
+                        {
+                            memberAccess = Expression.Property(memberAccess ?? (parameter as Expression), property);
+                        }
+
+                        if (item.FilterFieldInstace.SortMode == SortMode.Asc)
+                        {
+                            if (!isFirst)
+                            {
+                                methodName = "ThenBy";
+                            }
+                        }
+                        else if (item.FilterFieldInstace.SortMode == SortMode.Desc)
+                        {
+                            if (!isFirst)
+                            {
+                                methodName = "ThenByDescending";
+                            }
+                        }
+                        isFirst = false;
+
+                        LambdaExpression orderByLambda = Expression.Lambda(memberAccess, parameter);
+                        result = Expression.Call(
+                            typeof(Queryable),
+                            methodName,
+                            new[] { m_queryable.ElementType, memberAccess.Type },
+                            result,
+                            Expression.Quote(orderByLambda));
+                    }
+                    return result;
+                }
+                return base.VisitConstant(node);
             }
         }
     }
