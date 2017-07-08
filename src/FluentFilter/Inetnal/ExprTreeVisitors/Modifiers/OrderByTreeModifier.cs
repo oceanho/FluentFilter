@@ -120,16 +120,11 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                         if (item.FilterFieldInstace.SortMode == SortMode.Asc)
                         {
                             if (!isFirst)
-                            {
                                 methodName = "ThenBy";
-                            }
                         }
                         else if (item.FilterFieldInstace.SortMode == SortMode.Desc)
                         {
-                            if (!isFirst)
-                            {
-                                methodName = "ThenByDescending";
-                            }
+                            methodName = isFirst ? "OrderByDescending" : "ThenByDescending";
                         }
                         isFirst = false;
 
