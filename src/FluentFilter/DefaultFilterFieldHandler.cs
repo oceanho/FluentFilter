@@ -45,7 +45,7 @@ namespace FluentFilter
             var lambdaExpr = node as LambdaExpression;
             var parameter = lambdaExpr.Parameters[0];
             Expression memberAccess = null;
-            foreach (var property in metaData.FilterFieldName.Split('.'))
+            foreach (var property in metaData.FilterFieldExprName.Split('.'))
             {
                 memberAccess = Expression.Property(memberAccess ?? (parameter as Expression), property);
             }

@@ -1,5 +1,6 @@
 ﻿using OhPrimitives;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField
@@ -10,8 +11,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         private readonly Type _fieldFilterFieldType;
         private readonly IHasSortField _fieldFilterInstace;
 
-        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace, Type fieldFilterFieldType, string fieldExprName, Type filterFieldOfElementBinderType)
-            : base(fieldFilterInstace, fieldExprName, filterFieldOfElementBinderType)
+        public FilterFieldSortMetaInfo(IHasSortField fieldFilterInstace, Type fieldFilterFieldType, string fieldExprName, IEnumerable<Attribute> fieldAttributes)
+            : base(fieldFilterInstace, fieldExprName, fieldAttributes)
         {
             _fieldFilterInstace = fieldFilterInstace;
             _fieldFilterFieldType = fieldFilterFieldType;

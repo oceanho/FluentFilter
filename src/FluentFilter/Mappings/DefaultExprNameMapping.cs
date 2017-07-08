@@ -12,7 +12,6 @@ namespace FluentFilter.Mappings
         where TFilter : class, IDataFilter
     {
         private readonly TFilter m_filter;
-        private readonly Type m_filterType;
         private readonly string m_filterTypeUniqueName;
         private readonly Type m_defaultFilterFieldElementBindType;
         private readonly IReadOnlyList<PropertyInfo> m_filterProperties;
@@ -26,8 +25,6 @@ namespace FluentFilter.Mappings
             m_filter = ReflectionHelper.CreateInstance<TFilter>();
             m_filterProperties = ReflectionHelper.GetProperties(m_filter).ToImmutableList();
             m_filterTypeUniqueName = TypeHelper.GetGenericTypeUniqueName(m_filter.GetType());
-            m_filterType = m_filter.GetType();
-
             m_defaultFilterFieldElementBindType = FindFilterDefaultElementBindType(m_filter.GetType().GetTypeInfo());
         }
 
@@ -39,7 +36,7 @@ namespace FluentFilter.Mappings
         {
             var _typeInfo = typeInfo.BaseType.GetTypeInfo();
             var _typeInfoGenericTypeDefinition = _typeInfo.GetGenericTypeDefinition();
-            if (m_validFiltertypes.FirstOrDefault(p => p == _typeInfoGenericTypeDefinition) == null)
+            if (m_validFiltertypes.Contains(_typeInfoGenericTypeDefinition) == false)
             {
                 throw new ArgumentException("invalid type of TFilter, TFilter should be inherit from DefaultDataFilter<,> or DataFilter<,>");
             }
@@ -51,9 +48,9 @@ namespace FluentFilter.Mappings
             var _maps = new List<MappingInfo>();
             foreach (var property in FilterProperties)
             {
-                var exprAttr = property.GetCustomAttribute<FilterExprNameAttribute>(true);
+                var exprAttr = property.GetCustomAttribute<FilterFieldExprNameMapAttribute>(true);
                 var exprName = ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.ExprName) ? property.Name : exprAttr.ExprName;
-                var elementBindType= ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.FilterFieldElementBindType) ? m_defaultFilterFieldElementBindType : exprAttr.FilterFieldElementBindType;
+                var elementBindType = ObjectNullChecker.IsNullOrEmptyOfAnyOne(exprAttr, exprAttr?.FilterFieldElementBindType) ? m_defaultFilterFieldElementBindType : exprAttr.FilterFieldElementBindType;
                 _maps.Add(new MappingInfo()
                 {
                     Property = property,
@@ -64,10 +61,8 @@ namespace FluentFilter.Mappings
             }
             return _maps.ToArray();
         }
-
-        public Type FilterType => m_filterType;
         protected TFilter Filter => m_filter;
-        protected string FilterTypeUniqueName => m_filterTypeUniqueName;
+        public virtual string FilterTypeUniqueName => m_filterTypeUniqueName;
         protected IReadOnlyList<PropertyInfo> FilterProperties => m_filterProperties;
     }
 }

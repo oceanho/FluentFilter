@@ -156,20 +156,20 @@ namespace FluentFilter.Test
             };
         }
 
-        [FilterExprName("Id", SortMode = SortMode.Desc, SortPriority = 100)]
+        [FilterFieldExprNameMap("Id", SortMode = SortMode.Desc, SortPriority = 100)]
         public CompareField<int> Id { get; set; }
 
         public ContainsField<int> UserId { get; set; }
 
-        [FilterExprName("OrderState")]
+        [FilterFieldExprNameMap("OrderState")]
         public ContainsField<OrderState> State { get; set; }
 
-        [FilterExprName("OrderFee")]
+        [FilterFieldExprNameMap("OrderFee")]
         public CompareField<decimal> TotalFee { get; set; }
 
         public FreeDomRangeField<DateTime> CreationTime { get; set; }
 
-        [FilterExprName("OrderRemarks")]
+        [FilterFieldExprNameMap("OrderRemarks")]
         public LikeField Remarks { get; set; }
 
         public ContainsField<int> ProductId { get; set; }
@@ -185,7 +185,7 @@ namespace FluentFilter.Test
         public SortField<int> Id { get; set; }
         public EqualsField<int> OrderId { get; set; }
 
-        [FilterExprName("ProductInfo.Id")]
+        [FilterFieldExprNameMap("ProductInfo.Id")]
         public CompareField<int> ProductInfoId { get; set; }
     }
 

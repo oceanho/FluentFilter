@@ -8,13 +8,13 @@ namespace FluentFilter.Mappings
     /// </summary>
     [Serializable]
     [AttributeUsage(AttributeTargets.Property)]
-    public class FilterExprNameAttribute : Attribute
+    public class FilterFieldExprNameMapAttribute : Attribute
     {
         /// <summary>
-        /// 实例化 <see cref="FilterExprNameAttribute"/>
+        /// 实例化 <see cref="FilterFieldExprNameMapAttribute"/>
         /// </summary>
         /// <param name="exprName"></param>
-        public FilterExprNameAttribute(string exprName)
+        public FilterFieldExprNameMapAttribute(string exprName)
         {
             ExprName = exprName;
             SortMode = SortMode.Disable;
@@ -37,7 +37,7 @@ namespace FluentFilter.Mappings
         public int SortPriority { get; set; }
 
         /// <summary>
-        /// 
+        /// 保留字段（后期可能会移除，请勿使用此字段）
         /// </summary>
         public Type FilterFieldElementBindType { get; set; }
     }

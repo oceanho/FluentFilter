@@ -54,7 +54,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                 {
                     Expression memberAccess = null;
                     var parameter = Expression.Parameter(Queryable.ElementType, "p");
-                    foreach (var property in item.FilterFieldName.Split('.'))
+                    foreach (var property in item.FilterFieldExprName.Split('.'))
                     {
                         memberAccess = Expression.Property(memberAccess ?? (parameter as Expression), property);
                     }
@@ -115,7 +115,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
                     {
                         Expression memberAccess = null;
                         var parameter = PredicateBuilder.Paramter(m_queryable.ElementType);
-                        foreach (var property in item.FilterFieldName.Split('.'))
+                        foreach (var property in item.FilterFieldExprName.Split('.'))
                         {
                             memberAccess = Expression.Property(memberAccess ?? (parameter as Expression), property);
                         }

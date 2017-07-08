@@ -15,7 +15,7 @@ namespace FluentFilter.Mappings
         /// </summary>
         public string ExprName { get; set; }
 
-        internal FilterExprNameAttribute ExprNameAttribute { get; set; }
+        internal FilterFieldExprNameMapAttribute ExprNameAttribute { get; set; }
 
         /// <summary>
         /// 获取或者设置绑定到 <see cref="System.Linq.Expressions.Expression"/> 上的参数属性对应的 <see cref="PropertyInfo"/>

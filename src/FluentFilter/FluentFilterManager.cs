@@ -49,7 +49,7 @@ namespace FluentFilter
         {
             if (mapping.GetType().GetTypeInfo().IsClass)
             {
-                var name = TypeHelper.GetGenericTypeUniqueName(mapping.FilterType);
+                var name = mapping.FilterTypeUniqueName;
                 FieldExprNameMappingFactory.Add(name, mapping.Mapping().ToList());
             }
         }
