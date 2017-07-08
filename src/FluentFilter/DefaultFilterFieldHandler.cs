@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using OhDotNetLib.Extension;
 
-namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
+namespace FluentFilter
 {
+    using FluentFilter.Inetnal.ImplOfFilterField;
     using OhDotNetLib.Reflection;
     using OhDotNetLib.Utils;
     using OhPrimitives;
@@ -41,7 +41,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
         {
             if (node.NodeType != ExpressionType.Lambda)
             {
-                throw new ArgumentException($"invalid node.NodeType {node.NodeType}. It's should be {ExpressionType.Lambda.ToString()}");
+                throw new ArgumentException($"invalid node.NodeType {node.NodeType}. It's should be ExpressionType.Lambda");
             }
 
             var method = GetType().GetTypeInfo().GetMethod(filterName);
