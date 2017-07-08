@@ -6,7 +6,6 @@ using System.Linq;
 using FluentFilter.Mappings;
 using OhDotNetLib.Reflection;
 using FluentFilter.Mappings.Internal;
-using OhDotNetLib.Extension;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
 {

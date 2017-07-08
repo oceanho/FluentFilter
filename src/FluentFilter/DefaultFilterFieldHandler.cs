@@ -1,9 +1,4 @@
-﻿using OhPrimitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -11,7 +6,6 @@ using System.Reflection;
 namespace FluentFilter
 {
     using FluentFilter.Inetnal.ImplOfFilterField;
-    using OhDotNetLib.Linq;
     using OhDotNetLib.Reflection;
     using OhDotNetLib.Utils;
     using OhPrimitives;
@@ -64,6 +58,5 @@ namespace FluentFilter
         {
             return node;
         }
-
     }
 }

@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
 {
     using FluentFilter.Inetnal.ImplOfFilterField.Internal;
     using OhPrimitives;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     internal class LikeFilterFieldHandler : DefaultFilterFieldHandler
     {

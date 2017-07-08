@@ -1,8 +1,5 @@
 ﻿using FluentFilter.Inetnal.ExprTreeVisitors;
-using FluentFilter.Inetnal.ImplOfFilter;
-using System;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace FluentFilter
 {
