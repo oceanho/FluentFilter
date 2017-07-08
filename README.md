@@ -51,9 +51,13 @@ var result = orderSources.ApplyFluentFilter(orderFilter);
 #### d、模糊查询（LikeField）COLUMN like '%XXX', COLUMN like 'XXX%', COLUMN like 'XX%YY'
 #### e、仅排序功能（SortField）仅仅适用于排序，无数据过滤功能
 ### 3、FilterFieldHandler（过滤字段转换为Expression的处理Handler）
-在FluentFilter中，所有筛选类型字段转换为Expression Node，都是通过 FilterFieldHandler 实现的，你可以为您自己的Field实现 `IFilterFieldHandler` 接口，通过 ```csharp FluentFilterManager.AddFilterFieldHandler(Your handler creation func) ``` 实现自定义Field 到 Expression Node 的构建
+在FluentFilter中，所有筛选类型字段转换为Expression Node，都是通过 FilterFieldHandler 实现的，你可以为您自己的Field实现 `IFilterFieldHandler` 接口，通过 
+```csharp 
+FluentFilterManager.AddFilterFieldHandler(Your handler creation func) 
+``` 
+实现自定义 Field 到 Expression Node 的构建过程~
 
 ## 怎么贡献？
-1. 您在使用fluentfilter,发现有任何bug或想法，请一定提issue给我，谢谢
-2. 您可以为本项目翻译不同语言版本的文档（本项目暂时未提供完整的文档，文档正在准备中。。。）
+1. 您在使用fluentfilter,发现有任何bug或想法，请一定提issue给我，谢谢 ~
+2. 您可以为本项目翻译不同语言版本的文档（本项目暂时未提供完整的文档，文档筹备中。。。）
 3. 为本项目完善已实现的feature，实现更多的feature，让它变得更完善，更好用。
