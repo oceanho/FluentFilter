@@ -10,19 +10,43 @@ using System.Threading.Tasks;
 
 namespace FluentFilter
 {
+    /// <summary>
+    /// FluentFilterManager
+    /// </summary>
     public static class FluentFilterManager
     {
-        public static void AddMapping<TMapping, TFilter>()
-            where TFilter : class, IDataFilter
-            where TMapping : DefaultExprNameMapping<TFilter>
-        {
-            AddMapping<TMapping>();
-        }
-
-        public static void AddMapping<TMapping>()
+        /// <summary>
+        /// Add 一个自定义 Mapping
+        /// </summary>
+        /// <typeparam name="TMapping"></typeparam>
+        /// <param name="mapping"></param>
+        public static void AddMapping<TMapping>(TMapping mapping)
             where TMapping : class, IFilterFieldExprNameMapping
         {
-            AddMapping(ReflectionHelper.CreateInstance<TMapping>());
+            InternalAddMapping(mapping);
+        }
+
+        /// <summary>
+        /// Add 一个自定义字段的处理Handler
+        /// </summary>
+        /// <typeparam name="TFilterFieldHandler"></typeparam>
+        /// <param name="filterFiledHandlerFunc"></param>
+        public static void AddFilterFieldHandler<TFilterFieldHandler>(Func<TFilterFieldHandler> filterFiledHandlerFunc)
+            where TFilterFieldHandler : class, IFilterFieldHandler
+        {
+            FilterFieldHandlerFactory.Register(filterFiledHandlerFunc);
+        }        
+        public static void ShoutDown()
+        {
+            FilterFieldHandlerFactory.Clear();
+            FieldExprNameMappingFactory.Clear();
+            GC.Collect();
+        }
+
+        internal static void Reset()
+        {
+            FilterFieldHandlerFactory.Reset();
+            FieldExprNameMappingFactory.Clear();
         }
         internal static void InternalAddMapping(IFilterFieldExprNameMapping mapping)
         {
@@ -31,30 +55,6 @@ namespace FluentFilter
                 var name = TypeHelper.GetGenericTypeUniqueName(mapping.FilterType);
                 FieldExprNameMappingFactory.Add(name, mapping.Mapping().ToList());
             }
-        }
-        public static void AddMapping<TMapping>(TMapping mapping)
-            where TMapping : class, IFilterFieldExprNameMapping
-        {
-            InternalAddMapping(mapping);
-        }
-
-        public static void AddFilterFieldHandler<TFilterFieldHandler>(Func<TFilterFieldHandler> filterFiledHandlerFunc)
-            where TFilterFieldHandler : class, IFilterFieldHandler
-        {
-            FilterFieldHandlerFactory.Register(filterFiledHandlerFunc);
-        }
-
-        public static void Reset()
-        {
-            FilterFieldHandlerFactory.Reset();
-            FieldExprNameMappingFactory.Clear();
-        }
-
-        public static void ShoutDown()
-        {
-            FilterFieldHandlerFactory.Clear();
-            FieldExprNameMappingFactory.Clear();
-            GC.Collect();
         }
     }
 }

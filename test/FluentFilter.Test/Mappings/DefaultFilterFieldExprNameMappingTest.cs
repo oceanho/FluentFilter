@@ -14,7 +14,7 @@ namespace FluentFilter.Test.Mappings
         public DefaultFilterFieldExprNameMappingTest()
         {
             FluentFilterManager.Reset();
-            FluentFilterManager.AddMapping<MyFilterFieldMapping>();
+            FluentFilterManager.AddMapping(new MyFilterFieldMapping());
         }
 
         [Fact]
