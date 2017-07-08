@@ -40,9 +40,9 @@ namespace FluentFilter.Test
         protected DbSet<MyOrder> MyOrders { get; }
         protected DbSet<MyOrderDetail> OrderDetails { get; }
         protected DbSet<MyProduct> Products { get; }
-        protected override IQueryable<MyOrder> OrderDataSoures => MyOrders;
-        protected override IQueryable<MyOrderDetail> OrderDetailDataSoures => OrderDetails;
-        protected override IQueryable<MyProduct> ProductDataSoures => Products;
+        protected override IQueryable<MyOrder> OrderDataSources => MyOrders;
+        protected override IQueryable<MyOrderDetail> OrderDetailDataSources => OrderDetails;
+        protected override IQueryable<MyProduct> ProductDataSources => Products;
 
         /// <summary>
         /// more info

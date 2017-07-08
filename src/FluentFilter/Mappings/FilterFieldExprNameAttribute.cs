@@ -8,13 +8,13 @@ namespace FluentFilter.Mappings
     /// </summary>
     [Serializable]
     [AttributeUsage(AttributeTargets.Property)]
-    public class FilterFieldExprNameMapAttribute : Attribute
+    public class FilterFieldExprNameAttribute : Attribute
     {
         /// <summary>
-        /// 实例化 <see cref="FilterFieldExprNameMapAttribute"/>
+        /// 实例化 <see cref="FilterFieldExprNameAttribute"/>
         /// </summary>
         /// <param name="exprName"></param>
-        public FilterFieldExprNameMapAttribute(string exprName)
+        public FilterFieldExprNameAttribute(string exprName)
         {
             ExprName = exprName;
             SortMode = SortMode.Disable;

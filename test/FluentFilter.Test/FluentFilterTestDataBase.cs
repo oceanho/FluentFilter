@@ -16,9 +16,9 @@ namespace FluentFilter.Test
     /// </summary>
     public abstract class FluentFilterTestDataBase
     {
-        protected virtual IQueryable<MyOrder> OrderDataSoures => TempnoaryList.ToImmutableList().AsQueryable();
-        protected virtual IQueryable<MyOrderDetail> OrderDetailDataSoures => TempnoaryList.ToImmutableList().SelectMany(p => p.Details).AsQueryable();
-        protected virtual IQueryable<MyProduct> ProductDataSoures => TempnoaryList.ToImmutableList().SelectMany(p => p.Details).Select(l => l.ProductInfo).Distinct(new ProductEqualityComparer()).AsQueryable();
+        protected virtual IQueryable<MyOrder> OrderDataSources => TempnoaryList.ToImmutableList().AsQueryable();
+        protected virtual IQueryable<MyOrderDetail> OrderDetailDataSources => TempnoaryList.ToImmutableList().SelectMany(p => p.Details).AsQueryable();
+        protected virtual IQueryable<MyProduct> ProductDataSources => TempnoaryList.ToImmutableList().SelectMany(p => p.Details).Select(l => l.ProductInfo).Distinct(new ProductEqualityComparer()).AsQueryable();
 
         protected List<MyOrder> TempnoaryList = new List<MyOrder>() {
                 new MyOrder(){
@@ -156,20 +156,20 @@ namespace FluentFilter.Test
             };
         }
 
-        [FilterFieldExprNameMap("Id", SortMode = SortMode.Desc, SortPriority = 100)]
+        [FilterFieldExprName("Id", SortMode = SortMode.Desc, SortPriority = 1)]
         public CompareField<int> Id { get; set; }
 
         public ContainsField<int> UserId { get; set; }
 
-        [FilterFieldExprNameMap("OrderState")]
+        [FilterFieldExprName("OrderState")]
         public ContainsField<OrderState> State { get; set; }
 
-        [FilterFieldExprNameMap("OrderFee")]
+        [FilterFieldExprName("OrderFee")]
         public CompareField<decimal> TotalFee { get; set; }
 
         public FreeDomRangeField<DateTime> CreationTime { get; set; }
 
-        [FilterFieldExprNameMap("OrderRemarks")]
+        [FilterFieldExprName("OrderRemarks")]
         public LikeField Remarks { get; set; }
 
         public ContainsField<int> ProductId { get; set; }
@@ -185,7 +185,7 @@ namespace FluentFilter.Test
         public SortField<int> Id { get; set; }
         public EqualsField<int> OrderId { get; set; }
 
-        [FilterFieldExprNameMap("ProductInfo.Id")]
+        [FilterFieldExprName("ProductInfo.Id")]
         public CompareField<int> ProductInfoId { get; set; }
     }
 

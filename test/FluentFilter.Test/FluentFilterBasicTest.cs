@@ -15,7 +15,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_OnlySortShouldBeWork()
         {
-            var _orderList = OrderDataSoures;
+            var _orderList = OrderDataSources;
 
             //  OrderId主键倒序排列,详细见 MyOrderFilter 构造函数
             var filter = new MyOrderFilter();
@@ -36,7 +36,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_HasWhereExprShouldBeWork()
         {
-            var _orderList = OrderDataSoures;
+            var _orderList = OrderDataSources;
             var filter = new MyOrderFilter
             {
                 Id = new EqualsField<int>
@@ -59,7 +59,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_HasWhereAndSortExprShouldBeWork()
         {
-            var _orderList = OrderDataSoures;
+            var _orderList = OrderDataSources;
 
             /* 
              * 查询订单号 大于等于 1000 且 订单金额大于等于 100 ，按金额升序，然后订单号降序 后的结果列表
@@ -101,7 +101,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_HasWhereButNoSortExprShouldBeWork()
         {
-            var _orderList = OrderDataSoures;
+            var _orderList = OrderDataSources;
 
             /* 
              * 查询订单号 大于等于 1000 且 订单金额大于等于 100 ，按金额升序，然后订单号降序 后的结果列表
@@ -147,7 +147,7 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_DataFilterApplyFilterShouldBeWork()
         {
-            var orders = OrderDataSoures;
+            var orders = OrderDataSources;
             var orderFilter = new MyOrderFilter();
             orderFilter.Id = new CompareField<int>(1006)
             {

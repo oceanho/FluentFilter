@@ -15,8 +15,8 @@ namespace FluentFilter.Test
         [Fact]
         public void Verify_DeepLvPropertyShouldBeWork()
         {
-            var _order = OrderDataSoures.OrderBy(p => p.Id).First();
-            var _orderDetailList = OrderDetailDataSoures.Where(p => p.OrderId == _order.Id);
+            var _order = OrderDataSources.OrderBy(p => p.Id).First();
+            var _orderDetailList = OrderDetailDataSources.Where(p => p.OrderId == _order.Id);
         }
         #endregion
     }
