@@ -10,8 +10,9 @@ namespace FluentFilter.Test.ImplOfFilter
 {
     public class DataFilterMetaInfoParserTest : FluentFilterTestBase
     {
+        #region Verity_ParseContainsField<T>ShouldBeWork
         [Fact]
-        public void Verity_ParseShouldBeWork()
+        public void Verity_ParseContainsFieldShouldBeWork()
         {
             var filter = new MyOrderFilter()
             {
@@ -22,9 +23,15 @@ namespace FluentFilter.Test.ImplOfFilter
                     Values = new int[] { 10000 }
                 }
             };
-            var exprTree = DataFilterMetaInfoParser.Parse<MyOrder>(filter, "_myParam");
-            Assert.Equal(exprTree.NodeType, ExpressionType.Lambda);
-            Assert.Equal(exprTree.ToString(), "_myParam => (True AndAlso value(System.Int32[]).Contains(_myParam.UserId))");
+
+            var exprTree2 = DataFilterMetaInfoParser.Parse<MyOrder>(filter);
+            Assert.Equal(exprTree2.NodeType, ExpressionType.Lambda);
+            Assert.Equal(exprTree2.ToString(), "OhLq_P1 => value(System.Int32[]).Contains(OhLq_P1.UserId)");
+
+            var exprTree3 = DataFilterMetaInfoParser.Parse<MyOrder>(filter, "_myParam");
+            Assert.Equal(exprTree3.NodeType, ExpressionType.Lambda);
+            Assert.Equal(exprTree3.ToString(), "_myParam => value(System.Int32[]).Contains(_myParam.UserId)");
         }
+        #endregion
     }
 }

@@ -12,6 +12,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
 
     using FluentFilter.Inetnal.ImplOfFilterField;
     using FluentFilter.Inetnal.ImplOfFilter.Utils;
+    using FluentFilter.Inetnal.ExprTreeVisitors.Modifiers;
 
     internal class DataFilterMetaInfoParser
     {
@@ -19,7 +20,10 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         {
             throw new NotImplementedException();
         }
-
+        public static Expression<Func<TEntity, bool>> Parse<TEntity>(IDataFilter dataFilter)
+        {
+            return Parse<TEntity>(dataFilter, DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter), string.Empty);
+        }
         public static Expression<Func<TEntity, bool>> Parse<TEntity>(IDataFilter dataFilter, string paramName)
         {
             return Parse<TEntity>(dataFilter, DataFilterMetaInfoHelper.GetFilterMeatInfo(dataFilter), paramName);
@@ -43,7 +47,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             }
 
             // filter
-            var body = node;// (Expression)lambda;
+            var body = node;
             foreach (var filterField in filterFields)
             {
                 var handler = FilterFieldHandlerFactory.GetHandler(filterField.FilterFieldType);
@@ -53,6 +57,10 @@ namespace FluentFilter.Inetnal.ImplOfFilter
                     body = handler.Handle(body, filterField);
                 }
             }
+
+            // 删除 {True}
+            var optimizer = new ExprTreeOptimizer(body);
+            body = optimizer.Optimize();
             return body as Expression<Func<TEntity, bool>>;
         }
     }

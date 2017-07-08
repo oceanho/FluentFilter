@@ -61,7 +61,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         public static IFilterFieldHandler GetHandler(Type filterFieldType)
         {
             var name = TypeHelper.GetGenericTypeUniqueName(filterFieldType);
-            return handlers.ContainsKey(name) ? handlers[name]() : default(IFilterFieldHandler);
+            return handlers.ContainsKey(name) ? handlers[name]() : new EmptyFilterFieldHandler();
         }
 
         public static TFilterFieldHandler GetHandler<TFilterFieldHandler>(Type filterFieldType)
