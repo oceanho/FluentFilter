@@ -58,9 +58,9 @@ namespace FluentFilter
             return (Expression)genericMethod.Invoke(this, new object[] { lambdaExpr, memberAccess, parameter, metaData });
         }
 
-        public virtual Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
+        public virtual Expression HandleWhere<TPrimitive, TFluentFilterFiled>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
             where TPrimitive : IConvertible, IComparable
-            where TFiledOfPrimitive : class, IField<TPrimitive>
+            where TFluentFilterFiled : class, IField<TPrimitive>
         {
             return node;
         }
