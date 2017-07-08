@@ -16,10 +16,10 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
         private static readonly Type filterFieldType = typeof(FreeDomRangeField<>);
         public override Type FilterFieldType => filterFieldType;
 
-        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
         {
             var method = GetType().GetTypeInfo().GetMethod(nameof(InternalHandleWhere), BindingFlags.Instance | BindingFlags.NonPublic);
-            return (Expression)method.MakeGenericMethod(typeof(TPrimitive), typeof(TFiledOfPrimitive)).Invoke(this, new object[] { node, metaData });
+            return (Expression)method.MakeGenericMethod(typeof(TPrimitive), typeof(TFiledOfPrimitive)).Invoke(this, new object[] { node, memberAccessExpr, parameterExpr, metaData });
         }
 
         protected Expression MakeExpr(LambdaExpression node, Expression left, Expression right)
@@ -39,7 +39,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
             return Expression.Lambda(Expression.AndAlso(node.Body, Expression.MakeBinary(ExpressionType.AndAlso, left, right)), node.Parameters);
         }
 
-        protected virtual Expression InternalHandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        protected virtual Expression InternalHandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
             where TPrimitive : struct, IConvertible, IComparable
         {
             var field = metaData.FilterFieldInstace as FreeDomRangeField<TPrimitive>;
@@ -50,8 +50,6 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
 
             Expression left = null;
             Expression right = null;
-
-            var property = Expression.Property(node.Parameters[0], metaData.FilterFieldName);
 
             #region min (left)
             if (field.Min != null)
@@ -67,7 +65,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
                 {
                     throw new ArgumentException($"invalid MinCompareMode {field.MinCompareMode.ToString()}");
                 }
-                left = Expression.MakeBinary(expr, property, body);
+                left = Expression.MakeBinary(expr, memberAccessExpr, body);
             }
             #endregion
 
@@ -85,7 +83,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
                 {
                     throw new ArgumentException($"invalid MaxCompareMode {field.MaxCompareMode.ToString()}");
                 }
-                right = Expression.MakeBinary(expr, property, body);
+                right = Expression.MakeBinary(expr, memberAccessExpr, body);
             }
             #endregion
 

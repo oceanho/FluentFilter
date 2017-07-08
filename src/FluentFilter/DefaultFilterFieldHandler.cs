@@ -11,6 +11,7 @@ using System.Reflection;
 namespace FluentFilter
 {
     using FluentFilter.Inetnal.ImplOfFilterField;
+    using OhDotNetLib.Linq;
     using OhDotNetLib.Reflection;
     using OhDotNetLib.Utils;
     using OhPrimitives;
@@ -46,14 +47,23 @@ namespace FluentFilter
 
             var method = GetType().GetTypeInfo().GetMethod(filterName);
             var genericMethod = method.MakeGenericMethod(metaData.PrimitiveType, metaData.FilterFieldType);
-            return (Expression)genericMethod.Invoke(this, new object[] { (LambdaExpression)node, metaData });
+
+            var lambdaExpr = node as LambdaExpression;
+            var parameter = lambdaExpr.Parameters[0];
+            Expression memberAccess = null;
+            foreach (var property in metaData.FilterFieldName.Split('.'))
+            {
+                memberAccess = Expression.Property(memberAccess ?? (parameter as Expression), property);
+            }
+            return (Expression)genericMethod.Invoke(this, new object[] { lambdaExpr, memberAccess, parameter, metaData });
         }
 
-        public virtual Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        public virtual Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
             where TPrimitive : IConvertible, IComparable
             where TFiledOfPrimitive : class, IField<TPrimitive>
         {
             return node;
         }
+
     }
 }

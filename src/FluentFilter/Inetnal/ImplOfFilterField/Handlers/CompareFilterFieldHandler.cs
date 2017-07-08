@@ -13,14 +13,14 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
         private static readonly Type filterFieldType = typeof(CompareField<>);
         public override Type FilterFieldType => filterFieldType;
 
-        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
         {            
             var field = metaData.FilterFieldInstace as CompareField<TPrimitive>;
             if (field == null)
             {
                 throw new ArgumentException($"field should be {typeof(CompareField<TPrimitive>)}");
             }
-            var property = Expression.Property(node.Parameters[0], metaData.FilterFieldName);
+
             var predicateBody = Expression.Constant(field.Value);
 
             var expressionType = ExpressionType.Default;
@@ -40,7 +40,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
             {
                 throw new ArgumentException($"invalid CompareMode {field.CompareMode.ToString()}");
             }
-            return Expression.Lambda(Expression.AndAlso(node.Body, Expression.MakeBinary(expressionType, property, predicateBody)), node.Parameters);
+            return Expression.Lambda(Expression.AndAlso(node.Body, Expression.MakeBinary(expressionType, memberAccessExpr, predicateBody)), node.Parameters);
         }
     }
 }

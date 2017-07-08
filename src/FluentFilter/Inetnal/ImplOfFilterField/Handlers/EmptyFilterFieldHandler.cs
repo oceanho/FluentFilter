@@ -13,9 +13,9 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
         private static readonly Type filterFieldType = typeof(IField);
         public override Type FilterFieldType => filterFieldType;
 
-        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        public override Expression HandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
         {
-            return base.HandleWhere<TPrimitive, TFiledOfPrimitive>(node, metaData);
+            return base.HandleWhere<TPrimitive, TFiledOfPrimitive>(node, memberAccessExpr, parameterExpr, metaData);
         }
     }
 }

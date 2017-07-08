@@ -13,7 +13,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
         private static readonly Type filterFieldType = typeof(RangeField<>);
         public override Type FilterFieldType => filterFieldType;
 
-        protected override Expression InternalHandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, FilterFieldMetaInfo metaData)
+        protected override Expression InternalHandleWhere<TPrimitive, TFiledOfPrimitive>(LambdaExpression node, Expression memberAccessExpr, Expression parameterExpr, FilterFieldMetaInfo metaData)
         {
             var field = metaData.FilterFieldInstace as RangeField<TPrimitive>;
             if (field == null)
@@ -23,8 +23,6 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
 
             Expression left = null;
             Expression right = null;
-
-            var property = Expression.Property(node.Parameters[0], metaData.FilterFieldName);
 
             #region min (left)
             if (field.Min != null)
@@ -37,7 +35,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
                 {
                     throw new ArgumentException($"invalid MinCompareMode {field.MinCompareMode.ToString()}");
                 }
-                left = Expression.MakeBinary(expr, property, body);
+                left = Expression.MakeBinary(expr, memberAccessExpr, body);
             }
             #endregion
 
@@ -53,7 +51,7 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Handlers
                 {
                     throw new ArgumentException($"invalid MaxCompareMode {field.MaxCompareMode.ToString()}");
                 }
-                right = Expression.MakeBinary(expr, property, body);
+                right = Expression.MakeBinary(expr, memberAccessExpr, body);
             }
             #endregion
 

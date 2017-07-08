@@ -99,7 +99,10 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
             protected override Expression VisitConstant(ConstantExpression node)
             {
                 if (m_ismodified)
-                    return base.VisitConstant(node);
+                {
+                    return node;
+                }
+
                 var typeInfo = node.Type.GetTypeInfo();
                 if (typeInfo.IsGenericType && typeInfo.GetGenericArguments().Contains(m_queryable.ElementType))
                 {
