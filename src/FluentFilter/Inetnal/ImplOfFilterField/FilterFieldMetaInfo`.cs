@@ -9,8 +9,8 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
     {
         private readonly TFilterField _fieldFilterInstace;
 
-        public FilterFieldMetaInfo(TFilterField fieldFilterInstace, string fieldExprName)
-            : base(fieldFilterInstace as IHasSortField, typeof(TFilterField), fieldExprName)
+        public FilterFieldMetaInfo(TFilterField fieldFilterInstace, string fieldExprName,Type filterFieldOfElementBinderType)
+            : base(fieldFilterInstace as IHasSortField, typeof(TFilterField), fieldExprName, filterFieldOfElementBinderType)
         {
             _fieldFilterInstace = fieldFilterInstace;
             

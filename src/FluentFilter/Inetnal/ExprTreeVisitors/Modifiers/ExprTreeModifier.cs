@@ -9,21 +9,14 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
         {
             Queryable = queryable;
         }
-
         protected IQueryable Queryable { get; }
-        public Expression Result { get; private set; }
-        protected string MethodName { get; private set; }
         protected Expression Right { get; private set; }
-        protected Expression RightBody { get; private set; }
-
-
-        public void Modify(Expression node, LambdaExpression right, string methodName)
+        public Expression ModifiedResult { get; private set; }
+        
+        public void Modify(Expression node, Expression right)
         {
             Right = right;
-            RightBody = right.Body;
-            MethodName = methodName;
-
-            Result = Visit(node);
+            ModifiedResult = Visit(node);
         }
     }
 }

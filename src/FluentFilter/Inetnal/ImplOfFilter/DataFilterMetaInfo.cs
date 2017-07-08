@@ -16,11 +16,11 @@ namespace FluentFilter.Inetnal.ImplOfFilter
             FilterFields = filterFieldList.ToImmutableList();
 
             FilterFiledsOfSort = filterFieldList
-                .Where(p => ((p.FilterFieldInstace as IHasSortField) != null))
+                .Where(p => ((p.FilterFieldInstace as IHasSortField)?.SortMode != SortMode.Disable))
                 .Select((filter) =>
                 {
-                    return new FilterFieldSortMetaInfo(filter.FilterFieldInstace as IHasSortField, filter.FilterFieldType, filter.FilterFieldName);
-                }).OrderBy(p => p.FilterFieldInstace).ToImmutableList();
+                    return new FilterFieldSortMetaInfo(filter.FilterFieldInstace as IHasSortField, filter.FilterFieldType, filter.FilterFieldName, filter.FilterFieldOfElementBinderType);
+                }).OrderByDescending(p => p.FilterFieldInstace).ToImmutableList();
         }
         public Type FilterType { get; }
         public IDataFilter FilterInstance { get; }

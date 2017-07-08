@@ -37,5 +37,10 @@ namespace FluentFilter.Mappings
         /// 排序优先级（该字段优先级小于，Filter实体字段指定的SortPriority，若Filter字段上的SortPriority为空，则使用该属性作为排序的SortPriority））
         /// </summary>
         public int? SortPriority { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Type FilterFieldElementBindType { get; set; }
     }
 }

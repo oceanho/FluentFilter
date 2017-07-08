@@ -8,10 +8,11 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
     /// </summary>
     public abstract class FilterFieldMetaInfo
     {
-        public FilterFieldMetaInfo(IField filterField, string fieldExprName)
+        internal FilterFieldMetaInfo(IField filterField, string fieldExprName, Type filterFieldOfElementBinderType)
         {
             FilterFieldName = fieldExprName;
             FilterFieldInstace = filterField;
+            FilterFieldOfElementBinderType = filterFieldOfElementBinderType;
         }
 
         /// <summary>
@@ -33,5 +34,10 @@ namespace FluentFilter.Inetnal.ImplOfFilterField
         /// 
         /// </summary>
         public virtual IField FilterFieldInstace { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Type FilterFieldOfElementBinderType { get; }
     }
 }

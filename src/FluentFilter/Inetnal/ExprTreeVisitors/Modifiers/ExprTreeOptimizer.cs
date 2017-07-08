@@ -27,19 +27,22 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
 
         private Expression DeleteTrueExpr(BinaryExpression node)
         {
-            var constExpr = node.Left as ConstantExpression;
-            var constExprValue = false;
-            if (constExpr != null && constExpr.Value != null && constExpr.Value.GetType() == typeof(bool))
-                constExprValue = (bool)constExpr.Value;
-            if (constExprValue)
-                return node.Right;
+            if (node.Left != null && node.Right != null)
+            {
+                var constExpr = node.Left as ConstantExpression;
+                var constExprValue = false;
+                if (constExpr != null && constExpr.Value != null && constExpr.Value.GetType() == typeof(bool))
+                    constExprValue = (bool)constExpr.Value;
+                if (constExprValue)
+                    return node.Right;
 
-            constExprValue = false;
-            constExpr = node.Right as ConstantExpression;
-            if (constExpr != null && constExpr.Value != null && constExpr.Value.GetType() == typeof(bool))
-                constExprValue = (bool)constExpr.Value;
-            if (constExprValue)
-                return node.Left;
+                constExprValue = false;
+                constExpr = node.Right as ConstantExpression;
+                if (constExpr != null && constExpr.Value != null && constExpr.Value.GetType() == typeof(bool))
+                    constExprValue = (bool)constExpr.Value;
+                if (constExprValue)
+                    return node.Left;
+            }
             return base.VisitBinary(node);
         }
     }

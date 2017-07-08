@@ -1,5 +1,7 @@
-﻿using OhDotNetLib.Linq;
+﻿using FluentFilter.Inetnal.ImplOfFilterField;
+using OhDotNetLib.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -7,52 +9,57 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors.Modifiers
 {
     internal class WhereTreeModifier : ExprTreeModifier
     {
+        private bool m_ismodified = false;
         public WhereTreeModifier(IQueryable queryable)
             : base(queryable)
         {
         }
 
-        protected override Expression VisitMethodCall(MethodCallExpression node)
+        public override Expression Visit(Expression node)
         {
-            if (node.Method.Name.Equals(MethodName, StringComparison.OrdinalIgnoreCase))
-            {
-                //
-                // 此处如何实现？
-                // 需要达到效果：
-                //   node现有一个 Where(p=>p.Id>=0) , 需要把 RightBody 的 Where 追加到 node 的 Where 上（它们的参数名，类型都一样）
-                //   比如：node 上的 Where(p=> p.Id>=0) , RightBody 的 Where(p=> p.OrderFee >= 50)
-                //   需要把这两个条件合并，最终结果是 node 的 Where(p=> p.Id>=0 && p.OrderFee >=50)
-
-                var mi = node.Method;
-                var obj = Visit(node.Object);
-                var args = Visit(node.Arguments);
-
-                var left = (LambdaExpression)(((UnaryExpression)node.Arguments[1]).Operand);
-                var expr = Expression.MakeBinary(ExpressionType.AndAlso, left.Body, RightBody);
-
-                var replacedCall = Expression.Call(obj, mi, args[0], Expression.Lambda(expr, left.Parameters[0]));
-                
-                // 替换后的结果，无法作用到 node 的 Where 上，代码有问题!!!
-                return replacedCall;
-            }
-            // 递归遍历 Expression Node，查找指定 MethodName 的 CallMethodExpression 对其 MethodCall 进行替换操作
-            Visit(node.Arguments[0]);
-            return node;
-            // return base.VisitMethodCall(node);
+            var expr = base.Visit(node);
+            if (!m_ismodified)
+                expr = new SubTreeModifier(Queryable).InitWhere(node);
+            return expr;
         }
 
-        //protected override Expression VisitBinary(BinaryExpression node)
-        //{
-        //    if (node == whereExpr)
-        //    {
-        //        return mergeExpr;
-        //    }
-        //    return base.VisitBinary(node);
-        //}
+        protected override Expression VisitMethodCall(MethodCallExpression node)
+        {
+            if (m_ismodified)
+            {
+                return base.VisitMethodCall(node);
+            }
 
-        //protected override Expression VisitLambda<T>(Expression<T> node)
-        //{
-        //    return base.VisitLambda(node);
-        //}
+            if (node.Method.Name.Equals("Where", StringComparison.OrdinalIgnoreCase))
+            {
+                m_ismodified = true;
+                var parameter = PredicateBuilder.Paramter(Queryable.ElementType);
+                var mi = node.Method;
+                var obj = Visit(node.Object);
+
+                // 替换node，在后面追加Where条件
+                return Expression.Call(obj, mi, node, Right);
+            }
+            return base.VisitMethodCall(node);
+        }
+
+        public class SubTreeModifier : ExpressionVisitor
+        {
+            private IQueryable m_queryable;
+            public SubTreeModifier(IQueryable queryable)
+            {
+                m_queryable = queryable;
+            }
+
+            public Expression InitWhere(Expression node)
+            {
+                return Visit(node);
+            }
+
+            protected override Expression VisitBinary(BinaryExpression node)
+            {
+                return base.VisitBinary(node);
+            }
+        }
     }
 }

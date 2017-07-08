@@ -10,16 +10,76 @@ namespace FluentFilter.Test
 {
     public class DefaultDataFilterTest : FluentFilterTestBase
     {
-        [Fact]
-        public void DefaultDataFilter_ShouldBeOK_Test()
-        {
-            var filter = new MyOrderFilter();
-            filter.OrderId = new CompareField<int>(1000);
-            filter.CreationTime = new FreeDomRangeField<DateTime>(DateTime.Now.GetMinOfDay(), DateTime.Now.GetMaxOfDay());
-        }
+        #region Verify_HasWhereExprShouldBeWork
 
         [Fact]
-        public void DefaultDataFilter_ApplyFilter_ShouldBeOK_Test()
+        public void Verify_HasWhereExprShouldBeWork()
+        {
+            var _orderList = DataSoures;
+            var filter = new MyOrderFilter
+            {
+                OrderIdOfEqual = new EqualsField<int>
+                {
+                    Value = 1000
+                }
+            };
+
+            //  当 Query 中存在 Where 筛选条件，目前（2017-07-02）的实现有问题，需要重新实现后再进行单元测试。以下测试先屏蔽了
+            var _query = from a in _orderList
+                         where a.OrderId > 0
+                         select a;
+
+            var _newQuery = _query.ApplyFluentFilter(filter);
+            Assert.Equal(1, _newQuery.ToList().Count());
+        }
+        #endregion
+
+        #region Verify_HasWhereAndSortExprShouldBeWork
+
+        [Fact]
+        public void Verify_HasWhereAndSortExprShouldBeWork()
+        {
+            var _orderList = DataSoures;
+
+            /* 
+             * 查询订单号 大于等于 1000 且 订单金额大于等于 100 ，按金额升序，然后订单号降序 后的结果列表
+             */
+
+            var filter = new MyOrderFilter
+            {              
+                // 订单金额大于等于 100
+                TotalFee = new CompareField<decimal>
+                {
+                    Value = 100,
+                    CompareMode = CompareMode.GreaterThanOrEqual,
+                    SortMode = SortMode.Asc,
+                    SortPriority = 100
+                },
+                // 订单号大于等于 1002
+                OrderId = new CompareField<int>
+                {
+                    Value = 1002,
+                    CompareMode = CompareMode.GreaterThanOrEqual,
+                    SortMode = SortMode.Desc,
+                    SortPriority = 100
+                }
+            };
+
+            var _query = _orderList.OrderBy(p => p.Id);
+
+            var _newQuery = _query.ApplyFluentFilter(filter);
+
+            Assert.Equal(8, _newQuery.ToList().Count());
+
+            var str = _newQuery.Expression.ToString();
+            Assert.Contains(".ThenBy(p => p.OrderFee).ThenByDescending(p => p.OrderId)", str);
+        }
+        #endregion
+
+        #region Verify_DataFilterApplyFilterShouldBeWork
+
+        [Fact]
+        public void Verify_DataFilterApplyFilterShouldBeWork()
         {
             var orders = DataSoures;
             var orderFilter = new MyOrderFilter();
@@ -159,5 +219,6 @@ namespace FluentFilter.Test
             //var _newQuery = _query.ApplyFluentFilter(filter);
             //Assert.Equal(_newQuery.ToList().Count(), 4);
         }
+        #endregion
     }
 }

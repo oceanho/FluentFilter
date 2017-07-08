@@ -28,7 +28,7 @@ namespace FluentFilter.Inetnal.ImplOfFilter
         public static Expression<Func<TEntity, bool>> Parse<TEntity>(IDataFilter dataFilter, DataFilterMetaInfo filterInfo, string paramName)
         {
             var body = Expression.Constant(true, typeof(bool));
-            var parameter = paramName.IsEmpty() ? PredicateBuilder.Paramters<TEntity>() : PredicateBuilder.Paramters<TEntity>(paramName);
+            var parameter = paramName.IsEmpty() ? PredicateBuilder.Paramter<TEntity>() : PredicateBuilder.Paramter<TEntity>(paramName);
             var lambdaExpr = Expression.Lambda<Func<TEntity, bool>>(body, parameter);
             return Parse<TEntity>(dataFilter, filterInfo, lambdaExpr);
         }

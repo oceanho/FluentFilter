@@ -15,14 +15,14 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
         private static MethodInfo _createFilterFieldMetaInfoMethodInfo = typeof(FilterFieldMetaInfoHelper)
             .GetTypeInfo().GetMethod(nameof(CreateFilterFieldMetaInfo), BindingFlags.Static | BindingFlags.Public);
 
-        public static FilterFieldMetaInfo CreateFilterFieldMetaInfo<TField>(TField field, string fieldExprName)
+        public static FilterFieldMetaInfo CreateFilterFieldMetaInfo<TField>(TField field, string fieldExprName, Type filterFieldOfElementBinderType)
             where TField : class, IField
         {
-            return new FilterFieldMetaInfo<TField>(field, fieldExprName);
+            return new FilterFieldMetaInfo<TField>(field, fieldExprName, filterFieldOfElementBinderType);
         }
-        public static FilterFieldMetaInfo CreateFilterFieldMetaInfoByType(Type fieldType, object value, string fieldExprName)
+        public static FilterFieldMetaInfo CreateFilterFieldMetaInfoByType(Type fieldType, object value, string fieldExprName, Type filterFieldOfElementBinderType)
         {
-            return (FilterFieldMetaInfo)_createFilterFieldMetaInfoMethodInfo.MakeGenericMethod(fieldType).Invoke(null, new object[] { value, fieldExprName });
+            return (FilterFieldMetaInfo)_createFilterFieldMetaInfoMethodInfo.MakeGenericMethod(fieldType).Invoke(null, new object[] { value, fieldExprName, filterFieldOfElementBinderType });
         }
 
         public static PropertyInfo[] GetFieldPropertiesFromFilter(IDataFilter filter)
@@ -39,16 +39,24 @@ namespace FluentFilter.Inetnal.ImplOfFilterField.Utils
             {
                 return InternalExprNameMappingUtil.CreateFilterExprNameMappings(filter).ToList();
             });
-            
-            var fieldExprName = "";
+
             var fieldFilterIndex = 0;
-            object fieldValue = null;
             var FilterFieldMetaInfos = new FilterFieldMetaInfo[properties.Count()];
             foreach (var property in properties)
             {
-                fieldValue = property.GetValue(filter, null);
-                fieldExprName = propExprMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name)).ExprName;
-                FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, fieldValue, fieldExprName);
+                var map = propExprMappings.FirstOrDefault(p => p.Property.Name.Equals(property.Name));
+                var objValue = property.GetValue(filter, null);
+                var sortValue = objValue as IHasSortField;
+                if (sortValue != null && sortValue.SortMode == SortMode.Disable)
+                {
+                    if (map.ExprNameAttribute != null)
+                    {
+                        sortValue.SortMode = map.ExprNameAttribute.SortMode.GetValueOrDefault(SortMode.Disable);
+                        sortValue.SortPriority = map.ExprNameAttribute.SortPriority.GetValueOrDefault(-1);
+                    }
+                    objValue = sortValue;
+                }
+                FilterFieldMetaInfos[fieldFilterIndex++] = CreateFilterFieldMetaInfoByType(property.PropertyType, property.GetValue(filter, null), map.ExprName, map.FilterFieldElementBindType);
             }
 
             return FilterFieldMetaInfos;

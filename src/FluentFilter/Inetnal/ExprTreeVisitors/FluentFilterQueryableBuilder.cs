@@ -12,6 +12,8 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
 {
     internal class FluentFilterQueryableBuilder<TEntity>
     {
+        private Expression m_InternalExpr;
+        private IQueryable<TEntity> m_Queryable;
         public FluentFilterQueryableBuilder()
         {
         }
@@ -23,7 +25,18 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
         }
 
         public IDataFilter Filter { get; set; }
-        public IQueryable<TEntity> Queryable { get; set; }
+        public IQueryable<TEntity> Queryable
+        {
+            get
+            {
+                return m_Queryable;
+            }
+            set
+            {
+                m_Queryable = value;
+                m_InternalExpr = m_Queryable.Expression;
+            }
+        }
         protected DataFilterMetaInfo FilterMateInfo { get; set; }
 
         public IQueryable<TEntity> Build()
@@ -31,7 +44,7 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
             Init();
             VisitWhere();
             VisitOrderSort();
-            return Queryable;
+            return Queryable.Provider.CreateQuery<TEntity>(m_InternalExpr);
         }
 
         private void Init()
@@ -55,19 +68,21 @@ namespace FluentFilter.Inetnal.ExprTreeVisitors
             filterWhereExpression = new ExprTreeOptimizer(filterWhereExpression).Optimize() as Expression<Func<TEntity, bool>>;
             if (innerQueryableWhereExpr == null)
             {
-                Queryable = Queryable.Where(filterWhereExpression);
+                Queryable = Queryable.Where(filterWhereExpression);//.Expression;
             }
             else
             {
                 var modifier = new WhereTreeModifier(Queryable);
-                modifier.Modify(Queryable.Expression, filterWhereExpression, "Where");
-                Queryable = Queryable.Provider.CreateQuery<TEntity>(modifier.Result);
+                modifier.Modify(m_InternalExpr, filterWhereExpression);
+                m_InternalExpr = modifier.ModifiedResult;
             }
         }
 
         protected void VisitOrderSort()
         {
-
+            var modifier = new OrderByTreeModifier(Queryable, FilterMateInfo.FilterFiledsOfSort);
+            modifier.Modify(m_InternalExpr, null);
+            m_InternalExpr = modifier.ModifiedResult;
         }
     }
 }
