@@ -5,7 +5,7 @@ FluentFilter 是一个 .net linq query 查询扩展。它将查询条件（Where
 ### 1、DataFilter（过滤器）
 它实现了`IDataFilter`接口，作用于某个Queryable<T>，从而实现Where条件及OrderBy排序功能，是FluentFilter的基本组成单元。
 ### 2、FilterField（过滤字段）
-`DateFilter` 是由一个或多个FilterField组成的，是FluentFilter的最小组成单元。`FilterField` 分为排序和筛选（筛选字段通常拥有排序功能）两种。筛选类的字段，分为
+`DateFilter` 由一个或多个FilterField组成的，是FluentFilter的最小组成单元。`FilterField` 分为排序和筛选（筛选字段通常拥有排序功能）两种。筛选类的字段，分为
 #### a、单值比较（EqualField<TPrimitive>,CompareField<TPrimitive>）等于，大于，大于等于，小于等于
 #### b、多值比较（Contains<TPrimitive>）包含，不包含
 #### c、区间比较（FreeDomRange<TPrimitive>,BetweenRange<TPrimitive>,Range<TPrimitive>）大于[等于] && 小于[等于]，大于等于 && 小于等于，大于 && 小于 。
