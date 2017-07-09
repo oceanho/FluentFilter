@@ -138,7 +138,7 @@ namespace FluentFilter.Test
             Assert.True(lastOrderFee >= firsrtOrderFee);
 
             var exprStr = _newQuery.Expression.ToString();
-            Assert.Contains(".OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.Id)", exprStr);
+            Assert.EndsWith(".Where(OhLq_P1 => ((OhLq_P1.Id >= 1002) AndAlso (OhLq_P1.OrderFee >= 100.0))).OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.Id)", exprStr);
 
             // 只按订单号筛选，倒叙排列（禁用SortMode 和 关闭FilterSwitch）
             filter.TotalFee.SortMode = SortMode.Disable;
