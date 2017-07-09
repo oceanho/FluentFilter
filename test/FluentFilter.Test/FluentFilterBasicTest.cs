@@ -115,7 +115,7 @@ namespace FluentFilter.Test
                     Value = 1002,
                     CompareMode = CompareMode.GreaterThanOrEqual,
                     SortMode = SortMode.Desc,
-                    SortPriority = 100
+                    SortPriority = 1
                 },
                 // 订单金额大于等于 100
                 TotalFee = new CompareField<decimal>
@@ -123,8 +123,8 @@ namespace FluentFilter.Test
                     Value = 100.0M,
                     CompareMode = CompareMode.GreaterThanOrEqual,
                     SortMode = SortMode.Asc,
-                    SortPriority = 100
-                }                
+                    SortPriority = 1
+                }
             };
 
             var _query = _orderList.AsQueryable();
@@ -137,8 +137,20 @@ namespace FluentFilter.Test
             var firsrtOrderFee = _newQuery.ToList().First().OrderFee;
             Assert.True(lastOrderFee >= firsrtOrderFee);
 
-            var str = _newQuery.Expression.ToString();
-            Assert.Contains(".OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.Id)", str);
+            var exprStr = _newQuery.Expression.ToString();
+            Assert.Contains(".OrderBy(OhLq_P1 => OhLq_P1.OrderFee).ThenByDescending(OhLq_P1 => OhLq_P1.Id)", exprStr);
+
+            // 只按订单号筛选，倒叙排列（禁用SortMode 和 关闭FilterSwitch）
+            filter.TotalFee.SortMode = SortMode.Disable;
+            filter.TotalFee.FilterSwitch = FilterSwitch.Close;
+
+            filter.Id.CompareMode = CompareMode.Equal;
+
+            var _newQuery2 = _query.ApplyFluentFilter(filter);
+            exprStr = _newQuery2.Expression.ToString();
+
+            Assert.Equal(1, _newQuery2.ToList().Count);
+            Assert.EndsWith(".Where(OhLq_P1 => (OhLq_P1.Id == 1002)).OrderByDescending(OhLq_P1 => OhLq_P1.Id)", exprStr);
         }
         #endregion
 
